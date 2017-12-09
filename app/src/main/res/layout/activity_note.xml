@@ -1,9 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/appBackground"
     tools:context="com.mazurco066.notepad.activity.NoteActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <include layout="@layout/toolbar" android:id="@+id/mainToolbar"/>
+
+    <EditText
+        android:id="@+id/editTitle"
+        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mainToolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:maxLength="18"
+        android:layout_marginStart="@dimen/listMargin"
+        android:layout_marginEnd="@dimen/listMargin"
+        android:inputType="textPersonName"
+        android:hint="@string/edit_title_hint" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_below="@+id/editTitle"
+        android:background="@drawable/list_background"
+        android:gravity="start"
+        android:paddingLeft="15dp"
+        android:paddingStart="15dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingRight="5dp"
+        android:paddingEnd="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:layout_marginBottom="@dimen/listMargin"
+        android:layout_marginEnd="@dimen/listMargin"
+        android:layout_marginLeft="@dimen/listMargin"
+        android:layout_marginRight="@dimen/listMargin"
+        android:layout_marginStart="@dimen/listMargin"
+        android:inputType="textMultiLine" />
+
+</RelativeLayout>

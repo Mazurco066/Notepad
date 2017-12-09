@@ -3,7 +3,7 @@
 
     <color name="colorPrimary">#282828</color>
     <color name="colorPrimaryDark">#212121</color>
-    <color name="colorAccent">#263238</color>
+    <color name="colorAccent">#FFFFFF</color>
 
     <color name="appBackground">#616161</color>
     <color name="noteBackground">#70BDBDBD</color>
