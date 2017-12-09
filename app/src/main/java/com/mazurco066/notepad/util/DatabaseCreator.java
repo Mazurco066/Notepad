@@ -8,11 +8,11 @@ public class DatabaseCreator extends SQLiteOpenHelper {
 
     //Atributos
     private final static String DATABASE = "notepad.dp";
-    private final static String DEFAULT_TABLE = "notes";
-    private final static String FIELD_ID = "_id";
-    private final static String FIELD_DATE = "_date";
-    private final static String FIELD_TITLE = "_title";
-    private final static String FIELD_CONTENT = "_content";
+    public final static String DEFAULT_TABLE = "notes";
+    public final static String FIELD_ID = "_id";
+    public final static String FIELD_DATE = "_date";
+    public final static String FIELD_TITLE = "_title";
+    public final static String FIELD_CONTENT = "_content";
     private final static int VERSION = 1;
 
     //construtor padrão
@@ -24,27 +24,48 @@ public class DatabaseCreator extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        //Criando String de  Criação do Banco
-        StringBuilder sql = new StringBuilder();
-        sql.append("CREATE TABLE IF NOT EXISTS ").append(DEFAULT_TABLE).append("( ");
-        sql.append(FIELD_ID).append(" integer primary key autoincrement,");
-        sql.append(FIELD_DATE).append(" VARCHAR(10),");
-        sql.append(FIELD_TITLE).append(" VARCHAR(18),");
-        sql.append(FIELD_CONTENT).append(" text )");
+        try {
 
-        //Recuperando comando sql gerado
-        String sqlCommand = sql.toString();
+            //Criando String de  Criação do Banco
+            StringBuilder sql = new StringBuilder();
+            sql.append("CREATE TABLE IF NOT EXISTS ").append(DEFAULT_TABLE).append("( ");
+            sql.append(FIELD_ID).append(" integer primary key autoincrement,");
+            sql.append(FIELD_DATE).append(" VARCHAR(10),");
+            sql.append(FIELD_TITLE).append(" VARCHAR(18),");
+            sql.append(FIELD_CONTENT).append(" text )");
 
-        //Criando a tabela
-        sqLiteDatabase.execSQL(sqlCommand);
+            //Recuperando comando sql gerado
+            String sqlCommand = sql.toString();
+
+            //Criando a tabela
+            sqLiteDatabase.execSQL(sqlCommand);
+
+        }
+        catch (Exception e) {
+
+            //Registrando Erro Capturado
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DEFAULT_TABLE);
-        onCreate(sqLiteDatabase);
+        try {
+
+            //Removendo tabela pois versão do app mudou
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DEFAULT_TABLE);
+            onCreate(sqLiteDatabase);
+
+        }
+        catch (Exception e) {
+
+            //Regitrando erro encontrado
+            e.printStackTrace();
+        }
+
+
     }
 
 }

@@ -9,12 +9,16 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.mazurco066.notepad.R;
+import com.mazurco066.notepad.dao.NoteDAO;
 
 public class MainActivity extends AppCompatActivity {
 
     //Definindo os Componentes
     private Toolbar toolbar;
     private ListView listView;
+
+    //Definindo Atributos
+    private NoteDAO dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
         //Instanciando os Componentes
         toolbar = findViewById(R.id.mainToolbar);
         listView = findViewById(R.id.noteListView);
+
+        //Instanciando Atributos
+        NoteDAO dao = new NoteDAO(getApplicationContext());
 
         //Definindo Toolbar a ser usada na activity
         this.setSupportActionBar(toolbar);
@@ -52,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
             //Criar nova nota
             case R.id.action_write:
+                writeNote();
                 break;
 
             //Sair do App
@@ -63,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
 
         //Retornando retorno padrão do método implementado na superclasse
         return super.onOptionsItemSelected(item);
+
+    }
+
+    //Método que será responsávelpore xecutar as ações de recuperar dados de uma nota
+    private void writeNote() {
 
     }
 

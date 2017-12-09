@@ -6,5 +6,7 @@
     <color name="colorAccent">#263238</color>
 
     <color name="appBackground">#616161</color>
+    <color name="noteBackground">#70BDBDBD</color>
+    <color name="noteBackgroundPure">#BDBDBD</color>
 
 </resources>
