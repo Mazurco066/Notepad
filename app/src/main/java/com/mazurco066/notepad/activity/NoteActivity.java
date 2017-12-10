@@ -1,6 +1,7 @@
 package com.mazurco066.notepad.activity;
 
-import android.content.Intent;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,7 +16,6 @@ import com.mazurco066.notepad.dao.NoteDAO;
 import com.mazurco066.notepad.model.Note;
 import com.mazurco066.notepad.util.DatabaseCreator;
 
-import java.util.List;
 
 public class NoteActivity extends AppCompatActivity {
 
@@ -138,12 +138,25 @@ public class NoteActivity extends AppCompatActivity {
 
                     //Retornando mensagem de erro ao criar nota para usuário
                     Toast.makeText(getApplicationContext(), "Ops... an error occurred! Try again!", Toast.LENGTH_SHORT).show();
+
                 }
 
             }
             else {
 
                 //Atualizando a existente
+                if (dao.editNote(note)) {
+
+                    //Retornando mensagem de sucesso ao editar nota para usuário
+                    Toast.makeText(getApplicationContext(), "Note successfully updated!", Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+
+                    //Retornando mensagem de erro ao criar nota para usuário
+                    Toast.makeText(getApplicationContext(), "Ops... an error occurred! Try again!", Toast.LENGTH_SHORT).show();
+
+                }
 
             }
 
@@ -162,12 +175,65 @@ public class NoteActivity extends AppCompatActivity {
         //Verificando se o usuário esta tentando deletar uma nota que não existe
         if (note.getId() != -1) {
 
+            //Confirmando exclusão da nota
+            confirmDelete(note.getId());
+
+            //Retomando a activity principal
+            finish();
+
         }
         else {
 
             //Retornando alerta ao usuário
             Toast.makeText(getApplicationContext(), "You cannot delete a note that doesnt exists!!", Toast.LENGTH_SHORT).show();
         }
+
+    }
+
+    //Método para confirmar exclusão de uma nota
+    private void confirmDelete(final int id) {
+
+        //Instanciando criador de alert dialog
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+        //Configurando alert dialog
+        alertDialog.setTitle("Delete Confirmation");
+        alertDialog.setMessage("Are you sure you want to delete this note?");
+        alertDialog.setCancelable(false);
+
+        alertDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                if (dao.deleteNote(id)) {
+
+                    //Retornando mensagem de sucesso ao usuário
+                    Toast.makeText(getApplicationContext(), "Note successfully deleted!", Toast.LENGTH_SHORT).show();
+
+                    //Atualizando Lista
+                    onResume();
+
+                } else {
+
+                    //Retornando mensagem de erro ao criar nota para usuário
+                    Toast.makeText(getApplicationContext(), "Ops... an error occurred! Try again!", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+
+        //Adicionando botões negativo e positivo para alertdialog
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                //Nada Acontece....
+            }
+        });
+
+        //Criando e mostrando dialog
+        alertDialog.create();
+        alertDialog.show();
 
     }
 

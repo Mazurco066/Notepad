@@ -1,12 +1,16 @@
 package com.mazurco066.notepad.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -51,6 +55,48 @@ public class MainActivity extends AppCompatActivity {
         //Definindo Toolbar a ser usada na activity
         this.setSupportActionBar(toolbar);
 
+        //Ouvindo eventos de clicar em uma nota
+        this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                //Instanciando nota
+                Note note = notes.get(i);
+
+                //Iniciando Activity de Edição de nota
+                openNoteActivity(note);
+
+            }
+        });
+
+        //Ouvindo eventos de segurar click em uma nota
+        this.listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                //Confirmando exclusão da nota selecionada com usuário
+                confirmDelete(notes.get(i).getId());
+
+                //Retornando
+                return true;
+            }
+        });
+
+    }
+
+    //Sobrescrevendo método de ao retomar a activity
+    @Override
+    protected void onResume() {
+
+        //Implementação padrão do método de onResume do ciclo de vida
+        super.onResume();
+
+        //Atualizando lista de notas
+        this.notes = dao.readAllNotes();
+        this.adapter = new NoteAdapter(getApplicationContext(), notes);
+        this.listView.setAdapter(adapter);
+        //this.adapter.notifyDataSetChanged();
+
     }
 
     //Sobrescrevendo método de inflar menu
@@ -64,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //sobrescrevento método de capturar ações feitas na toolbar
+    //Sobrescrevento método de capturar ações feitas na toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -112,6 +158,54 @@ public class MainActivity extends AppCompatActivity {
 
         //Iniciando nova activity
         startActivity(noteActivity);
+
+    }
+
+    //Método para confirmar exclusão de uma nota
+    private void confirmDelete(final int id) {
+
+        //Instanciando criador de alert dialog
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+        //Configurando alert dialog
+        alertDialog.setTitle("Delete Confirmation");
+        alertDialog.setMessage("Are you sure you want to delete this note?");
+        alertDialog.setCancelable(false);
+
+        alertDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                if (dao.deleteNote(id)) {
+
+                    //Retornando mensagem de sucesso ao usuário
+                    Toast.makeText(getApplicationContext(), "Note successfully deleted!", Toast.LENGTH_SHORT).show();
+
+                    //Atualizando Lista
+                    onResume();
+
+                }
+                else {
+
+                    //Retornando mensagem de erro ao criar nota para usuário
+                    Toast.makeText(getApplicationContext(), "Ops... an error occurred! Try again!", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+
+        //Adicionando botões negativo e positivo para alertdialog
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                //Nada Acontece....
+            }
+        });
+
+        //Criando e mostrando dialog
+        alertDialog.create();
+        alertDialog.show();
 
     }
 

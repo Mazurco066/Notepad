@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 import com.mazurco066.notepad.model.Note;
 import com.mazurco066.notepad.util.DatabaseCreator;
@@ -16,14 +15,13 @@ public class NoteDAO {
     //Atributos
     private SQLiteDatabase db;
     private DatabaseCreator database;
-    private Context context;
 
     //Construtor Padrão
     public NoteDAO(Context context) {
 
         //Instanciando Banco de dados
         database = new DatabaseCreator(context);
-        this.context = context;
+
     }
 
     //Métodos de CRUD
@@ -55,6 +53,89 @@ public class NoteDAO {
             //Registrando erro ocorrido
             e.printStackTrace();
             return false;
+        }
+
+    }
+
+    //Método para alterar nota
+    public boolean editNote(Note note) {
+
+        try {
+
+            //Definindo variáveeis necessárias
+            ContentValues values;
+            String condition;
+            long result;
+
+            //Recuperando instancia de escrita do banco
+            db = database.getWritableDatabase();
+
+            //Definindo condição para alteração dos dados
+            condition = DatabaseCreator.FIELD_ID + "=" + note.getId();
+
+            //Definindo novos valores para a nota selecionada
+            values = new ContentValues();
+            values.put(DatabaseCreator.FIELD_TITLE, note.getTitle());
+            values.put(DatabaseCreator.FIELD_CONTENT, note.getContent());
+
+            result = db.update(
+                    DatabaseCreator.DEFAULT_TABLE,
+                    values,
+                    condition,
+                    null
+            );
+
+            //Fechando conexão com banco
+            db.close();
+
+            //Retornando sucesso ou fracasso
+            if (result == -1) return false; else return true;
+
+        }
+        catch (Exception e) {
+
+            //Registrando erro encontrado
+            e.printStackTrace();
+            return false;
+
+        }
+
+    }
+
+    //Méodo para deletar uma nota
+    public boolean deleteNote(int id) {
+
+        try {
+
+            //Definindo condições necessárias
+            String condition = DatabaseCreator.FIELD_ID + "=" + id;
+
+            //Recuperando instancia do banco
+            db = database.getReadableDatabase();
+
+            //Removendo a nota
+            long result = db.delete(
+                    DatabaseCreator.DEFAULT_TABLE,
+                    condition,
+                    null
+            );
+
+            //Fechando conexão com banco
+            db.close();
+
+            //Retornando sucesso
+            if (result == -1) return false; else return true;
+
+        }
+        catch (Exception e) {
+
+            //Registrandoerro ocorrido
+            e.printStackTrace();
+            return false;
+        }
+        finally {
+
+            db.close();
         }
 
     }
