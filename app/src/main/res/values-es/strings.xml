@@ -7,6 +7,7 @@
     <string name="action_save">Guardar Nota</string>
     <string name="action_delete">Borrar Nota</string>
     <string name="action_back">Cancelar</string>
+    <string name="action_settings">Configuración</string>
 
     <string name="edit_title_hint">Título</string>
     <string name="edit_content_hint">Contenido</string>
