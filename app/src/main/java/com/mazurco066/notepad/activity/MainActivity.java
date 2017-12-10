@@ -48,9 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Instanciando Atributos
         this.dao = new NoteDAO(getApplicationContext());
-        this.notes = dao.readAllNotes();
-        this.adapter = new NoteAdapter(getApplicationContext(), notes);
-        this.listView.setAdapter(adapter);
 
         //Definindo Toolbar a ser usada na activity
         this.setSupportActionBar(toolbar);
@@ -91,11 +88,15 @@ public class MainActivity extends AppCompatActivity {
         //Implementação padrão do método de onResume do ciclo de vida
         super.onResume();
 
-        //Atualizando lista de notas
+        //Verificando se há itens na lista
         this.notes = dao.readAllNotes();
-        this.adapter = new NoteAdapter(getApplicationContext(), notes);
-        this.listView.setAdapter(adapter);
-        //this.adapter.notifyDataSetChanged();
+        if (notes != null) {
+
+            //Atualizando lista de notas
+            this.adapter = new NoteAdapter(getApplicationContext(), notes);
+            this.listView.setAdapter(adapter);
+
+        }
 
     }
 
