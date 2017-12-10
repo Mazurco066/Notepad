@@ -2,5 +2,6 @@
 <resources>
 
     <dimen name="listMargin">15dp</dimen>
+    <dimen name="note_text_size">20sp</dimen>
 
 </resources>

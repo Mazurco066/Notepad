@@ -7,13 +7,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
+import com.mazurco066.notepad.adapter.NoteAdapter;
 import com.mazurco066.notepad.dao.NoteDAO;
 import com.mazurco066.notepad.model.Note;
 import com.mazurco066.notepad.util.DatabaseCreator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
 
     //Definindo Atributos
+    private ArrayAdapter<Note> adapter;
     private List<Note> notes;
     private NoteDAO dao;
 
@@ -38,7 +43,10 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.noteListView);
 
         //Instanciando Atributos
-        NoteDAO dao = new NoteDAO(getApplicationContext());
+        this.dao = new NoteDAO(getApplicationContext());
+        this.notes = dao.readAllNotes();
+        this.adapter = new NoteAdapter(getApplicationContext(), notes);
+        this.listView.setAdapter(adapter);
 
         //Definindo Toolbar a ser usada na activity
         this.setSupportActionBar(toolbar);
@@ -96,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     private void openNoteActivity(Note note) {
 
         //Instanciando intent para ir para prox activity
-        Intent noteActivity = new Intent(getApplicationContext(), NoteActivity.class);
+        Intent noteActivity = new Intent(MainActivity.this, NoteActivity.class);
         noteActivity.putExtra(DatabaseCreator.FIELD_ID, note.getId());
         noteActivity.putExtra(DatabaseCreator.FIELD_DATE, note.getDate());
         noteActivity.putExtra(DatabaseCreator.FIELD_TITLE, note.getTitle());

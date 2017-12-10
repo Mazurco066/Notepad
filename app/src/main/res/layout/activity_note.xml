@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,9 +25,10 @@
         android:hint="@string/edit_title_hint" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editNote"
         android:layout_below="@+id/editTitle"
         android:background="@drawable/list_background"
+        android:textSize="@dimen/note_text_size"
         android:gravity="start"
         android:paddingLeft="15dp"
         android:paddingStart="15dp"

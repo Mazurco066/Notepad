@@ -1,5 +1,6 @@
 package com.mazurco066.notepad.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Note {
@@ -7,7 +8,7 @@ public class Note {
     //Atributos
     private int id;
     private String title;
-    private Date date;
+    private String date;
     private String content;
 
     //Construtor padrão
@@ -15,7 +16,9 @@ public class Note {
 
         this.title = "";
         this.content = "";
-        this.date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy ");
+        Date now = new Date();
+        this.date = format.format(now);
 
     }
 
@@ -44,11 +47,11 @@ public class Note {
         this.content = content;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
