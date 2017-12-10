@@ -1,0 +1,14 @@
+<resources>
+
+    <string name="app_name">Notepad</string>
+
+    <string name="action_write">Write Note</string>
+    <string name="action_exit">Exit App</string>
+    <string name="action_save">Save Note</string>
+    <string name="action_delete">Delete Note</string>
+    <string name="action_back">Cancel</string>
+
+    <string name="edit_title_hint">Title</string>
+    <string name="edit_content_hint">Content</string>
+
+</resources>
