@@ -1,5 +1,7 @@
 package com.mazurco066.notepad.activity;
 
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,11 +10,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.mazurco066.notepad.R;
+import com.mazurco066.notepad.adapter.TabAdapter;
+import com.mazurco066.notepad.util.SlidingTabLayout;
 
 public class SettingsActivity extends AppCompatActivity {
 
     //Componentes
     private Toolbar toolbar;
+    private ViewPager viewPager;
+    private SlidingTabLayout slidingTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +29,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         //Instanciando componentes
         this.toolbar = findViewById(R.id.mainToolbar);
+        this.viewPager = findViewById(R.id.mainViewPager);
+        this.slidingTabLayout = findViewById(R.id.slidingTab);
 
         //Recuperando título para toolbar
         String title = getResources().getString(R.string.action_settings);
@@ -32,6 +40,16 @@ public class SettingsActivity extends AppCompatActivity {
         toolbar.setTitle(title);
         this.setSupportActionBar(toolbar);
 
+        //Configurando Adapter, ViewPager
+        TabAdapter tabAdapter = new TabAdapter(getSupportFragmentManager(),getApplicationContext());
+        viewPager.setAdapter(tabAdapter);
+
+        //Configurando o SlidingTab
+        slidingTabLayout.setCustomTabView(R.layout.tab_view, R.id.viewTextTab);
+        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.colorAccent));
+        slidingTabLayout.setViewPager(viewPager);
+        
     }
 
     //sobrescrevendo método de inflar menu
