@@ -32,6 +32,8 @@ public class SettingsActivity extends AppCompatActivity {
         toolbar.setTitle(title);
         this.setSupportActionBar(toolbar);
 
+
+
     }
 
     //sobrescrevendo método de inflar menu
@@ -55,7 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
             case R.id.action_back:
                 finish();
                 break;
-            
+
         }
 
         //Retorno pardão do método
