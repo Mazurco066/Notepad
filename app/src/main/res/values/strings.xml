@@ -19,4 +19,7 @@
     <string name="alert_inexistent_note">You cannot delete a note that doesn\'t exists!</string>
     <string name="alert_empty_fields">Empty Fields!</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

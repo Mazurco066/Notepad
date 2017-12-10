@@ -32,8 +32,6 @@ public class SettingsActivity extends AppCompatActivity {
         toolbar.setTitle(title);
         this.setSupportActionBar(toolbar);
 
-
-
     }
 
     //sobrescrevendo método de inflar menu
