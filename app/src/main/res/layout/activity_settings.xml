@@ -10,4 +10,10 @@
 
     <include layout="@layout/toolbar" android:id="@+id/mainToolbar" />
 
+    <com.mazurco066.notepad.util.SlidingTabLayout
+        android:id="@+id/slidingTab"
+        android:background="@color/appBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </RelativeLayout>
