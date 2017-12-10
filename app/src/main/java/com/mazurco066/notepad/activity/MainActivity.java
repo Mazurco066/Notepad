@@ -177,10 +177,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
+                //Recuperando mensagens
+                String sucess = getResources().getString(R.string.alert_delete_note_sucess);
+                String failure = getResources().getString(R.string.alert_failure);
+
                 if (dao.deleteNote(id)) {
 
                     //Retornando mensagem de sucesso ao usuário
-                    Toast.makeText(getApplicationContext(), "Note successfully deleted!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), sucess, Toast.LENGTH_SHORT).show();
 
                     //Atualizando Lista
                     onResume();
@@ -189,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
                 else {
 
                     //Retornando mensagem de erro ao criar nota para usuário
-                    Toast.makeText(getApplicationContext(), "Ops... an error occurred! Try again!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), failure, Toast.LENGTH_SHORT).show();
 
                 }
             }

@@ -112,6 +112,12 @@ public class NoteActivity extends AppCompatActivity {
     //Método para executar ações do botão salvar nota
     private void saveNote() {
 
+        //Recuperando mensagens a serem exibidas
+        String emptyMsg = getResources().getString(R.string.alert_empty_fields);
+        String sucessCreatedMsg = getResources().getString(R.string.alert_create_note_sucess);
+        String sucessUpdatedMsg = getResources().getString(R.string.alert_save_note_sucess);
+        String failure = getResources().getString(R.string.alert_failure);
+
         //Verificando se os Campos não estão Vazios
         if (isValidFields()) {
 
@@ -128,7 +134,7 @@ public class NoteActivity extends AppCompatActivity {
                 if (dao.insertNote(note)) {
 
                     //Retornando mensagem de sucesso ao criar nota para usuário
-                    Toast.makeText(getApplicationContext(), "Note successfully created!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), sucessCreatedMsg, Toast.LENGTH_SHORT).show();
 
                     //Finalizando a Activity
                     finish();
@@ -137,7 +143,7 @@ public class NoteActivity extends AppCompatActivity {
                 else {
 
                     //Retornando mensagem de erro ao criar nota para usuário
-                    Toast.makeText(getApplicationContext(), "Ops... an error occurred! Try again!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), failure, Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -148,13 +154,13 @@ public class NoteActivity extends AppCompatActivity {
                 if (dao.editNote(note)) {
 
                     //Retornando mensagem de sucesso ao editar nota para usuário
-                    Toast.makeText(getApplicationContext(), "Note successfully updated!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), sucessUpdatedMsg, Toast.LENGTH_SHORT).show();
 
                 }
                 else {
 
                     //Retornando mensagem de erro ao criar nota para usuário
-                    Toast.makeText(getApplicationContext(), "Ops... an error occurred! Try again!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), failure, Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -164,7 +170,7 @@ public class NoteActivity extends AppCompatActivity {
         else {
 
             //Retornando alerta ao usuário
-            Toast.makeText(getApplicationContext(), "Empty Fields!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), emptyMsg, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -184,8 +190,11 @@ public class NoteActivity extends AppCompatActivity {
         }
         else {
 
+            //Recuperando mensagem
+            String msg = getResources().getString(R.string.alert_inexistent_note);
+
             //Retornando alerta ao usuário
-            Toast.makeText(getApplicationContext(), "You cannot delete a note that doesnt exists!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -205,10 +214,14 @@ public class NoteActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
+                //Recuperando mensagens
+                String sucess = getResources().getString(R.string.alert_delete_note_sucess);
+                String failure = getResources().getString(R.string.alert_failure);
+
                 if (dao.deleteNote(id)) {
 
                     //Retornando mensagem de sucesso ao usuário
-                    Toast.makeText(getApplicationContext(), "Note successfully deleted!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), sucess, Toast.LENGTH_SHORT).show();
 
                     //Atualizando Lista
                     onResume();
@@ -216,7 +229,7 @@ public class NoteActivity extends AppCompatActivity {
                 } else {
 
                     //Retornando mensagem de erro ao criar nota para usuário
-                    Toast.makeText(getApplicationContext(), "Ops... an error occurred! Try again!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), failure, Toast.LENGTH_SHORT).show();
 
                 }
             }

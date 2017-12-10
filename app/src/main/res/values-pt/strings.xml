@@ -11,4 +11,11 @@
     <string name="edit_title_hint">Título</string>
     <string name="edit_content_hint">Conteúdo</string>
 
+    <string name="alert_create_note_sucess">Nota criada com sucesso!</string>
+    <string name="alert_save_note_sucess">Nota atualizada com sucesso!</string>
+    <string name="alert_delete_note_sucess">Nota deletada com sucesso!</string>
+    <string name="alert_failure">Ops, ocorreu um erro! Tente novamente!</string>
+    <string name="alert_inexistent_note">Você não pode deletar uma nota que ainda não foi criada!</string>
+    <string name="alert_empty_fields">Há campos vazios!</string>
+
 </resources>
