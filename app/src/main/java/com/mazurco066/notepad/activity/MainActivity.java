@@ -123,6 +123,11 @@ public class MainActivity extends AppCompatActivity {
                 writeNote();
                 break;
 
+            //Configurações do app
+            case R.id.action_settings:
+                openSettingsActivity();
+                break;
+
             //Sair do App
             case R.id.action_exit:
                 finish();
@@ -160,6 +165,14 @@ public class MainActivity extends AppCompatActivity {
         //Iniciando nova activity
         startActivity(noteActivity);
 
+    }
+
+    //Método para abrir activity de configurações
+    private void openSettingsActivity() {
+
+        //Instanciando intent e indo para settings
+        Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(settings);
     }
 
     //Método para confirmar exclusão de uma nota
