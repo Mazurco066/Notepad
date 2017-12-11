@@ -20,6 +20,7 @@ import com.mazurco066.notepad.adapter.NoteAdapter;
 import com.mazurco066.notepad.dao.NoteDAO;
 import com.mazurco066.notepad.model.Note;
 import com.mazurco066.notepad.util.DatabaseCreator;
+import com.mazurco066.notepad.util.Preferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
 
     //Definindo Atributos
+    private Preferences preferences;
     private ArrayAdapter<Note> adapter;
     private List<Note> notes;
     private NoteDAO dao;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Instanciando Atributos
         this.dao = new NoteDAO(getApplicationContext());
+        preferences = new Preferences(getApplicationContext());
 
         //Definindo Toolbar a ser usada na activity
         this.setSupportActionBar(toolbar);

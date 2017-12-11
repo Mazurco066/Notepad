@@ -3,6 +3,8 @@ package com.mazurco066.notepad.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.mazurco066.notepad.R;
+
 public class Preferences {
 
     //Atributos
@@ -14,6 +16,7 @@ public class Preferences {
 
     //Keys
     private final String LANGUAGE = "app-language";
+    private final String THEME = "app-theme";
 
     //Construtor padrão
     public Preferences (Context context) {
@@ -32,11 +35,25 @@ public class Preferences {
         editor.commit();
     }
 
+    //Método para salvar tema ativo nas preferencias
+    public void saveTheme(int theme) {
+
+        //Colocando tema nas preferencias do app
+        editor.putInt(THEME, theme);
+    }
+
     //Método para recuperar idioma salvo
     public String getLanguage() {
 
         //Retornando idioma salvo
         return sharedPreferences.getString(LANGUAGE, null);
+    }
+
+    //Método para recuperar tema ativo nas preferencias
+    public int getTheme() {
+
+        //Retornando Tema ativo
+        return sharedPreferences.getInt(THEME, R.style.DarkTheme);
     }
 
 }
