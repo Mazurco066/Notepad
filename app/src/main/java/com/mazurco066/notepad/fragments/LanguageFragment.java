@@ -30,9 +30,9 @@ public class LanguageFragment extends Fragment {
     private Button btnChange;
 
     //Atributos
-    Locale myLocale;
-    Preferences preferences;
-    Context context;
+    private Locale myLocale;
+    private Preferences preferences;
+    private Context context;
 
     public LanguageFragment() {
         // Required empty public constructor

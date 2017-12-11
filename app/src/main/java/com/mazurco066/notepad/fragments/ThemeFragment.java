@@ -8,9 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mazurco066.notepad.R;
+import com.mazurco066.notepad.util.Preferences;
 
 public class ThemeFragment extends Fragment {
 
+    //Atributos
+    private Preferences preferences;
 
     public ThemeFragment() {
         // Required empty public constructor
@@ -20,7 +23,15 @@ public class ThemeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_theme, container, false);
+        View view = inflater.inflate(R.layout.fragment_theme, container, false);
+
+        // Instanciando Componentes
+
+        // Instanciando Atributos
+
+        // Retornando view
+        return view;
+
     }
 
 }

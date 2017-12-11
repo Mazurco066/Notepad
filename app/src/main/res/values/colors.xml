@@ -1,12 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Cores Gerais -->
+    <color name="appBackground">#616161</color>
+    <color name="noteBackground">#70BDBDBD</color>
+    <color name="noteBackgroundPure">#BDBDBD</color>
+
+    <!-- Cores para o tema Dark -->
     <color name="colorPrimary">#282828</color>
     <color name="colorPrimaryDark">#212121</color>
     <color name="colorAccent">#FFFFFF</color>
 
-    <color name="appBackground">#616161</color>
-    <color name="noteBackground">#70BDBDBD</color>
-    <color name="noteBackgroundPure">#BDBDBD</color>
+    <color name="dark_text_color">#FFFFFF</color>
+    <color name="dark_text_color_aux">#000000</color>
+    <color name="dark_text_color_secundary">#FFFFFF</color>
+
+    <color name="dark_appMenuBackground">#424242</color>
+    <color name="dark_appBackground">#616161</color>
+
+    <!-- Cores para o tema Light -->
+    <color name="lightColorPrimary">#9E9E9E</color>
+    <color name="lightColorPrimaryDark">#BDBDBD</color>
+    <color name="lightColorAccent">#000000</color>
+
+    <color name="light_text_color">#000000</color>
+    <color name="light_text_color_aux">#40000000</color>
+    <color name="light_text_color_secundary">#FFFFFF</color>
+
+    <color name="light_appMenuBackground">#FFFFFF</color>
+    <color name="light_appBackground">#FFFFFF</color>
+
+    <!-- Cores para o tema Blue -->
+    <color name="blueColorPrimary">#283593</color>
+    <color name="blueColorPrimaryDark">#1A237E</color>
+    <color name="blueColorAccent">#FFFFFF</color>
+
+    <color name="blue_text_color">#FFFFFF</color>
+    <color name="blue_text_color_aux">#000000</color>
+    <color name="blue_text_color_secundary">#FFFFFF</color>
+
+    <color name="blue_appMenuBackground">#303F9F</color>
+    <color name="blue_appBackground">#5C6BC0</color>
+
+    <!-- Cores para o tema Red -->
+    <color name="redColorPrimary">#c62828</color>
+    <color name="redColorPrimaryDark">#b71c1c</color>
+    <color name="redColorAccent">#FFFFFF</color>
+
+    <color name="red_text_color">#FFFFFF</color>
+    <color name="red_text_color_aux">#000000</color>
+    <color name="red_text_color_secundary">#FFFFFF</color>
+
+    <color name="red_appMenuBackground">#d32f2f</color>
+    <color name="red_appBackground">#ef5350</color>
 
 </resources>

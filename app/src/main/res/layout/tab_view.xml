@@ -9,7 +9,7 @@
     
     <TextView
         android:id="@+id/viewTextTab"
-        android:textColor="@android:color/white"
+        android:textColor="@color/dark_text_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

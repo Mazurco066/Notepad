@@ -16,8 +16,11 @@
     <string name="edit_content_hint">Content</string>
 
     <string name="button_change_language">Change Language</string>
+    <string name="button_change_theme">Change Theme</string>
 
     <string name="label_language">Language Settings</string>
+    <string name="label_theme">Theme Settings</string>
+    <string name="label_created">Created at</string>
 
     <string name="alert_create_note_sucess">Note successfully created!</string>
     <string name="alert_save_note_sucess">Note successfully updated!</string>
@@ -31,5 +34,10 @@
     <string name="language_pt">Portuguese</string>
     <string name="language_en">English</string>
     <string name="language_es">Spanish</string>
+
+    <string name="theme_dark">Dark Theme</string>
+    <string name="theme_light">Light Theme</string>
+    <string name="theme_blue">Blue Theme</string>
+    <string name="theme_red">Red Theme</string>
 
 </resources>

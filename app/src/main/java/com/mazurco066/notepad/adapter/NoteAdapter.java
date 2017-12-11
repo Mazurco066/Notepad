@@ -60,7 +60,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 
         //Definindo Strings para serem exibidas
         String title = note.getTitle();
-        String date = "Created at " + note.getDate();
+        String date = context.getResources().getString(R.string.label_created) + " " + note.getDate();
 
         //Exibindo dados na tela
         editNoteTitle.setText(title);

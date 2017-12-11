@@ -16,8 +16,11 @@
     <string name="edit_content_hint">Conteúdo</string>
 
     <string name="button_change_language">Alterar Idioma</string>
+    <string name="button_change_theme">Alterar Tema</string>
 
     <string name="label_language">Configurações de Idioma</string>
+    <string name="label_theme">Configurações de Tema</string>
+    <string name="label_created">Criada em</string>
 
     <string name="alert_create_note_sucess">Nota criada com sucesso!</string>
     <string name="alert_save_note_sucess">Nota atualizada com sucesso!</string>
@@ -31,5 +34,10 @@
     <string name="language_pt">Português</string>
     <string name="language_en">Inglês</string>
     <string name="language_es">Espanhol</string>
+
+    <string name="theme_dark">Tema Escuro</string>
+    <string name="theme_light">Tema Claro</string>
+    <string name="theme_blue">Tema Azul</string>
+    <string name="theme_red">Tema Vermelho</string>
 
 </resources>

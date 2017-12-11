@@ -1,14 +1,71 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="DarkTheme" parent="Theme.AppCompat.NoActionBar">
+
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="android:windowBackground">@color/colorPrimary</item>
-        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:colorBackground">@color/dark_appMenuBackground</item>
+        <item name="android:windowBackground">@color/dark_appBackground</item>
+
+        <item name="android:textColor">@color/dark_text_color</item>
+        <item name="android:textColorSecondary">@color/dark_text_color_secundary</item>
+        <item name="android:textColorTertiary">@color/dark_text_color_aux</item>
+
+    </style>
+
+    <!-- Light application theme -->
+    <style name="LightTheme" parent="Theme.AppCompat.NoActionBar">
+
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/lightColorPrimary</item>
+        <item name="colorPrimaryDark">@color/lightColorPrimaryDark</item>
+        <item name="colorAccent">@color/lightColorAccent</item>
+
+        <item name="android:colorBackground">@color/light_appMenuBackground</item>
+        <item name="android:windowBackground">@color/light_appBackground</item>
+
+        <item name="android:textColor">@color/light_text_color</item>
+        <item name="android:textColorSecondary">@color/light_text_color_secundary</item>
+        <item name="android:textColorTertiary">@color/light_text_color_aux</item>
+
+    </style>
+
+    <!-- Blue application theme -->
+    <style name="BlueTheme" parent="Theme.AppCompat.NoActionBar">
+
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/blueColorPrimary</item>
+        <item name="colorPrimaryDark">@color/blueColorPrimaryDark</item>
+        <item name="colorAccent">@color/blueColorAccent</item>
+
+        <item name="android:colorBackground">@color/blue_appMenuBackground</item>
+        <item name="android:windowBackground">@color/blue_appBackground</item>
+
+        <item name="android:textColor">@color/blue_text_color</item>
+        <item name="android:textColorSecondary">@color/blue_text_color_secundary</item>
+        <item name="android:textColorTertiary">@color/blue_text_color_aux</item>
+
+    </style>
+
+    <!-- Red application theme -->
+    <style name="RedTheme" parent="Theme.AppCompat.NoActionBar">
+
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/redColorPrimary</item>
+        <item name="colorPrimaryDark">@color/redColorPrimaryDark</item>
+        <item name="colorAccent">@color/redColorAccent</item>
+
+        <item name="android:colorBackground">@color/red_appMenuBackground</item>
+        <item name="android:windowBackground">@color/red_appBackground</item>
+
+        <item name="android:textColor">@color/red_text_color</item>
+        <item name="android:textColorSecondary">@color/red_text_color_secundary</item>
+        <item name="android:textColorTertiary">@color/red_text_color_aux</item>
+
     </style>
 
 </resources>

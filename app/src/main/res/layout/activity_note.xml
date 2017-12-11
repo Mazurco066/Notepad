@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appBackground"
+    android:background="?android:windowBackground"
     tools:context="com.mazurco066.notepad.activity.NoteActivity">
 
     <include layout="@layout/toolbar" android:id="@+id/mainToolbar"/>
 
     <EditText
         android:id="@+id/editTitle"
-        android:textColor="@android:color/white"
+        android:textColor="?android:textColor"
+        android:textColorHint="?android:textColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/mainToolbar"
@@ -26,6 +27,9 @@
 
     <EditText
         android:id="@+id/editNote"
+        android:textColor="?android:textColor"
+        android:textColorHint="?android:textColor"
+        android:hint="@string/edit_content_hint"
         android:layout_below="@+id/editTitle"
         android:background="@drawable/list_background"
         android:textSize="@dimen/note_text_size"

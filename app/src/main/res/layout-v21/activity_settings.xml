@@ -20,7 +20,7 @@
 
     <com.mazurco066.notepad.util.SlidingTabLayout
         android:id="@+id/slidingTab"
-        android:background="@color/colorPrimary"
+        android:background="?android:colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="8dp"

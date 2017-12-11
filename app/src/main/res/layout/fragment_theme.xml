@@ -2,10 +2,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appBackground"
+    android:background="?android:windowBackground"
     tools:context="com.mazurco066.notepad.fragments.ThemeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:id="@+id/themeScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/relLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/listMargin"
+            android:layout_marginEnd="@dimen/listMargin"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/textThemeLabel"
+                android:textColor="?android:textColor"
+                android:textSize="@dimen/note_text_size"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/label_theme"/>
+            
+            <RadioGroup
+                android:id="@+id/themeRadioGroup"
+                android:background="@drawable/radio_group_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textThemeLabel"
+                android:padding="10dp"
+                android:layout_margin="@dimen/listMargin">
+                
+                <RadioButton
+                    android:id="@+id/darkRadioBtn"
+                    android:textColor="?android:textColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/theme_dark"/>
+
+                <RadioButton
+                    android:id="@+id/lightRadioBtn"
+                    android:textColor="?android:textColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/theme_light"/>
+
+                <RadioButton
+                    android:id="@+id/blueRadioBtn"
+                    android:textColor="?android:textColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/theme_blue"/>
+
+                <RadioButton
+                    android:id="@+id/redRadioBtn"
+                    android:textColor="?android:textColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/theme_red"/>
+
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/btnChangeTheme"
+                android:background="@drawable/button_background"
+                android:layout_below="@id/themeRadioGroup"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="@dimen/listMargin"
+                android:layout_marginEnd="@dimen/listMargin"
+                android:text="@string/button_change_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 
 </FrameLayout>
