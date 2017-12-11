@@ -212,6 +212,7 @@ public class LanguageFragment extends Fragment {
         res.updateConfiguration(conf, dm);
         Intent refresh = new Intent(context.getApplicationContext(), SettingsActivity.class);
         startActivity(refresh);
+        getActivity().finish();
 
     }
 

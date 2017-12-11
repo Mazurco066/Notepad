@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.util.Preferences;
@@ -18,8 +19,6 @@ public class ThemeFragment extends Fragment {
 
     //Componentes
     private RadioGroup themeGroup;
-    private RadioButton radioButton;
-    private Button btnChangeTheme;
 
     //Atributos
     private Preferences preferences;
@@ -37,11 +36,14 @@ public class ThemeFragment extends Fragment {
 
         // Instanciando Componentes
         themeGroup = view.findViewById(R.id.themeRadioGroup);
-        btnChangeTheme = view.findViewById(R.id.btnChangeTheme);
+        Button btnChangeTheme = view.findViewById(R.id.btnChangeTheme);
 
         // Instanciando Atributos
         this.context = view.getContext();
         preferences = new Preferences(this.context);
+
+        //Declarando um radio button
+        RadioButton radioButton;
 
         //Verificando se usuário está com tema padrão ou personalizado
         if (preferences.getTheme() != R.style.DarkTheme) {
@@ -74,6 +76,9 @@ public class ThemeFragment extends Fragment {
             radioButton = view.findViewById(R.id.darkRadioBtn);
             radioButton.setChecked(true);
 
+            //Setando preferences caso não esteja setado
+            preferences.saveTheme(R.style.DarkTheme);
+
         }
 
         //Ouvindo Eventos do botão de alterar tema
@@ -81,9 +86,41 @@ public class ThemeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                setActiveTheme();
+                //Verificando qual botão está ativo
+                switch (themeGroup.getCheckedRadioButtonId()) {
+
+                    //Caso tema dark
+                    case R.id.darkRadioBtn:
+                        //Alterando tema nas preferencias
+                        preferences.saveTheme(R.style.DarkTheme);
+                        break;
+
+                    //Caso tema light
+                    case R.id.lightRadioBtn:
+                        //Alterando tema nas preferencias
+                        preferences.saveTheme(R.style.LightTheme);
+                        break;
+
+                    //Caso tema blue
+                    case R.id.blueRadioBtn:
+                        //Alterando tema nas preferencias
+                        preferences.saveTheme(R.style.BlueTheme);
+                        break;
+
+                    //Caso tema red
+                    case R.id.redRadioBtn:
+                        //Alterando tema nas preferencias
+                        preferences.saveTheme(R.style.RedTheme);
+                        break;
+
+                }
+
+                //Alterando o tema que está ativo no momento
+                //changeTheme();
+                Toast.makeText(getActivity(), "Theme: " + preferences.getTheme() + " ID: " + R.style.DarkTheme, Toast.LENGTH_SHORT).show();
 
             }
+
         });
 
         // Retornando view
@@ -91,18 +128,11 @@ public class ThemeFragment extends Fragment {
 
     }
 
-    //Método para recuperar tema que está ativo
-    private String getActiveTheme() {
+    //Método para alterar Tema
+    private void changeTheme() {
 
-        //Retornando nome do tema ativo
-        String theme = this.context.getTheme().toString();
-        return theme;
-    }
-
-    //Método para alterar tema do app
-    private void setActiveTheme() {
-
-        preferences.saveTheme(R.style.LightTheme);
+        //Alterando tema
+        this.context.setTheme(preferences.getTheme());
 
     }
 

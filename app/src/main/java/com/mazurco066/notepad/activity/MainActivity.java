@@ -52,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
         this.dao = new NoteDAO(getApplicationContext());
         preferences = new Preferences(getApplicationContext());
 
+        //Verificando tema
+        //if (preferences.getTheme() != R.style.DarkTheme) {
+
+        //    getApplicationContext().setTheme(preferences.getTheme());
+        //}
+
         //Definindo Toolbar a ser usada na activity
         this.setSupportActionBar(toolbar);
 

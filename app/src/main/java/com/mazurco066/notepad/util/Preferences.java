@@ -53,7 +53,7 @@ public class Preferences {
     public int getTheme() {
 
         //Retornando Tema ativo
-        return sharedPreferences.getInt(THEME, R.style.DarkTheme);
+        return sharedPreferences.getInt(THEME, R.style.LightTheme);
     }
 
 }
