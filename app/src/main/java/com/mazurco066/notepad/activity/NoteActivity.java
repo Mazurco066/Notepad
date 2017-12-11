@@ -56,8 +56,8 @@ public class NoteActivity extends AppCompatActivity {
         }
 
         //configurando qual título ira aparecer na Activity
-        String title = "New Note";
-        if (note.getId() != -1) title = "Edit Note";
+        String title = getResources().getString(R.string.activity_create_note);
+        if (note.getId() != -1) title = getResources().getString(R.string.activity_update_note);
 
         //Configurando a Toolbar
         toolbar.setTitle(title);

@@ -9,6 +9,9 @@
     <string name="action_back">Cancelar</string>
     <string name="action_settings">Configuración</string>
 
+    <string name="activity_create_note">Nueva Nota</string>
+    <string name="activity_update_note">Editar Nota</string>
+
     <string name="edit_title_hint">Título</string>
     <string name="edit_content_hint">Contenido</string>
 
@@ -22,6 +25,8 @@
     <string name="alert_failure">¡Ops, ocurrió un error! ¡Inténtalo de nuevo!</string>
     <string name="alert_inexistent_note">¡Usted no puede borrar una nota que todavía no se ha creado!</string>
     <string name="alert_empty_fields">¡Hay campos vacíos!</string>
+    <string name="alert_language_same">¡Usted ya está usando ese idioma!</string>
+    <string name="alert_unselected_language">¡Seleccione un idioma!</string>
 
     <string name="language_pt">Portugues</string>
     <string name="language_en">Inglés</string>
