@@ -115,9 +115,9 @@ public class ThemeFragment extends Fragment {
 
                 }
 
-                //Alterando o tema que está ativo no momento
-                //changeTheme();
-                Toast.makeText(getActivity(), "Theme: " + preferences.getTheme() + " ID: " + R.style.DarkTheme, Toast.LENGTH_SHORT).show();
+                //Retornando mensagem mandando usuário reiniciar o app para ver novo tema
+                String msg = context.getResources().getString(R.string.alert_theme_change_sucess);
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
 
             }
 
@@ -128,12 +128,5 @@ public class ThemeFragment extends Fragment {
 
     }
 
-    //Método para alterar Tema
-    private void changeTheme() {
-
-        //Alterando tema
-        this.context.setTheme(preferences.getTheme());
-
-    }
 
 }

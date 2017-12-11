@@ -22,6 +22,7 @@
     <string name="label_theme">Theme Settings</string>
     <string name="label_created">Created at</string>
 
+    <string name="alert_theme_change_sucess">Theme Successfully changed! Plase restart the app to get the theme fully working!</string>
     <string name="alert_create_note_sucess">Note successfully created!</string>
     <string name="alert_save_note_sucess">Note successfully updated!</string>
     <string name="alert_delete_note_sucess">Note successfully deleted!</string>

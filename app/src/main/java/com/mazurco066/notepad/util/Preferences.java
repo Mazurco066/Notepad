@@ -40,6 +40,7 @@ public class Preferences {
 
         //Colocando tema nas preferencias do app
         editor.putInt(THEME, theme);
+        editor.commit();
     }
 
     //Método para recuperar idioma salvo
@@ -53,7 +54,7 @@ public class Preferences {
     public int getTheme() {
 
         //Retornando Tema ativo
-        return sharedPreferences.getInt(THEME, R.style.LightTheme);
+        return sharedPreferences.getInt(THEME, R.style.DarkTheme);
     }
 
 }

@@ -2,6 +2,7 @@ package com.mazurco066.notepad.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
 
         //Implementação padrão do método onCreate
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        //Verificando tema
+        setSettingsTheme();
 
         //Instanciando os Componentes
         toolbar = findViewById(R.id.mainToolbar);
@@ -50,13 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Instanciando Atributos
         this.dao = new NoteDAO(getApplicationContext());
-        preferences = new Preferences(getApplicationContext());
-
-        //Verificando tema
-        //if (preferences.getTheme() != R.style.DarkTheme) {
-
-        //    getApplicationContext().setTheme(preferences.getTheme());
-        //}
 
         //Definindo Toolbar a ser usada na activity
         this.setSupportActionBar(toolbar);
@@ -233,6 +229,19 @@ public class MainActivity extends AppCompatActivity {
         //Criando e mostrando dialog
         alertDialog.create();
         alertDialog.show();
+
+    }
+
+    //Método para adaptar tema do app
+    private void setSettingsTheme() {
+
+        this.preferences = new Preferences(getApplicationContext());
+
+        if (preferences.getTheme() != R.style.DarkTheme) {
+
+            this.setTheme(preferences.getTheme());
+        }
+        setContentView(R.layout.activity_main);
 
     }
 

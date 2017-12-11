@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.adapter.TabAdapter;
+import com.mazurco066.notepad.util.Preferences;
 import com.mazurco066.notepad.util.SlidingTabLayout;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -20,12 +21,17 @@ public class SettingsActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private SlidingTabLayout slidingTabLayout;
 
+    //Atributos
+    private Preferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         //Implementação padrão do método onCreate
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+
+        //Verificando Tema
+        setSettingsTheme();
 
         //Instanciando componentes
         this.toolbar = findViewById(R.id.mainToolbar);
@@ -79,4 +85,18 @@ public class SettingsActivity extends AppCompatActivity {
         //Retorno pardão do método
         return super.onOptionsItemSelected(item);
     }
+
+    //Método para adaptar tema do app
+    private void setSettingsTheme() {
+
+        this.preferences = new Preferences(getApplicationContext());
+
+        if (preferences.getTheme() != R.style.DarkTheme) {
+
+            this.setTheme(preferences.getTheme());
+        }
+        setContentView(R.layout.activity_settings);
+
+    }
+
 }

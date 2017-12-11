@@ -15,6 +15,7 @@ import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.dao.NoteDAO;
 import com.mazurco066.notepad.model.Note;
 import com.mazurco066.notepad.util.DatabaseCreator;
+import com.mazurco066.notepad.util.Preferences;
 
 
 public class NoteActivity extends AppCompatActivity {
@@ -25,6 +26,7 @@ public class NoteActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     //Definindo Atributos
+    private  Preferences preferences;
     private NoteDAO dao;
     private Note note;
 
@@ -33,7 +35,9 @@ public class NoteActivity extends AppCompatActivity {
 
         //Implementação padrão do método onCreate
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note);
+
+        //Verificando tema
+        setSettingsTheme();
 
         //Instanciando Componentes
         editTitle = findViewById(R.id.editTitle);
@@ -254,6 +258,19 @@ public class NoteActivity extends AppCompatActivity {
     private boolean isValidFields() {
 
         return !(editTitle.getText().toString().isEmpty() || editNote.getText().toString().isEmpty());
+    }
+
+    //Método para adaptar tema do app
+    private void setSettingsTheme() {
+
+        this.preferences = new Preferences(getApplicationContext());
+
+        if (preferences.getTheme() != R.style.DarkTheme) {
+
+            this.setTheme(preferences.getTheme());
+        }
+        setContentView(R.layout.activity_note);
+
     }
 
 }

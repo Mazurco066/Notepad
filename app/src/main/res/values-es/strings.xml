@@ -22,6 +22,7 @@
     <string name="label_theme">Configuración del Tema</string>
     <string name="label_created">Creada en</string>
 
+    <string name="alert_theme_change_sucess">¡Tema cambiado con éxito! ¡Para utilizarlo correctamente reinicie el App!</string>
     <string name="alert_create_note_sucess">¡Nota creada con éxito!</string>
     <string name="alert_save_note_sucess">¡Nota actualizada con éxito!</string>
     <string name="alert_delete_note_sucess">¡Nota borrada con éxito!</string>
