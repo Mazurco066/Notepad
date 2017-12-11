@@ -2,12 +2,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/appBackground"
     tools:context="com.mazurco066.notepad.fragments.LanguageFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:id="@+id/relLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <RadioGroup
+            android:id="@+id/languageRadioGroup"
+            android:padding="10dp"
+            android:layout_margin="@dimen/listMargin"
+            android:background="@drawable/radio_group_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <RadioButton
+                android:id="@+id/englishButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/language_en" />
+
+            <RadioButton
+                android:id="@+id/portugueseButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/language_pt" />
+
+            <RadioButton
+                android:id="@+id/spanishButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/language_es" />
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnChangeLanguage"
+            android:background="@drawable/button_background"
+            android:layout_below="@id/languageRadioGroup"
+            android:text="@string/button_change_language"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="@dimen/listMargin"
+            android:layout_marginEnd="@dimen/listMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
 
 </FrameLayout>

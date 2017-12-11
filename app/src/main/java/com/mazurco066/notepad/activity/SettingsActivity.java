@@ -49,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
         slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.colorAccent));
         slidingTabLayout.setViewPager(viewPager);
-        
+
     }
 
     //sobrescrevendo método de inflar menu

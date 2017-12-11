@@ -53,12 +53,12 @@ public class TabAdapter extends FragmentStatePagerAdapter {
         switch (position) {
 
             //Case 1 - Language
-            case 1:
+            case 0:
                 fragment = new LanguageFragment();
                 break;
 
             //Case 2 - Theme
-            case 2:
+            case 1:
                 fragment = new ThemeFragment();
                 break;
         }

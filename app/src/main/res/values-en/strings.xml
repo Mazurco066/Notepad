@@ -12,11 +12,17 @@
     <string name="edit_title_hint">Title</string>
     <string name="edit_content_hint">Content</string>
 
+    <string name="button_change_language">Change Language</string>
+
     <string name="alert_create_note_sucess">Note successfully created!</string>
     <string name="alert_save_note_sucess">Note successfully updated!</string>
     <string name="alert_delete_note_sucess">Note successfully deleted!</string>
     <string name="alert_failure">Ops, an error occurred! Try again!</string>
     <string name="alert_inexistent_note">You cannot delete a note that doesn\'t exists!</string>
     <string name="alert_empty_fields">Empty Fields!</string>
+
+    <string name="language_pt">Portuguese</string>
+    <string name="language_en">English</string>
+    <string name="language_es">Spanish</string>
 
 </resources>
