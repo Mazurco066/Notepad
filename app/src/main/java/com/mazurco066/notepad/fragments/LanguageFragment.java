@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.mazurco066.notepad.R;
@@ -16,6 +18,8 @@ public class LanguageFragment extends Fragment {
 
     //Componentes
     private RadioGroup languageGroup;
+    private RadioButton radioButton;
+    private Button btnChange;
 
     //Atributos
     Resources res;
@@ -33,9 +37,18 @@ public class LanguageFragment extends Fragment {
 
         // Instanciando Componentes
         this.languageGroup = view.findViewById(R.id.languageRadioGroup);
+        this.btnChange = view.findViewById(R.id.btnChangeLanguage);
 
         // Instanciando Atributos
         this.res = view.getResources();
+
+        //Ouvindo Eventos do botão alterar idioma
+        btnChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         // Retornando a view
         return view;

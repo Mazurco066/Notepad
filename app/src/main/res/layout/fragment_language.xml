@@ -5,13 +5,32 @@
     android:background="@color/appBackground"
     tools:context="com.mazurco066.notepad.fragments.LanguageFragment">
 
-    <RelativeLayout
-        android:id="@+id/relLayout"
+    <ScrollView
+        android:id="@+id/languageScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/relLayout"
+        android:layout_marginEnd="@dimen/listMargin"
+        android:layout_marginStart="@dimen/listMargin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/textLanguageLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="@dimen/note_text_size"
+            android:text="@string/label_language"/>
+
         <RadioGroup
             android:id="@+id/languageRadioGroup"
+            android:layout_below="@id/textLanguageLabel"
+            android:layout_marginTop="15dp"
             android:padding="10dp"
             android:layout_margin="@dimen/listMargin"
             android:background="@drawable/radio_group_background"
@@ -53,5 +72,7 @@
             android:layout_height="wrap_content" />
 
     </RelativeLayout>
+
+    </ScrollView>
 
 </FrameLayout>
