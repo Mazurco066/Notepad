@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<Note> adapter;
     private List<Note> notes;
     private NoteDAO dao;
+    private boolean settingsOpened = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +101,26 @@ public class MainActivity extends AppCompatActivity {
             //Atualizando lista de notas
             this.adapter = new NoteAdapter(getApplicationContext(), notes);
             this.listView.setAdapter(adapter);
+
+        }
+        else {
+
+            //Atualizando lista
+            this.notes = new ArrayList<>();
+            this.adapter = new NoteAdapter(getApplicationContext(), notes);
+            this.listView.setAdapter(adapter);
+
+        }
+
+        //Verficando se há temas novos a serem aplicados
+        if (settingsOpened) {
+
+            //Retornando boolena a estado falso se bem que n é necessário pois outra activity sera instanciada
+            settingsOpened = false;
+
+            //Reiniciando activity
+            Intent main = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(main);
 
         }
 
@@ -175,9 +196,13 @@ public class MainActivity extends AppCompatActivity {
     //Método para abrir activity de configurações
     private void openSettingsActivity() {
 
+        //Notificando essa activity que usuário foi para activity de config
+        settingsOpened = true;
+
         //Instanciando intent e indo para settings
         Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(settings);
+
     }
 
     //Método para confirmar exclusão de uma nota

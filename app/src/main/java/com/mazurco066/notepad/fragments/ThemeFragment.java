@@ -2,6 +2,7 @@ package com.mazurco066.notepad.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
+import com.mazurco066.notepad.activity.SettingsActivity;
 import com.mazurco066.notepad.util.Preferences;
 
 public class ThemeFragment extends Fragment {
@@ -119,6 +121,9 @@ public class ThemeFragment extends Fragment {
                 String msg = context.getResources().getString(R.string.alert_theme_change_sucess);
                 Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
 
+                //Refresh
+                refresh();
+
             }
 
         });
@@ -128,5 +133,14 @@ public class ThemeFragment extends Fragment {
 
     }
 
+    //Método para atualizar activity
+    private void refresh() {
+
+        //Instanciando intent da msm acitivity
+        Intent intent = new Intent(getActivity(), SettingsActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+
+    }
 
 }

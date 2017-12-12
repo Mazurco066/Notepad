@@ -85,7 +85,6 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     //Sobrescrevendo método para ver qual botão do menu foi pressionado
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -188,9 +187,6 @@ public class NoteActivity extends AppCompatActivity {
             //Confirmando exclusão da nota
             confirmDelete(note.getId());
 
-            //Retomando a activity principal
-            finish();
-
         }
         else {
 
@@ -227,8 +223,8 @@ public class NoteActivity extends AppCompatActivity {
                     //Retornando mensagem de sucesso ao usuário
                     Toast.makeText(getApplicationContext(), sucess, Toast.LENGTH_SHORT).show();
 
-                    //Atualizando Lista
-                    onResume();
+                    //Retomando a activity principal
+                    finish();
 
                 } else {
 
