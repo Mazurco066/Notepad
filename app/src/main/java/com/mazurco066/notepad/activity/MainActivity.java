@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
             //Reiniciando activity
             Intent main = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(main);
+            finish();
 
         }
 
