@@ -12,8 +12,9 @@ Develop a simple notepad app for android.
 
 ## Resources
 
-* Multitheme App
-* MultiLanguage App
+* Multitheme App - 4 interface themes -> Dark Theme, Light Theme, Blue Theme and Red Theme;
+* MultiLanguage App - 3 supported languages -> Portuguese, English, Spanish;
+* Note Creation - Save, Edit and Delete a Note.
 
 ## Metods
 
