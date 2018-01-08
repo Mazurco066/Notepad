@@ -2,11 +2,13 @@ package com.mazurco066.notepad.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,6 +27,7 @@ import com.mazurco066.notepad.util.Preferences;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,8 +48,9 @@ public class MainActivity extends AppCompatActivity {
         //Implementação padrão do método onCreate
         super.onCreate(savedInstanceState);
 
-        //Verificando tema
+        //Verificando tema e linguagem
         setSettingsTheme();
+        setLanguageTheme();
 
         //Instanciando os Componentes
         toolbar = findViewById(R.id.mainToolbar);
@@ -268,6 +272,30 @@ public class MainActivity extends AppCompatActivity {
             this.setTheme(preferences.getTheme());
         }
         setContentView(R.layout.activity_main);
+
+    }
+
+    //Método para adaptar linguagem dep app
+    private void setLanguageTheme() {
+
+        //Instanciando um novo objeto para recuperar preferencias
+        this.preferences = new Preferences(getApplicationContext());
+
+        //Verificando se ja foi configurado um idioma
+        if (this.preferences.getLanguage() != null) {
+
+            //Recuperando local
+            String local = this.preferences.getLanguage();
+
+            //Recuperando local e o configurando
+            Locale myLocale = new Locale(local);
+            Resources res = getApplicationContext().getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration conf = res.getConfiguration();
+            conf.locale = myLocale;
+            res.updateConfiguration(conf, dm);
+
+        }
 
     }
 

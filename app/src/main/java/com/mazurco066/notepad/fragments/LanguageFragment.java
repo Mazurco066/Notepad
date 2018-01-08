@@ -195,7 +195,6 @@ public class LanguageFragment extends Fragment {
     private String getLocale() {
 
         Resources res = context.getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
         Configuration conf = res.getConfiguration();
         return conf.locale.toString();
 
