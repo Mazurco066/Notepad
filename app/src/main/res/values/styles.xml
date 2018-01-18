@@ -10,6 +10,7 @@
 
         <item name="android:colorBackground">@color/dark_appMenuBackground</item>
         <item name="android:windowBackground">@color/dark_appBackground</item>
+        <item name="android:centerColor">@color/dark_noteBackground</item>
 
         <item name="android:textColor">@color/dark_text_color</item>
         <item name="android:textColorSecondary">@color/dark_text_color_secundary</item>
@@ -27,6 +28,7 @@
 
         <item name="android:colorBackground">@color/light_appMenuBackground</item>
         <item name="android:windowBackground">@color/light_appBackground</item>
+        <item name="android:centerColor">@color/light_noteBackground</item>
 
         <item name="android:textColor">@color/light_text_color</item>
         <item name="android:textColorSecondary">@color/light_text_color_secundary</item>
@@ -44,6 +46,7 @@
 
         <item name="android:colorBackground">@color/blue_appMenuBackground</item>
         <item name="android:windowBackground">@color/blue_appBackground</item>
+        <item name="android:centerColor">@color/blue_noteBackground</item>
 
         <item name="android:textColor">@color/blue_text_color</item>
         <item name="android:textColorSecondary">@color/blue_text_color_secundary</item>
@@ -61,6 +64,7 @@
 
         <item name="android:colorBackground">@color/red_appMenuBackground</item>
         <item name="android:windowBackground">@color/red_appBackground</item>
+        <item name="android:centerColor">@color/red_noteBackground</item>
 
         <item name="android:textColor">@color/red_text_color</item>
         <item name="android:textColorSecondary">@color/red_text_color_secundary</item>

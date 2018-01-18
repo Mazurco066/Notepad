@@ -38,7 +38,7 @@
 
     <string name="theme_dark">Tema Escuro</string>
     <string name="theme_light">Tema Claro</string>
-    <string name="theme_blue">Tema Azul</string>
-    <string name="theme_red">Tema Vermelho</string>
+    <string name="theme_blue">Tema Neo</string>
+    <string name="theme_red">Tema Clássico</string>
 
 </resources>

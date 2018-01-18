@@ -38,7 +38,7 @@
 
     <string name="theme_dark">Dark Theme</string>
     <string name="theme_light">Light Theme</string>
-    <string name="theme_blue">Blue Theme</string>
-    <string name="theme_red">Red Theme</string>
+    <string name="theme_blue">Neo Theme</string>
+    <string name="theme_red">Wooden Theme</string>
 
 </resources>
