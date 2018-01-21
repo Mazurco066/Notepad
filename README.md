@@ -1,6 +1,6 @@
 # Notepad
 
-A Notepad App developed for Android API 15 or higher
+A Notepad App developed for Android API 21 or higher
 
 ## Developer
 
