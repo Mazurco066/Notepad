@@ -22,7 +22,7 @@ Develop a simple notepad app for android.
 	
 	**-> Edit** Edit a created note for content updates or correct a written mistake.
 	
-	**->Delete** Delete a created note completely.
+	**-> Delete** Delete a created note completely.
 
 ## Metods
 
