@@ -5,6 +5,7 @@
     <string name="action_write">Escrever Nota</string>
     <string name="action_exit">Fechar App</string>
     <string name="action_save">Salvar Nota</string>
+    <string name="action_share">Compartilhar Nota</string>
     <string name="action_delete">Deletar Nota</string>
     <string name="action_back">Cancelar</string>
     <string name="action_settings">Configurações</string>
@@ -29,6 +30,7 @@
     <string name="alert_failure">Ops, ocorreu um erro! Tente novamente!</string>
     <string name="alert_inexistent_note">Você não pode deletar uma nota que ainda não foi criada!</string>
     <string name="alert_empty_fields">Há campos vazios!</string>
+    <string name="alert_empty_shared_field">Você não tem nada escrito nessa nota para compartilhar!</string>
     <string name="alert_language_same">Você já esta usando esse idioma!</string>
     <string name="alert_unselected_language">Selecione um idioma!</string>
 

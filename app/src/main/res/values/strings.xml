@@ -5,6 +5,7 @@
     <string name="action_write">Write Note</string>
     <string name="action_exit">Exit App</string>
     <string name="action_save">Save Note</string>
+    <string name="action_share">Share Note</string>
     <string name="action_delete">Delete Note</string>
     <string name="action_back">Cancel</string>
     <string name="action_settings">Settings</string>
@@ -29,6 +30,7 @@
     <string name="alert_failure">Ops, an error occurred! Try again!</string>
     <string name="alert_inexistent_note">You cannot delete a note that doesn\'t exists!</string>
     <string name="alert_empty_fields">Empty Fields!</string>
+    <string name="alert_empty_shared_field">You have nothing to share!</string>
     <string name="alert_language_same">You are alreay using this language!</string>
     <string name="alert_unselected_language">Please Select a Language!</string>
 

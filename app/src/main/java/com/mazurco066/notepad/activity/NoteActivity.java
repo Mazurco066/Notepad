@@ -1,6 +1,7 @@
 package com.mazurco066.notepad.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -96,6 +97,11 @@ public class NoteActivity extends AppCompatActivity {
                 saveNote();
                 break;
 
+            //Caso pressionou botão compartilhar
+            case R.id.action_share:
+                shareNote();
+                break;
+
             //Caso pressionou botão deletar
             case R.id.action_delete:
                 deleteNote();
@@ -174,6 +180,35 @@ public class NoteActivity extends AppCompatActivity {
 
             //Retornando alerta ao usuário
             Toast.makeText(getApplicationContext(), emptyMsg, Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    //Método para executar ações do botão compartilhar
+    private void shareNote() {
+
+        //Verificando se há texto para ser compartilhado
+        if (!editNote.getText().toString().isEmpty()) {
+
+            //Recuperando conteúdo a ser compartilhado
+            String content = editNote.getText().toString();
+
+            //Instanciando intent para compartilhamento
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, content);
+            shareIntent.setType("text/plain");
+            startActivity(shareIntent);
+
+        }
+        else {
+
+            //Recuperando mensagem para emitir no alerta
+            String error = getResources().getString(R.string.alert_empty_shared_field);
+
+            //Emitindo Alerta para usuário
+            Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+
         }
 
     }
