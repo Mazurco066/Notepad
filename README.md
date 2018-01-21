@@ -16,13 +16,13 @@ Develop a simple notepad app for android.
 * MultiLanguage App - 3 supported languages -> Portuguese, English, Spanish;
 * Note Creation:
 	
-	** -> Save** Save a note writing anything you wish on it.
+	**-> Save** Save a note writing anything you wish on it.
 	
-	** -> Share** Share a created note via Whatsapp, Facebook, Gmail or other Apps.
+	**-> Share** Share a created note via Whatsapp, Facebook, Gmail or other Apps.
 	
-	** -> Edit** Edit a created note for content updates or correct a written mistake.
+	**-> Edit** Edit a created note for content updates or correct a written mistake.
 	
-	** ->Delete** Delete a created note completely.
+	**->Delete** Delete a created note completely.
 
 ## Metods
 
