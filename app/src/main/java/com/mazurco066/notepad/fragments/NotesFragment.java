@@ -35,7 +35,7 @@ public class NotesFragment extends Fragment {
     private List<Note> notes;
     private NoteDAO dao;
 
-    public NotesFragment() {}
+    public NotesFragment() {} // Required empty public constructor
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

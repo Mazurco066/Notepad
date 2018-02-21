@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Método para Abrir Activity de Escrever/Visualizar Nota
     private void openListActivity() {
-        
+
     }
 
     //Método que será responsável por executar as ações de recuperar dados de uma nota
