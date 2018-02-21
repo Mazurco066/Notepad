@@ -120,6 +120,11 @@ public class MainActivity extends AppCompatActivity {
                 writeNote();
                 break;
 
+            //Criar nova lista
+            case R.id.action_newList:
+                writeList();
+                break;
+
             //Configurações do app
             case R.id.action_settings:
                 openSettingsActivity();
@@ -152,6 +157,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Método para Abrir Activity de Escrever/Visualizar Nota
+    private void openListActivity() {
+        
+    }
+
     //Método que será responsável por executar as ações de recuperar dados de uma nota
     private void writeNote() {
 
@@ -161,6 +171,11 @@ public class MainActivity extends AppCompatActivity {
 
         //Abrindo Activity de edição para nova nota
         openNoteActivity(note);
+
+    }
+
+    //Método que será responsável por executar as ações de recuperar dados de uma lista
+    private void writeList() {
 
     }
 

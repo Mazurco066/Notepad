@@ -3,12 +3,16 @@
     <string name="app_name">Notepad</string>
 
     <string name="action_write">Escribir Nota</string>
+    <string name="action_newList">Lista Nueva</string>
     <string name="action_exit">Cerrar App</string>
     <string name="action_save">Guardar Nota</string>
     <string name="action_share">Compartir Nota</string>
     <string name="action_delete">Borrar Nota</string>
     <string name="action_back">Cancelar</string>
     <string name="action_settings">Configuración</string>
+
+    <string name="tab_notes">Anotaciones</string>
+    <string name="tab_lists">Listas</string>
 
     <string name="activity_create_note">Nueva Nota</string>
     <string name="activity_update_note">Editar Nota</string>

@@ -15,7 +15,7 @@ public class MainAdapter extends FragmentStatePagerAdapter {
 
     //Atributos
     private Context context;
-    private String[] titles = {"Anotações", "Listas"};
+    private String[] titles = new String[2];
 
     //Construtor padrão
     public MainAdapter(FragmentManager fm, Context context) {
@@ -23,8 +23,14 @@ public class MainAdapter extends FragmentStatePagerAdapter {
         //Construindo com implementação padrão
         super(fm);
 
+        //Reuperando Títulos das abas
+        String tab1 = context.getResources().getString(R.string.tab_notes);
+        String tab2 = context.getResources().getString(R.string.tab_lists);
+
         //Instanciando Atributos
         this.context = context;
+        this.titles[0] = tab1;
+        this.titles[1] = tab2;
 
     }
 
