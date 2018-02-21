@@ -26,6 +26,8 @@
     <string name="label_language">Configuración del Idioma</string>
     <string name="label_theme">Configuración del Tema</string>
     <string name="label_created">Creada en</string>
+    <string name="label_todo">To Do</string>
+    <string name="label_done">Done</string>
 
     <string name="alert_theme_change_sucess">¡Tema cambiado con éxito!</string>
     <string name="alert_create_note_sucess">¡Nota creada con éxito!</string>

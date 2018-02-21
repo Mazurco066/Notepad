@@ -26,6 +26,8 @@
     <string name="label_language">Language Settings</string>
     <string name="label_theme">Theme Settings</string>
     <string name="label_created">Created at</string>
+    <string name="label_todo">To Do</string>
+    <string name="label_done">Done</string>
 
     <string name="alert_theme_change_sucess">Theme Successfully changed!</string>
     <string name="alert_create_note_sucess">Note successfully created!</string>

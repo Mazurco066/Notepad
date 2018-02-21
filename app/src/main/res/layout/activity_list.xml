@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:windowBackground"
+    tools:context="com.mazurco066.notepad.activity.ListActivity">
+
+    <include layout="@layout/toolbar" android:id="@+id/mainToolbar"/>
+
+        <TextView
+            android:id="@+id/todoListLabel"
+            android:layout_below="@id/mainToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/listMargin"
+            android:layout_marginEnd="@dimen/listMargin"
+            android:layout_marginLeft="@dimen/listMargin"
+            android:layout_marginRight="@dimen/listMargin"
+            android:layout_marginStart="@dimen/listMargin"
+            android:layout_marginTop="@dimen/listMargin"
+            android:textAlignment="center"
+            android:textSize="@dimen/note_text_size"
+            android:text="@string/label_todo" />
+
+        <ListView
+            android:id="@+id/todoView"
+            android:layout_below="@id/todoListLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_background"
+            android:layout_marginBottom="@dimen/listMargin"
+            android:layout_marginEnd="@dimen/listMargin"
+            android:layout_marginLeft="@dimen/listMargin"
+            android:layout_marginRight="@dimen/listMargin"
+            android:layout_marginStart="@dimen/listMargin"
+            android:layout_marginTop="@dimen/listMargin" />
+
+        <TextView
+            android:id="@+id/doneListLabel"
+            android:layout_below="@id/todoView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/listMargin"
+            android:layout_marginEnd="@dimen/listMargin"
+            android:layout_marginLeft="@dimen/listMargin"
+            android:layout_marginRight="@dimen/listMargin"
+            android:layout_marginStart="@dimen/listMargin"
+            android:layout_marginTop="@dimen/listMargin"
+            android:textAlignment="center"
+            android:textSize="@dimen/note_text_size"
+            android:text="@string/label_done" />
+
+        <ListView
+            android:id="@+id/doneView"
+            android:layout_below="@id/doneListLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_background"
+            android:layout_marginBottom="@dimen/listMargin"
+            android:layout_marginEnd="@dimen/listMargin"
+            android:layout_marginLeft="@dimen/listMargin"
+            android:layout_marginRight="@dimen/listMargin"
+            android:layout_marginStart="@dimen/listMargin"
+            android:layout_marginTop="@dimen/listMargin" />
+
+</RelativeLayout>

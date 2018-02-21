@@ -25,6 +25,7 @@ import com.mazurco066.notepad.adapter.MainAdapter;
 import com.mazurco066.notepad.adapter.NoteAdapter;
 import com.mazurco066.notepad.dao.NoteDAO;
 import com.mazurco066.notepad.model.Note;
+import com.mazurco066.notepad.model.TodoList;
 import com.mazurco066.notepad.util.DatabaseCreator;
 import com.mazurco066.notepad.util.Preferences;
 import com.mazurco066.notepad.util.SlidingTabLayout;
@@ -158,7 +159,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Método para Abrir Activity de Escrever/Visualizar Nota
-    private void openListActivity() {
+    private void openListActivity(TodoList todoList) {
+
+        //Instanciando intent para ir para prox activity
+        Intent listActivity = new Intent(getApplicationContext(), ListActivity.class);
+
+        //Iniciando nova activity
+        startActivity(listActivity);
 
     }
 
@@ -176,6 +183,13 @@ public class MainActivity extends AppCompatActivity {
 
     //Método que será responsável por executar as ações de recuperar dados de uma lista
     private void writeList() {
+
+        //Instanciando uma nova lista com id de não salvo para validação
+        TodoList todoList = new TodoList();
+        todoList.setId(-1);
+
+        //Abrindo Activity de edição para nova lista
+        openListActivity(todoList);
 
     }
 
