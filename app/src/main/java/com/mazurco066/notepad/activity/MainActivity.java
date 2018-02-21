@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,11 +21,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
+import com.mazurco066.notepad.adapter.MainAdapter;
 import com.mazurco066.notepad.adapter.NoteAdapter;
 import com.mazurco066.notepad.dao.NoteDAO;
 import com.mazurco066.notepad.model.Note;
 import com.mazurco066.notepad.util.DatabaseCreator;
 import com.mazurco066.notepad.util.Preferences;
+import com.mazurco066.notepad.util.SlidingTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
     //Definindo os Componentes
     private Toolbar toolbar;
-    private ListView listView;
+    private ViewPager viewPager;
+    private SlidingTabLayout slidingTabLayout;
 
     //Definindo Atributos
     private Preferences preferences;
-    private ArrayAdapter<Note> adapter;
-    private List<Note> notes;
-    private NoteDAO dao;
+
     private boolean settingsOpened = false;
 
     @Override
@@ -54,40 +57,21 @@ public class MainActivity extends AppCompatActivity {
 
         //Instanciando os Componentes
         toolbar = findViewById(R.id.mainToolbar);
-        listView = findViewById(R.id.noteListView);
-
-        //Instanciando Atributos
-        this.dao = new NoteDAO(getApplicationContext());
+        viewPager = findViewById(R.id.notesViewPager);
+        slidingTabLayout = findViewById(R.id.slidingTabNotes);
 
         //Definindo Toolbar a ser usada na activity
         this.setSupportActionBar(toolbar);
 
-        //Ouvindo eventos de clicar em uma nota
-        this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        //Configurando Adapter/ViewPager
+        MainAdapter mainAdapter = new MainAdapter(getSupportFragmentManager(), getApplicationContext());
+        viewPager.setAdapter(mainAdapter);
 
-                //Instanciando nota
-                Note note = notes.get(i);
-
-                //Iniciando Activity de Edição de nota
-                openNoteActivity(note);
-
-            }
-        });
-
-        //Ouvindo eventos de segurar click em uma nota
-        this.listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                //Confirmando exclusão da nota selecionada com usuário
-                confirmDelete(notes.get(i).getId());
-
-                //Retornando
-                return true;
-            }
-        });
+        //Configurando o SlidingTabs
+        slidingTabLayout.setCustomTabView(R.layout.tab_view, R.id.viewTextTab);
+        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.colorAccent));
+        slidingTabLayout.setViewPager(viewPager);
 
     }
 
@@ -97,24 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Implementação padrão do método de onResume do ciclo de vida
         super.onResume();
-
-        //Verificando se há itens na lista
-        this.notes = dao.readAllNotes();
-        if (notes != null) {
-
-            //Atualizando lista de notas
-            this.adapter = new NoteAdapter(getApplicationContext(), notes);
-            this.listView.setAdapter(adapter);
-
-        }
-        else {
-
-            //Atualizando lista
-            this.notes = new ArrayList<>();
-            this.adapter = new NoteAdapter(getApplicationContext(), notes);
-            this.listView.setAdapter(adapter);
-
-        }
 
         //Verficando se há temas novos a serem aplicados
         if (settingsOpened) {
@@ -171,6 +137,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Método para Abrir Activity de Escrever/Visualizar Nota
+    private void openNoteActivity(Note note) {
+
+        //Instanciando intent para ir para prox activity
+        Intent noteActivity = new Intent(getApplicationContext(), NoteActivity.class);
+        noteActivity.putExtra(DatabaseCreator.FIELD_ID, note.getId());
+        noteActivity.putExtra(DatabaseCreator.FIELD_DATE, note.getDate());
+        noteActivity.putExtra(DatabaseCreator.FIELD_TITLE, note.getTitle());
+        noteActivity.putExtra(DatabaseCreator.FIELD_CONTENT, note.getContent());
+
+        //Iniciando nova activity
+        startActivity(noteActivity);
+
+    }
+
     //Método que será responsável por executar as ações de recuperar dados de uma nota
     private void writeNote() {
 
@@ -183,21 +164,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //Método para Abrir Activity de Escrever/Visualizar Nota
-    private void openNoteActivity(Note note) {
-
-        //Instanciando intent para ir para prox activity
-        Intent noteActivity = new Intent(MainActivity.this, NoteActivity.class);
-        noteActivity.putExtra(DatabaseCreator.FIELD_ID, note.getId());
-        noteActivity.putExtra(DatabaseCreator.FIELD_DATE, note.getDate());
-        noteActivity.putExtra(DatabaseCreator.FIELD_TITLE, note.getTitle());
-        noteActivity.putExtra(DatabaseCreator.FIELD_CONTENT, note.getContent());
-
-        //Iniciando nova activity
-        startActivity(noteActivity);
-
-    }
-
     //Método para abrir activity de configurações
     private void openSettingsActivity() {
 
@@ -207,58 +173,6 @@ public class MainActivity extends AppCompatActivity {
         //Instanciando intent e indo para settings
         Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(settings);
-
-    }
-
-    //Método para confirmar exclusão de uma nota
-    private void confirmDelete(final int id) {
-
-        //Instanciando criador de alert dialog
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-
-        //Configurando alert dialog
-        alertDialog.setTitle("Delete Confirmation");
-        alertDialog.setMessage("Are you sure you want to delete this note?");
-        alertDialog.setCancelable(false);
-
-        alertDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                //Recuperando mensagens
-                String sucess = getResources().getString(R.string.alert_delete_note_sucess);
-                String failure = getResources().getString(R.string.alert_failure);
-
-                if (dao.deleteNote(id)) {
-
-                    //Retornando mensagem de sucesso ao usuário
-                    Toast.makeText(getApplicationContext(), sucess, Toast.LENGTH_SHORT).show();
-
-                    //Atualizando Lista
-                    onResume();
-
-                }
-                else {
-
-                    //Retornando mensagem de erro ao criar nota para usuário
-                    Toast.makeText(getApplicationContext(), failure, Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        });
-
-        //Adicionando botões negativo e positivo para alertdialog
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                //Nada Acontece....
-            }
-        });
-
-        //Criando e mostrando dialog
-        alertDialog.create();
-        alertDialog.show();
 
     }
 
