@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.adapter.MainAdapter;
 import com.mazurco066.notepad.adapter.NoteAdapter;
+import com.mazurco066.notepad.dao.ListDAO;
 import com.mazurco066.notepad.dao.NoteDAO;
 import com.mazurco066.notepad.model.Note;
 import com.mazurco066.notepad.model.TodoList;
@@ -163,11 +164,34 @@ public class MainActivity extends AppCompatActivity {
     //Método para Abrir Activity de Escrever/Visualizar Nota
     private void openListActivity(TodoList todoList) {
 
-        //Instanciando intent para ir para prox activity
-        Intent listActivity = new Intent(getApplicationContext(), ListActivity.class);
+        //Verificando se é uma lista existente ou nova
+        if (todoList.getId() == -1) {   //Se for nova
 
-        //Iniciando nova activity
-        startActivity(listActivity);
+            //Instanciando DAO de lista para inserir nova lista
+            ListDAO dao = new ListDAO(getApplicationContext());
+
+            //Inserindo no banco nova lista
+            if (dao.createList(todoList.getTitle())){
+
+                //Recuperando id do ultimo autoincrement
+                todoList.setId(dao.getLastListId());
+
+                //Abrindo Activity de Edição de listas para adicionar ou remover itens
+
+            }
+            else {
+
+                //Recuperando mensagem de erro
+                String msg = getResources().getString(R.string.alert_failure);
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+
+            }
+
+
+        }
+        else {
+
+        }
 
     }
 
@@ -186,13 +210,7 @@ public class MainActivity extends AppCompatActivity {
     //Método que será responsável por executar as ações de recuperar dados de uma lista
     private void writeList() {
 
-        //Instanciando uma nova lista com id de não salvo para validação
-        //TodoList todoList = new TodoList();
-        //todoList.setId(-1);
-
-        //Abrindo Activity de edição para nova lista
-        //openListActivity(todoList);
-
+        //Abrindo um dialog para recolher título da lista
         getTodoListTitle();
 
     }
@@ -229,6 +247,9 @@ public class MainActivity extends AppCompatActivity {
                     TodoList todoList = new TodoList();
                     todoList.setId(-1);
                     todoList.setTitle(title);
+
+                    //Validando e se possível partindo para activity de listas
+                    openListActivity(todoList);
 
                 }
                 else {
