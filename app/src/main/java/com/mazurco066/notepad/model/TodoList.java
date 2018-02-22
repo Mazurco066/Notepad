@@ -50,4 +50,11 @@ public class TodoList {
     public void setItens(List<ItemList> itens) {
         this.itens = itens;
     }
+
+    //Class Methods
+    public void addItem(ItemList itemList) {
+
+        if (itemList != null) this.itens.add(itemList);
+    }
+
 }

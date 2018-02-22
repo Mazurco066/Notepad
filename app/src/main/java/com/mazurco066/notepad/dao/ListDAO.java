@@ -1,5 +1,6 @@
 package com.mazurco066.notepad.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -20,5 +21,27 @@ public class ListDAO {
     }
 
     //Méthods
+
+    //Todo List: Create Method
+    public boolean createList(String title) {
+
+        try {
+
+            //Definindo valores a serem registrados
+            ContentValues values;
+            long result;
+
+            //Settando Dados no objeto para realização da inserção
+
+            return true;
+
+        }
+        catch (Exception e) {
+
+            //Registrando erro gerado
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

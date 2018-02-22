@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -185,11 +187,71 @@ public class MainActivity extends AppCompatActivity {
     private void writeList() {
 
         //Instanciando uma nova lista com id de não salvo para validação
-        TodoList todoList = new TodoList();
-        todoList.setId(-1);
+        //TodoList todoList = new TodoList();
+        //todoList.setId(-1);
 
         //Abrindo Activity de edição para nova lista
-        openListActivity(todoList);
+        //openListActivity(todoList);
+
+        getTodoListTitle();
+
+    }
+
+    //Método para recuperar nome da lista que usuário deseja criar
+    private void getTodoListTitle() {
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+        //Configurando a AlertDialog
+        builder.setTitle("List Title");
+        builder.setMessage("Insert a title for your list:");
+        builder.setCancelable(false);
+
+        //Criando EditText para coleta do título
+        final EditText input = new EditText(MainActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        builder.setView(input);
+
+        //Setando botões de avançar ou cancelar
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                if (!input.getText().toString().isEmpty()) {
+
+                    //Recuperando texto digitado
+                    String title = input.getText().toString();
+
+                    //Instanciando nova Lista para insersão
+                    TodoList todoList = new TodoList();
+                    todoList.setId(-1);
+                    todoList.setTitle(title);
+
+                }
+                else {
+
+                    //Retornando Mensagem de erro
+                    String msg = getApplicationContext().getResources().getString(R.string.alert_empty_fields);
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                //Nada Acontece.....
+            }
+        });
+
+        //Criando e mostrando a Dialog
+        builder.create();
+        builder.show();
 
     }
 

@@ -9,6 +9,8 @@ public class DatabaseCreator extends SQLiteOpenHelper {
     //Atributos
     private final static String DATABASE = "notepad.dp";
     public final static String DEFAULT_TABLE = "notes";
+    public final static String TODOLIST_TABLE = "todolists";
+    public final static String ITEMLIST_TABLE = "itemlist";
     public final static String FIELD_ID = "_id";
     public final static String FIELD_DATE = "_date";
     public final static String FIELD_TITLE = "_title";
@@ -26,7 +28,7 @@ public class DatabaseCreator extends SQLiteOpenHelper {
 
         try {
 
-            //Criando String de  Criação do Banco
+            //Criando String de Criação do Banco
             StringBuilder sql = new StringBuilder();
             sql.append("CREATE TABLE IF NOT EXISTS ").append(DEFAULT_TABLE).append("( ");
             sql.append(FIELD_ID).append(" integer primary key autoincrement,");
@@ -38,6 +40,18 @@ public class DatabaseCreator extends SQLiteOpenHelper {
             String sqlCommand = sql.toString();
 
             //Criando a tabela
+            sqLiteDatabase.execSQL(sqlCommand);
+
+            //Criando String para nova tabela da update de Todo Lists
+            sql = new StringBuilder();
+            sql.append("CREATE TABLE IF NOT EXISTS ").append(TODOLIST_TABLE).append("( ");
+            sql.append(FIELD_ID).append(" integer primary key autoincrement,");
+            sql.append(FIELD_TITLE).append(" VARCHAR(23)");
+
+            //Recuperando comando sql gerado
+            sqlCommand = sql.toString();
+
+            //Criando a Tabela
             sqLiteDatabase.execSQL(sqlCommand);
 
         }
@@ -56,6 +70,7 @@ public class DatabaseCreator extends SQLiteOpenHelper {
 
             //Removendo tabela pois versão do app mudou
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DEFAULT_TABLE);
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ TODOLIST_TABLE);
             onCreate(sqLiteDatabase);
 
         }
