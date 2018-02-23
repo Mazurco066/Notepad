@@ -22,17 +22,22 @@
 
     <string name="button_change_language">Alterar Idioma</string>
     <string name="button_change_theme">Alterar Tema</string>
+    <string name="btn_addTask">Adicionar Tarefa</string>
 
     <string name="label_language">Configurações de Idioma</string>
     <string name="label_theme">Configurações de Tema</string>
     <string name="label_created">Criada em</string>
+    <string name="label_task">Insira a Tarefa:</string>
     <string name="label_todo">Pendente</string>
     <string name="label_done">Concluído</string>
 
+    <string name="alert_task_added">Tarefa Adicionada</string>
+    <string name="alert_same_task">Essa tarefa ja existe!</string>
     <string name="alert_theme_change_sucess">Tema alterado com sucesso!</string>
     <string name="alert_create_note_sucess">Nota criada com sucesso!</string>
     <string name="alert_save_note_sucess">Nota atualizada com sucesso!</string>
     <string name="alert_delete_note_sucess">Nota deletada com sucesso!</string>
+    <string name="alert_delete_list_sucess">Lista deletada com sucesso!</string>
     <string name="alert_failure">Ops, ocorreu um erro! Tente novamente!</string>
     <string name="alert_inexistent_note">Você não pode deletar uma nota que ainda não foi criada!</string>
     <string name="alert_empty_fields">Há campos vazios!</string>

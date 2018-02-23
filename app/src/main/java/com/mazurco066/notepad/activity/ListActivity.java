@@ -1,14 +1,21 @@
 package com.mazurco066.notepad.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
@@ -61,7 +68,7 @@ public class ListActivity extends AppCompatActivity {
         this.dao = new ListDAO(getApplicationContext());
 
         //Recuperando dados passados por Intent
-        Bundle data = getIntent().getExtras();
+        final Bundle data = getIntent().getExtras();
         if (data != null) {
 
             todoList = new TodoList();
@@ -122,8 +129,9 @@ public class ListActivity extends AppCompatActivity {
                     ItemList itemList = new ItemList();
                     itemList.setTask(taskEdit.getText().toString());
 
-                        //Adicionando tarefa
-                        addTask(itemList);
+                    //Adicionando tarefa
+                    addTask(itemList);
+
 
                 }
                 else {
@@ -150,6 +158,7 @@ public class ListActivity extends AppCompatActivity {
 
                     //Atualizando Arrays
                     _todo.remove(itemList);
+                    itemList.setDone(1);
                     _done.add(itemList);
 
                     //Atualizando Views
@@ -167,8 +176,75 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
+        //Adicionando evento de onlongclick na view de pendencias
+        _todoView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                //Deletando tarefa selecionada
+                removeTask(_todo.get(i));
+
+                //Retorno padrão
+                return true;
+
+            }
+        });
+
+        //Adicionando evento de onlongclick na view de conclusões
+        _doneView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                //Deletando tarefa selecionada
+                removeTask(_done.get(i));
+
+                //Retorno padrão
+                return false;
+            }
+        });
+
     }
 
+    //Sobrescrevendo método on Create do menu para carrega menu customizado
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        //Inflando menu na activity
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.task_menu, menu);
+        return  true;
+    }
+
+    //Controlador do menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        //Verificando qual botão foi pressionado
+        switch (item.getItemId()) {
+
+            //Caso botão deletar
+            case R.id.action_delete:
+                confirmDelete(todoList);
+                break;
+
+            //Caso botão compartilhar
+            case R.id.action_share:
+                shareList();
+                break;
+
+            //Caso botão cancelar
+            case R.id.action_back:
+                finish();
+                break;
+
+        }
+
+        //Retorno padrão da implementação normal
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    //Sobrescrevendo método onResume para atualizar a lista
     @Override
     protected void onResume() {
 
@@ -235,7 +311,7 @@ public class ListActivity extends AppCompatActivity {
         if (this.dao.AddItem(todoList.getId(), itemList)) {
 
             //Retornando mensagem de Sucesso
-            String msg = getResources().getString(R.string.alert_create_note_sucess);
+            String msg = getResources().getString(R.string.alert_task_added);
             Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
 
             //Limpando campo de texto
@@ -243,6 +319,28 @@ public class ListActivity extends AppCompatActivity {
 
             //Atualizando View
             _todo.add(itemList);
+            updateViewContent();
+
+        }
+        else {
+
+            //Retornando mensagem de Erro
+            String msg = getResources().getString(R.string.alert_failure);
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
+    //Método para remover uma tarefa
+    private void removeTask(ItemList itemList) {
+
+        //Removendo
+        if (dao.deleteTask(todoList.getId(), itemList.getTask())) {
+
+            //Removendo da view e atualizando a mesma
+            if (itemList.getDone() == 1) _done.remove(itemList);
+            else _todo.remove(itemList);
             updateViewContent();
 
         }
@@ -268,4 +366,102 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
     }
+
+    //Método para confirmar exclusão de uma lista
+    private void confirmDelete(final TodoList todoList) {
+
+        //Instanciando criador de alert dialog
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(ListActivity.this);
+
+        //Configurando alert dialog
+        alertDialog.setTitle("Delete Confirmation");
+        alertDialog.setMessage("Are you sure you want to delete this List?");
+        alertDialog.setCancelable(false);
+
+        alertDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                //Recuperando mensagens
+                String sucess = getResources().getString(R.string.alert_delete_list_sucess);
+                String failure = getResources().getString(R.string.alert_failure);
+
+                if (dao.deleteList(todoList)) {
+
+                    //Retornando mensagem de sucesso ao usuário
+                    Toast.makeText(ListActivity.this, sucess, Toast.LENGTH_SHORT).show();
+
+                    //Finalizando Activity
+                    finish();
+
+                }
+                else {
+
+                    //Retornando mensagem de erro ao deletar lista para usuário
+                    Toast.makeText(ListActivity.this, failure, Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+
+        //Adicionando botões negativo e positivo para alertdialog
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                //Nada Acontece....
+            }
+        });
+
+        //Criando e mostrando dialog
+        alertDialog.create();
+        alertDialog.show();
+
+    }
+
+    //Método para compartilhar nota via redes sociais
+    private void shareList() {
+
+        //Verificando se há conteúdo para se compartilhar na lista
+        if (this._todo != null || this._done != null) {
+
+            //Montando estrutura da lista para compartilhamento em texto
+            StringBuilder finalList = new StringBuilder();
+            finalList.append(todoList.getTitle()).append("\n\n");
+            finalList.append(getResources().getString(R.string.label_todo)).append("\n\n");
+            if (_todo != null) for (ItemList _item: _todo) {
+                finalList.append("-> ").append(_item.getTask()).append("\n");
+            }
+            finalList.append("\n");
+            finalList.append(getResources().getString(R.string.label_done)).append("\n\n");
+            if (_done != null) for (ItemList _item: _done) {
+                finalList.append("->").append(_item.getTask()).append("\n");
+            }
+            finalList.append("\nNotepad App - by Gabriel Mazurco");
+
+            //Recuperando conteúdo a ser compartilhado
+            String content = finalList.toString();
+
+            //Instanciando intent para compartilhamento
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, content);
+            shareIntent.setType("text/plain");
+            startActivity(shareIntent);
+
+
+
+        }
+        else {
+
+            //Recuperando mensagem para emitir no alerta
+            String error = getResources().getString(R.string.alert_empty_shared_field);
+
+            //Emitindo Alerta para usuário
+            Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
 }

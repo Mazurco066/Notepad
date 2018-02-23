@@ -42,12 +42,6 @@ public class ListDAO {
             values.put(DatabaseCreator.FIELD_TITLE, title);
             values.put(DatabaseCreator.FIELD_DATE, date);
 
-            //db.execSQL("DROP TABLE IF EXISTS itemlist");
-            //db.execSQL("DELETE FROM " + DatabaseCreator.TODOLIST_TABLE);
-            //db.execSQL("ALTER TABLE " + DatabaseCreator.TODOLIST_TABLE + "  add " + DatabaseCreator.FIELD_DATE + " Varchar(10)");
-            //db.execSQL("DROP TABLE itemlist");
-            //db.execSQL("CREATE TABLE IF NOT EXISTS itemlist (_noteid integer, _task VARCHAR(50) primary key, _done integer, FOREIGN KEY (_noteid) REFERENCES todolists(_id));");
-
             //Inserindo os Dados
             result = db.insert(DatabaseCreator.TODOLIST_TABLE, null, values);
             db.close();
@@ -65,6 +59,50 @@ public class ListDAO {
         }
     }
 
+    public boolean deleteList(TodoList todoList) {
+
+        try {
+
+            //Definindo parametros da exclusão
+            String Taskwhere = DatabaseCreator.FIELD_NOTEID + " = " + todoList.getId();
+            String Listwhere = DatabaseCreator.FIELD_ID + " = " + todoList.getId();
+            long resultTask;
+            long resultList;
+
+            //Recuperando uma instancia do banco de dados
+            this.db = database.getWritableDatabase();
+
+            //Removendo primeiramente todas as tarefas de uma lista
+            resultTask = db.delete(
+                    DatabaseCreator.ITEMLIST_TABLE,
+                    Taskwhere,
+                    null
+            );
+
+            //Removendo agora a lista em si
+            resultList = db.delete(
+                    DatabaseCreator.TODOLIST_TABLE,
+                    Listwhere,
+                    null
+            );
+
+            //Fechando conexão com o banco
+            this.db.close();
+
+            //Retornando Sucesso ou fracasso
+            if (resultTask == -1 && resultList == -1) return false; return true;
+
+
+        }
+        catch (Exception e) {
+
+            //Registrando erro ocorrido
+            e.printStackTrace();
+            return false;
+
+        }
+
+    }
 
     public boolean AddItem(int TodoListID, ItemList itemList) {
 
@@ -119,6 +157,41 @@ public class ListDAO {
             result = db.update(
                     DatabaseCreator.ITEMLIST_TABLE,
                     values,
+                    where,
+                    null
+            );
+
+            //Fechando conexão com banco
+            db.close();
+
+            //Retornando sucesso ou fracasso
+            if (result == -1) return false; else return true;
+
+        }
+        catch (Exception e) {
+
+            //Registrando erro ocorrigo
+            e.printStackTrace();
+            return false;
+
+        }
+
+    }
+
+    public boolean deleteTask(int _id, String _task) {
+
+        try {
+
+            //Definindo Valorres
+            String where = DatabaseCreator.FIELD_NOTEID + " = " + _id + " and " + DatabaseCreator.FIELD_TASK + " = '" + _task + "'";
+            long result;
+
+            //Recuperando instancia banco de dados
+            this.db = database.getWritableDatabase();
+
+            //Atualizando dados no banco
+            result = db.delete(
+                    DatabaseCreator.ITEMLIST_TABLE,
                     where,
                     null
             );
