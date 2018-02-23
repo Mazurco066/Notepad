@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
-import com.mazurco066.notepad.activity.MainActivity;
 import com.mazurco066.notepad.activity.NoteActivity;
 import com.mazurco066.notepad.adapter.NoteAdapter;
 import com.mazurco066.notepad.dao.NoteDAO;

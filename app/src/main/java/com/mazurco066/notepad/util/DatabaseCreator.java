@@ -12,6 +12,9 @@ public class DatabaseCreator extends SQLiteOpenHelper {
     public final static String TODOLIST_TABLE = "todolists";
     public final static String ITEMLIST_TABLE = "itemlist";
     public final static String FIELD_ID = "_id";
+    public final static String FIELD_NOTEID = "_noteid";
+    public final static String FIELD_TASK = "_task";
+    public final static String FIELD_DONE = "_done";
     public final static String FIELD_DATE = "_date";
     public final static String FIELD_TITLE = "_title";
     public final static String FIELD_CONTENT = "_content";
@@ -42,11 +45,25 @@ public class DatabaseCreator extends SQLiteOpenHelper {
             //Criando a tabela
             sqLiteDatabase.execSQL(sqlCommand);
 
-            //Criando String para nova tabela da update de Todo Lists
+            //Criando String para nova tabela da update de Todo Lists: TodoList
             sql = new StringBuilder();
             sql.append("CREATE TABLE IF NOT EXISTS ").append(TODOLIST_TABLE).append("( ");
             sql.append(FIELD_ID).append(" integer primary key autoincrement,");
-            sql.append(FIELD_TITLE).append(" VARCHAR(23)");
+            sql.append(FIELD_TITLE).append(" VARCHAR(23))");
+
+            //Recuperando comando sql gerado
+            sqlCommand = sql.toString();
+
+            //Criando a Tabela
+            sqLiteDatabase.execSQL(sqlCommand);
+
+            //Criando String para nova tabela da update de Todo Lists: ItemList
+            sql = new StringBuilder();
+            sql.append("CREATE TABLE If NOT EXISTS ").append(ITEMLIST_TABLE).append("( ");
+            sql.append(FIELD_NOTEID).append(" integer,");
+            sql.append(FIELD_TASK).append(" VARCHAR(50),");
+            sql.append(FIELD_DONE).append(" integer,");
+            sql.append("FOREIGN KEY (" +  FIELD_NOTEID + ") REFERENCES  " + TODOLIST_TABLE + " (" + FIELD_ID +"))");
 
             //Recuperando comando sql gerado
             sqlCommand = sql.toString();

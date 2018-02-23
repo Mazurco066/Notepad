@@ -1,7 +1,9 @@
 package com.mazurco066.notepad.model;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TodoList {
@@ -9,6 +11,7 @@ public class TodoList {
     //Attb
     private int id;
     private String title;
+    private String date;
     private List<ItemList> itens;
 
     //Public constructors
@@ -16,6 +19,9 @@ public class TodoList {
 
         this.id = 0;
         this.title = "";
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy ");
+        Date now = new Date();
+        this.date = format.format(now);
         this.itens = new ArrayList<>();
     }
 
@@ -51,10 +57,11 @@ public class TodoList {
         this.itens = itens;
     }
 
-    //Class Methods
-    public void addItem(ItemList itemList) {
-
-        if (itemList != null) this.itens.add(itemList);
+    public String getDate() {
+        return date;
     }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

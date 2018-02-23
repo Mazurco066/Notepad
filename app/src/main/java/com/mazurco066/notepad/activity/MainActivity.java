@@ -14,27 +14,19 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.adapter.MainAdapter;
-import com.mazurco066.notepad.adapter.NoteAdapter;
 import com.mazurco066.notepad.dao.ListDAO;
-import com.mazurco066.notepad.dao.NoteDAO;
 import com.mazurco066.notepad.model.Note;
 import com.mazurco066.notepad.model.TodoList;
 import com.mazurco066.notepad.util.DatabaseCreator;
 import com.mazurco066.notepad.util.Preferences;
 import com.mazurco066.notepad.util.SlidingTabLayout;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -171,12 +163,17 @@ public class MainActivity extends AppCompatActivity {
             ListDAO dao = new ListDAO(getApplicationContext());
 
             //Inserindo no banco nova lista
-            if (dao.createList(todoList.getTitle())){
+            if (dao.createList(todoList.getTitle(), todoList.getDate())){
 
                 //Recuperando id do ultimo autoincrement
                 todoList.setId(dao.getLastListId());
 
-                //Abrindo Activity de Edição de listas para adicionar ou remover itens
+                //Abrindo Activity de Edição de listas para adicionar ou remover
+                Intent listActivity = new Intent(getApplicationContext(), ListActivity.class);
+                listActivity.putExtra(DatabaseCreator.FIELD_ID, todoList.getId());
+                listActivity.putExtra(DatabaseCreator.FIELD_TITLE, todoList.getTitle());
+
+                startActivity(listActivity);
 
             }
             else {
@@ -186,10 +183,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
 
             }
-
-
-        }
-        else {
 
         }
 

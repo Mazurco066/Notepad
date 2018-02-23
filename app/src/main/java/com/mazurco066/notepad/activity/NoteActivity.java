@@ -18,7 +18,6 @@ import com.mazurco066.notepad.model.Note;
 import com.mazurco066.notepad.util.DatabaseCreator;
 import com.mazurco066.notepad.util.Preferences;
 
-
 public class NoteActivity extends AppCompatActivity {
 
     //Definindo Componentes
