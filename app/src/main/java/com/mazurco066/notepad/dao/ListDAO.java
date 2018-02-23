@@ -99,6 +99,47 @@ public class ListDAO {
 
     }
 
+    public boolean setDone(int _id, String _task) {
+
+        try {
+
+            //Definindo Valorres
+            ContentValues values;
+            String where = DatabaseCreator.FIELD_NOTEID + " = " + _id + " and " + DatabaseCreator.FIELD_TASK + " = '" + _task + "'";
+            long result;
+
+            //Recuperando instancia banco de dados
+            this.db = database.getWritableDatabase();
+
+            //Definindo Valores que serão alterados
+            values = new ContentValues();
+            values.put(DatabaseCreator.FIELD_DONE, 1);
+
+            //Atualizando dados no banco
+            result = db.update(
+                    DatabaseCreator.ITEMLIST_TABLE,
+                    values,
+                    where,
+                    null
+            );
+
+            //Fechando conexão com banco
+            db.close();
+
+            //Retornando sucesso ou fracasso
+            if (result == -1) return false; else return true;
+
+        }
+        catch (Exception e) {
+
+            //Registrando erro ocorrigo
+            e.printStackTrace();
+            return false;
+
+        }
+
+    }
+
     public ArrayList<ItemList> getAllItens(int TodoListID) {
 
         ArrayList<ItemList> _return = new ArrayList<>();

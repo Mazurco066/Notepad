@@ -4,11 +4,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
+import com.mazurco066.notepad.adapter.TaskAdapter;
 import com.mazurco066.notepad.dao.ListDAO;
 import com.mazurco066.notepad.model.ItemList;
 import com.mazurco066.notepad.model.TodoList;
@@ -24,12 +28,18 @@ public class ListActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private EditText taskEdit;
     private Button btnAddTask;
+    private ListView _todoView;
+    private ListView _doneView;
 
     private Preferences preferences;
     private ListDAO dao;
     private TodoList todoList;
     private List<ItemList> _todo;
     private List<ItemList> _done;
+
+    //Adapters
+    private ArrayAdapter<ItemList> _todoAdapter;
+    private ArrayAdapter<ItemList> _doneAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +54,8 @@ public class ListActivity extends AppCompatActivity {
         this.toolbar = findViewById(R.id.mainToolbar);
         this.taskEdit = findViewById(R.id.taskEdit);
         this.btnAddTask = findViewById(R.id.btnAddItem);
+        this._todoView = findViewById(R.id.todoView);
+        this._doneView = findViewById(R.id.doneView);
 
         //Instanciando Atributos
         this.dao = new ListDAO(getApplicationContext());
@@ -98,7 +110,7 @@ public class ListActivity extends AppCompatActivity {
 
         }
 
-        //Adicionando evento ao botãoAdicionar Tarefa
+        //Adicionando evento ao botão Adicionar Tarefa
         btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,6 +137,85 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
+        //Adicionando evento á lista de pendentes
+        _todoView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                //Recuperando tarefa que sera atualizada
+                ItemList itemList = _todo.get(i);
+
+                //Tentando Atualizar dados sobre a tarefa
+                if (dao.setDone(todoList.getId(), itemList.getTask())) {
+
+                    //Atualizando Arrays
+                    _todo.remove(itemList);
+                    _done.add(itemList);
+
+                    //Atualizando Views
+                    updateViewContent();
+
+                }
+                else {
+
+                    //Retornando mensagem de Erro
+                    String msg = getResources().getString(R.string.alert_failure);
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+
+        //Implementação padrão
+        super.onResume();
+
+        //Atualizando Listas
+        updateViewContent();
+
+    }
+
+    //Método para atualizar conteúdo das view
+    private void updateViewContent() {
+
+        //Verificando se há itens para exibir na aba de pendentes
+        if (this._todo != null) {
+
+            //Atualizando lista de pendentes
+            this._todoAdapter = new TaskAdapter(getApplicationContext(), _todo);
+            this._todoView.setAdapter(_todoAdapter);
+
+        }
+        else {
+
+            //Criando uma liista vazia
+            this._todo = new ArrayList<>();
+            this._todoAdapter = new TaskAdapter(getApplicationContext(), _todo);
+            this._todoView.setAdapter(_todoAdapter);
+
+        }
+
+        //Verificando se há itens para exibir na aba de concluídos
+        if (this._done != null) {
+
+            //Atualizando lista de pendentes
+            this._doneAdapter = new TaskAdapter(getApplicationContext(), _done);
+            this._doneView.setAdapter(_doneAdapter);
+
+        }
+        else {
+
+            //Criando uma liista vazia
+            this._done = new ArrayList<>();
+            this._doneAdapter = new TaskAdapter(getApplicationContext(), _done);
+            this._doneView.setAdapter(_doneAdapter);
+
+        }
 
     }
 
@@ -149,6 +240,10 @@ public class ListActivity extends AppCompatActivity {
 
             //Limpando campo de texto
             taskEdit.setText(null);
+
+            //Atualizando View
+            _todo.add(itemList);
+            updateViewContent();
 
         }
         else {
