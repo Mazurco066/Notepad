@@ -10,9 +10,13 @@ import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.dao.ListDAO;
+import com.mazurco066.notepad.model.ItemList;
 import com.mazurco066.notepad.model.TodoList;
 import com.mazurco066.notepad.util.DatabaseCreator;
 import com.mazurco066.notepad.util.Preferences;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -24,6 +28,8 @@ public class ListActivity extends AppCompatActivity {
     private Preferences preferences;
     private ListDAO dao;
     private TodoList todoList;
+    private List<ItemList> _todo;
+    private List<ItemList> _done;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +67,34 @@ public class ListActivity extends AppCompatActivity {
         //Recuperando itens da lista se houver
         todoList.setItens(dao.getAllItens(todoList.getId()));
 
-        Toast.makeText(getApplicationContext(), "ID: " + todoList.getId(), Toast.LENGTH_SHORT).show();
-
         //Verificando se há itens
         if (todoList.getItens() != null) {
 
-            //Adicionando itens nas views
+            //Instanciando Arraylists
+            this._todo = new ArrayList<>();
+            this._done = new ArrayList<>();
+
+            //Adicionando itens na view
+            for (ItemList _item : todoList.getItens()) {
+
+                //Verificando se é uma tarefa pendente ou concluída
+                if (_item.getDone() == 1) {
+
+                    _done.add(_item);
+                }
+                else {
+
+                    _todo.add(_item);
+                }
+
+            }
+
+        }
+        else {
+
+            //Instanciando Arraylists
+            this._todo = new ArrayList<>();
+            this._done = new ArrayList<>();
 
         }
 
@@ -75,9 +103,61 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                //Verificando se os campos não estão vazios
+                if (isNotEmptyFields()) {
+
+                    //Instanciando uma nova tarefa e a populando
+                    ItemList itemList = new ItemList();
+                    itemList.setTask(taskEdit.getText().toString());
+
+                        //Adicionando tarefa
+                        addTask(itemList);
+
+                }
+                else {
+
+                    //Retornando mensagem de Validação
+                    String msg = getResources().getString(R.string.alert_empty_fields);
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
 
+
+    }
+
+    //Método para validar adição de tarefas
+    private boolean isNotEmptyFields() {
+
+        return !(this.taskEdit.getText().toString().isEmpty());
+    }
+
+    //Método para adicionar itens na lista
+    private void addTask(ItemList itemList) {
+
+        //Definindo tarefa como pendende
+        itemList.setDone(0);
+
+        //Inserindo Tarefa no banco
+        if (this.dao.AddItem(todoList.getId(), itemList)) {
+
+            //Retornando mensagem de Sucesso
+            String msg = getResources().getString(R.string.alert_create_note_sucess);
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+
+            //Limpando campo de texto
+            taskEdit.setText(null);
+
+        }
+        else {
+
+            //Retornando mensagem de Erro
+            String msg = getResources().getString(R.string.alert_failure);
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+
+        }
 
     }
 

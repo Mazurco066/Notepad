@@ -45,7 +45,8 @@ public class ListDAO {
             //db.execSQL("DROP TABLE IF EXISTS itemlist");
             //db.execSQL("DELETE FROM " + DatabaseCreator.TODOLIST_TABLE);
             //db.execSQL("ALTER TABLE " + DatabaseCreator.TODOLIST_TABLE + "  add " + DatabaseCreator.FIELD_DATE + " Varchar(10)");
-            //db.execSQL("CREATE TABLE IF NOT EXISTS itemlist (_noteid integer, _task VARCHAR(50), _done integer, FOREIGN KEY (_noteid) REFERENCES todolists(_id));");
+            //db.execSQL("DROP TABLE itemlist");
+            //db.execSQL("CREATE TABLE IF NOT EXISTS itemlist (_noteid integer, _task VARCHAR(50) primary key, _done integer, FOREIGN KEY (_noteid) REFERENCES todolists(_id));");
 
             //Inserindo os Dados
             result = db.insert(DatabaseCreator.TODOLIST_TABLE, null, values);

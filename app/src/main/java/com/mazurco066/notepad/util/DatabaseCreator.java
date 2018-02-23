@@ -61,7 +61,7 @@ public class DatabaseCreator extends SQLiteOpenHelper {
             sql = new StringBuilder();
             sql.append("CREATE TABLE If NOT EXISTS ").append(ITEMLIST_TABLE).append("( ");
             sql.append(FIELD_NOTEID).append(" integer,");
-            sql.append(FIELD_TASK).append(" VARCHAR(50),");
+            sql.append(FIELD_TASK).append(" VARCHAR(50) primary key,");
             sql.append(FIELD_DONE).append(" integer,");
             sql.append("FOREIGN KEY (" +  FIELD_NOTEID + ") REFERENCES  " + TODOLIST_TABLE + " (" + FIELD_ID +"))");
 
