@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
@@ -126,12 +125,11 @@ public class ListActivity extends AppCompatActivity {
                 if (isNotEmptyFields()) {
 
                     //Instanciando uma nova tarefa e a populando
-                    ItemList itemList = new ItemList();
+                    final ItemList itemList = new ItemList();
                     itemList.setTask(taskEdit.getText().toString());
 
                     //Adicionando tarefa
                     addTask(itemList);
-
 
                 }
                 else {

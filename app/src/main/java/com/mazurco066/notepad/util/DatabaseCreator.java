@@ -49,7 +49,8 @@ public class DatabaseCreator extends SQLiteOpenHelper {
             sql = new StringBuilder();
             sql.append("CREATE TABLE IF NOT EXISTS ").append(TODOLIST_TABLE).append("( ");
             sql.append(FIELD_ID).append(" integer primary key autoincrement,");
-            sql.append(FIELD_TITLE).append(" VARCHAR(23))");
+            sql.append(FIELD_TITLE).append(" VARCHAR(23),");
+            sql.append(FIELD_DATE).append(" VARCHAR(10))");
 
             //Recuperando comando sql gerado
             sqlCommand = sql.toString();
