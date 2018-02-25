@@ -48,6 +48,16 @@
     <string name="alert_language_same">You are alreay using this language!</string>
     <string name="alert_unselected_language">Please Select a Language!</string>
 
+    <string name="dialog_note_delete_title">Delete Confirmation</string>
+    <string name="dialog_note_delete_content">Are you sure you want to delete this note?</string>
+    <string name="dialog_list_delete_title">Delete Confirmation</string>
+    <string name="dialog_list_delete_content">Are you sure you want to delete this list?</string>
+    <string name="dialog_list_create_title">List Title</string>
+    <string name="dialog_list_create_content">Insert a title for your list:</string>
+    <string name="dialog_confirm">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_delete">Delete</string>
+
     <string name="language_pt">Portuguese</string>
     <string name="language_en">English</string>
     <string name="language_es">Spanish</string>

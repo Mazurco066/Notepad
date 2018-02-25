@@ -214,8 +214,8 @@ public class MainActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
         //Configurando a AlertDialog
-        builder.setTitle("List Title");
-        builder.setMessage("Insert a title for your list:");
+        builder.setTitle(getResources().getString(R.string.dialog_list_create_title));
+        builder.setMessage(getResources().getString(R.string.dialog_list_create_content));
         builder.setCancelable(false);
 
         //Criando EditText para coleta do título
@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setView(input);
 
         //Setando botões de avançar ou cancelar
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getResources().getString(R.string.dialog_confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getResources().getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 

@@ -46,6 +46,16 @@
     <string name="alert_language_same">¡Usted ya está usando ese idioma!</string>
     <string name="alert_unselected_language">¡Seleccione un idioma!</string>
 
+    <string name="dialog_note_delete_title">Confirmación</string>
+    <string name="dialog_note_delete_content">¿Estás seguro que quieres borrar esta nota?</string>
+    <string name="dialog_list_delete_title">Confirmación</string>
+    <string name="dialog_list_delete_content">¿Estás seguro que quieres eliminar esta lista?</string>
+    <string name="dialog_list_create_title">Titúlo</string>
+    <string name="dialog_list_create_content">Inserta un título para tu lista:</string>
+    <string name="dialog_confirm">OK</string>
+    <string name="dialog_cancel">Cancelar</string>
+    <string name="dialog_delete">Borrar</string>
+
     <string name="language_pt">Portugues</string>
     <string name="language_en">Inglés</string>
     <string name="language_es">Español</string>

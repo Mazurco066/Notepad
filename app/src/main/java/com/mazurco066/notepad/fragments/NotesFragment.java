@@ -128,11 +128,11 @@ public class NotesFragment extends Fragment {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
 
         //Configurando alert dialog
-        alertDialog.setTitle("Delete Confirmation");
-        alertDialog.setMessage("Are you sure you want to delete this note?");
+        alertDialog.setTitle(getResources().getString(R.string.dialog_note_delete_title));
+        alertDialog.setMessage(getResources().getString(R.string.dialog_note_delete_content));
         alertDialog.setCancelable(false);
 
-        alertDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton(getResources().getString(R.string.dialog_delete), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -159,7 +159,7 @@ public class NotesFragment extends Fragment {
         });
 
         //Adicionando botões negativo e positivo para alertdialog
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton(getResources().getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 

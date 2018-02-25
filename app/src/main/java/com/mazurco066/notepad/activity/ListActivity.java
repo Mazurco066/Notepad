@@ -372,11 +372,11 @@ public class ListActivity extends AppCompatActivity {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(ListActivity.this);
 
         //Configurando alert dialog
-        alertDialog.setTitle("Delete Confirmation");
-        alertDialog.setMessage("Are you sure you want to delete this List?");
+        alertDialog.setTitle(getResources().getString(R.string.dialog_list_delete_title));
+        alertDialog.setMessage(getResources().getString(R.string.dialog_list_delete_content));
         alertDialog.setCancelable(false);
 
-        alertDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton(getResources().getString(R.string.dialog_delete), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -403,7 +403,7 @@ public class ListActivity extends AppCompatActivity {
         });
 
         //Adicionando botões negativo e positivo para alertdialog
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton(getResources().getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
