@@ -24,6 +24,8 @@ Develop a simple notepad app for android.
 	
 	**-> Delete** Delete a created note completely.
 
+* NEW - List Creation: Allow you to create/edit or delete a todo list for any uses;
+
 ## Metods
 
 * **Layers Development** 
