@@ -168,7 +168,7 @@ public class NoteDAO {
                     null,
                     null,
                     null,
-                    null,
+                    DatabaseCreator.FIELD_TITLE,
                     null
             );
 

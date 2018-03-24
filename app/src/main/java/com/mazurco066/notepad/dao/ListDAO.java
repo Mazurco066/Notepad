@@ -303,7 +303,7 @@ public class ListDAO {
                     null,
                     null,
                     null,
-                    null,
+                    DatabaseCreator.FIELD_TITLE,
                     null
             );
 
