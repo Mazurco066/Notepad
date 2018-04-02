@@ -433,7 +433,7 @@ public class ListActivity extends AppCompatActivity {
             finalList.append("\n");
             finalList.append(getResources().getString(R.string.label_done)).append("\n\n");
             if (_done != null) for (ItemList _item: _done) {
-                finalList.append("->").append(_item.getTask()).append("\n");
+                finalList.append("-> ").append(_item.getTask()).append("\n");
             }
             finalList.append("\nNotepad App - by Gabriel Mazurco");
 
