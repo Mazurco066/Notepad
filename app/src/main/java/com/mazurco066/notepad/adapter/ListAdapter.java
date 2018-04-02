@@ -1,15 +1,20 @@
 package com.mazurco066.notepad.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
+import com.mazurco066.notepad.dao.ListDAO;
 import com.mazurco066.notepad.model.TodoList;
 
 import java.util.List;
@@ -19,6 +24,7 @@ public class ListAdapter extends ArrayAdapter<TodoList> {
     //Atributos
     private Context context;
     private List<TodoList> lists;
+    private ListDAO dao;
 
     //Método construtor padrão
     public ListAdapter(@NonNull Context context, @NonNull List<TodoList> objects) {
@@ -29,6 +35,7 @@ public class ListAdapter extends ArrayAdapter<TodoList> {
         //Setando Atributos
         this.context = context;
         this.lists = objects;
+        this.dao = new ListDAO(context);
 
     }
 
@@ -55,8 +62,22 @@ public class ListAdapter extends ArrayAdapter<TodoList> {
         TextView editNoteTitle = view.findViewById(R.id.editNoteTitle);
         TextView editNoteData = view.findViewById(R.id.editNoteDate);
 
+        //Instanciando botão para exclusão dos dados
+        ImageView imgDelete = view.findViewById(R.id.img_delete);
+
         //Recuperando nota para ser exibida
-        TodoList todoList = lists.get(position);
+        final TodoList todoList = lists.get(position);
+
+        //Definindo evento para exclusão da nota
+        imgDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //Confirmando exclusão da nota com usuário
+                confirmDelete(todoList);
+
+            }
+        });
 
         //Definindo Strings para serem exibidas
         String title = todoList.getTitle();
@@ -68,6 +89,57 @@ public class ListAdapter extends ArrayAdapter<TodoList> {
 
         //Retornando a view
         return view;
+
+    }
+
+    //Método para confirmar exclusão de uma lista
+    private void confirmDelete(final TodoList todoList) {
+
+        //Instanciando criador de alert dialog
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+
+        //Configurando alert dialog
+        alertDialog.setTitle(context.getResources().getString(R.string.dialog_list_delete_title));
+        alertDialog.setMessage(context.getResources().getString(R.string.dialog_list_delete_content));
+        alertDialog.setCancelable(false);
+
+        alertDialog.setPositiveButton(context.getResources().getString(R.string.dialog_delete), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                //Recuperando mensagens
+                String sucess = context.getResources().getString(R.string.alert_delete_list_sucess);
+                String failure = context.getResources().getString(R.string.alert_failure);
+
+                if (dao.deleteList(todoList)) {
+
+                    //Retornando mensagem de sucesso ao usuário
+                    Toast.makeText(context, sucess, Toast.LENGTH_SHORT).show();
+                    remove(todoList);
+                    notifyDataSetChanged();
+
+                }
+                else {
+
+                    //Retornando mensagem de erro ao deletar lista para usuário
+                    Toast.makeText(context, failure, Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+
+        //Adicionando botões negativo e positivo para alertdialog
+        alertDialog.setNegativeButton(context.getResources().getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                //Nada Acontece....
+            }
+        });
+
+        //Criando e mostrando dialog
+        alertDialog.create();
+        alertDialog.show();
 
     }
 
