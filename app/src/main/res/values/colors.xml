@@ -34,7 +34,7 @@
 
     <!-- Cores para o tema Blue -->
     <color name="blueColorPrimary">#448AFF</color>
-    <color name="blueColorPrimaryDark">#212121</color>
+    <color name="blueColorPrimaryDark">#448AFF</color>
     <color name="blueColorAccent">#82B1FF</color>
 
     <color name="blue_text_color">#000000</color>

@@ -4,5 +4,4 @@
     android:id="@+id/mainToolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:colorPrimary"
-    android:elevation="1dp" />
+    android:background="?android:colorPrimary" />
