@@ -1,5 +1,8 @@
 # Notepad
 
+![alt text](https://raw.githubusercontent.com/Mazurco066/ImagesSource/master/Notepad_02.png)
+![alt text](https://raw.githubusercontent.com/Mazurco066/ImagesSource/master/Notepad_01.png)
+
 A Notepad App developed for Android API 21 or higher
 
 ## Developer
