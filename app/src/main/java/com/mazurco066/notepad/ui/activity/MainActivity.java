@@ -4,8 +4,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +30,8 @@ import com.mazurco066.notepad.SQLite.methods.ListActions;
 import com.mazurco066.notepad.model.Note;
 import com.mazurco066.notepad.model.TodoList;
 import com.mazurco066.notepad.SQLite.DatabaseCreator;
+import com.mazurco066.notepad.ui.fragments.ListsFragment;
+import com.mazurco066.notepad.ui.fragments.NotesFragment;
 import com.mazurco066.notepad.util.Preferences;
 import com.mazurco066.notepad.ui.layout.SlidingTabLayout;
 
@@ -36,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
     //Definindo os Componentes
     @BindView(R.id.mainToolbar) Toolbar toolbar;
-    @BindView(R.id.notesViewPager) ViewPager viewPager;
-    @BindView(R.id.slidingTabNotes) SlidingTabLayout slidingTabLayout;
+    @BindView(R.id.appDrawer) DrawerLayout mDrawerLayout;
+    @BindView(R.id.nav_view) NavigationView mNavigationView;
+    private ActionBarDrawerToggle mToggle;
 
     //Definindo Atributos
     private Preferences preferences;
@@ -57,19 +66,84 @@ public class MainActivity extends AppCompatActivity {
         //Interligando componentes com xml
         ButterKnife.bind(this);
 
+        //Instanciando componentes
+        setSupportActionBar(toolbar);
+        mToggle = new ActionBarDrawerToggle(
+                this,
+                mDrawerLayout,
+                R.string.open_drawer,
+                R.string.close_drawer
+        );
+
+        //Configurando drawer
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+
+        //Configurando Action Bar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //Definindo Toolbar a ser usada na activity
         this.setSupportActionBar(toolbar);
 
-        //Configurando Adapter/ViewPager
-        MainAdapter mainAdapter = new MainAdapter(getSupportFragmentManager(), getApplicationContext());
-        viewPager.setAdapter(mainAdapter);
+        //Definindo evento da navigation para controlar ações do menu
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        //Configurando o SlidingTabs
-        slidingTabLayout.setCustomTabView(R.layout.tab_view, R.id.viewTextTab);
-        slidingTabLayout.setDistributeEvenly(true);
-        slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.colorAccent));
-        slidingTabLayout.setViewPager(viewPager);
+                //Definindo objetos para manipular fragments
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft;
 
+                //Verificando qual item foi selecionado
+                switch (item.getItemId()) {
+
+                    //Criar nova nota
+                    case R.id.item_new_note:
+                        break;
+
+                    //Criar nova lista
+                    case R.id.item_new_list:
+                        break;
+
+                    //Acessar lista de notas
+                    case R.id.item_notes:
+                        ft = fm.beginTransaction();
+                        ft.replace(R.id.content_frame, new NotesFragment());
+                        ft.commit();
+                        mDrawerLayout.closeDrawers();
+                        break;
+
+                    //Acessar lista de listas
+                    case R.id.item_lists:
+                        ft = fm.beginTransaction();
+                        ft.replace(R.id.content_frame, new ListsFragment());
+                        ft.commit();
+                        mDrawerLayout.closeDrawers();
+                        break;
+
+                    //Acessar menu de configurações
+                    case R.id.item_settings:
+                        break;
+
+                    //Sair do app
+                    case  R.id.item_exit:
+                        break;
+
+                    //Nenhuma das opções
+                    default:
+                        //Nada acontece
+                }
+
+                //Retornando falso
+                return false;
+            }
+        });
+
+        //Definindo fragmento inicial
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.add(R.id.content_frame, new NotesFragment());
+        ft.commit();
     }
 
     //Sobrescrevendo método de ao retomar a activity
@@ -101,13 +175,18 @@ public class MainActivity extends AppCompatActivity {
         //Inflando menu no app
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
-        return true;
+
+        //Usando implementação padrão ao inflar menu
+        return super.onCreateOptionsMenu(menu);
 
     }
 
     //Sobrescrevento método de capturar ações feitas na toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        //Verificando se foi pressionado botão toggle
+        if (mToggle.onOptionsItemSelected(item)) return true;
 
         //Verificando qual item de menu foi pressionado
         switch (item.getItemId()) {

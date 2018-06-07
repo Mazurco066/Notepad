@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:title="@string/drawer_creation"
+            android:orderInCategory="100">
+            <menu>
+                <item
+                    android:id="@+id/item_new_note"
+                    android:icon="@drawable/ic_mode_edit"
+                    android:orderInCategory="100"
+                    android:title="@string/action_write" />
+                <item
+                    android:id="@+id/item_new_list"
+                    android:icon="@drawable/ic_action_list"
+                    android:orderInCategory="200"
+                    android:title="@string/action_newList" />
+            </menu>
+        </item>
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:title="@string/drawer_main"
+            android:orderInCategory="200">
+            <menu>
+                <item
+                    android:id="@+id/item_notes"
+                    android:icon="@drawable/ic_event_note"
+                    android:orderInCategory="100"
+                    android:title="@string/nav_notes" />
+                <item
+                    android:id="@+id/item_lists"
+                    android:icon="@drawable/ic_format_list_numbered"
+                    android:orderInCategory="200"
+                    android:title="@string/nav_lists" />
+            </menu>
+        </item>
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:title="@string/drawer_settings"
+            android:orderInCategory="300">
+            <item
+                android:id="@+id/item_settings"
+                android:icon="@drawable/ic_action_settings"
+                android:orderInCategory="200"
+                android:title="@string/nav_settings" />
+            <item
+                android:id="@+id/item_exit"
+                android:icon="@drawable/ic_exit_to_app"
+                android:orderInCategory="200"
+                android:title="@string/nav_exit" />
+        </item>
+    </group>
+
+</menu>
