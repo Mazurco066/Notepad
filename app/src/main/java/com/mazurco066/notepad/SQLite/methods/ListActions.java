@@ -1,4 +1,4 @@
-package com.mazurco066.notepad.dao;
+package com.mazurco066.notepad.SQLite.methods;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,18 +7,18 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.mazurco066.notepad.model.ItemList;
 import com.mazurco066.notepad.model.TodoList;
-import com.mazurco066.notepad.util.DatabaseCreator;
+import com.mazurco066.notepad.SQLite.DatabaseCreator;
 
 import java.util.ArrayList;
 
-public class ListDAO {
+public class ListActions {
 
     //Attb
     private SQLiteDatabase db;
     private DatabaseCreator database;
 
     //Public Constructors
-    public ListDAO(Context context) {
+    public ListActions(Context context) {
 
         //Instancing database instance
         this.database = new DatabaseCreator(context);

@@ -8,8 +8,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
 import com.mazurco066.notepad.R;
-import com.mazurco066.notepad.fragments.ListsFragment;
-import com.mazurco066.notepad.fragments.NotesFragment;
+import com.mazurco066.notepad.ui.fragments.ListsFragment;
+import com.mazurco066.notepad.ui.fragments.NotesFragment;
 
 public class MainAdapter extends FragmentStatePagerAdapter {
 

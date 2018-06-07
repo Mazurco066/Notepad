@@ -1,4 +1,4 @@
-package com.mazurco066.notepad.activity;
+package com.mazurco066.notepad.ui.activity;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.adapter.TabAdapter;
 import com.mazurco066.notepad.util.Preferences;
-import com.mazurco066.notepad.util.SlidingTabLayout;
+import com.mazurco066.notepad.ui.layout.SlidingTabLayout;
 
 public class SettingsActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.mazurco066.notepad.dao;
+package com.mazurco066.notepad.SQLite.methods;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,18 +6,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.mazurco066.notepad.model.Note;
-import com.mazurco066.notepad.util.DatabaseCreator;
+import com.mazurco066.notepad.SQLite.DatabaseCreator;
 
 import java.util.ArrayList;
 
-public class NoteDAO {
+public class NoteActions {
 
     //Atributos
     private SQLiteDatabase db;
     private DatabaseCreator database;
 
     //Construtor Padrão
-    public NoteDAO(Context context) {
+    public NoteActions(Context context) {
 
         //Instanciando Banco de dados
         database = new DatabaseCreator(context);

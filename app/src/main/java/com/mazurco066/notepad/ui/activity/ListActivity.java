@@ -1,4 +1,4 @@
-package com.mazurco066.notepad.activity;
+package com.mazurco066.notepad.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,10 +19,10 @@ import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.adapter.TaskAdapter;
-import com.mazurco066.notepad.dao.ListDAO;
+import com.mazurco066.notepad.SQLite.methods.ListActions;
 import com.mazurco066.notepad.model.ItemList;
 import com.mazurco066.notepad.model.TodoList;
-import com.mazurco066.notepad.util.DatabaseCreator;
+import com.mazurco066.notepad.SQLite.DatabaseCreator;
 import com.mazurco066.notepad.util.Preferences;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class ListActivity extends AppCompatActivity {
     private ListView _doneView;
 
     private Preferences preferences;
-    private ListDAO dao;
+    private ListActions dao;
     private TodoList todoList;
     private List<ItemList> _todo;
     private List<ItemList> _done;
@@ -64,7 +64,7 @@ public class ListActivity extends AppCompatActivity {
         this._doneView = findViewById(R.id.doneView);
 
         //Instanciando Atributos
-        this.dao = new ListDAO(getApplicationContext());
+        this.dao = new ListActions(getApplicationContext());
 
         //Recuperando dados passados por Intent
         final Bundle data = getIntent().getExtras();

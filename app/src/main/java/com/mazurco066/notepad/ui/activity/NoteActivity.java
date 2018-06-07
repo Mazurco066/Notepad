@@ -1,4 +1,4 @@
-package com.mazurco066.notepad.activity;
+package com.mazurco066.notepad.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,9 +13,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
-import com.mazurco066.notepad.dao.NoteDAO;
+import com.mazurco066.notepad.SQLite.methods.NoteActions;
 import com.mazurco066.notepad.model.Note;
-import com.mazurco066.notepad.util.DatabaseCreator;
+import com.mazurco066.notepad.SQLite.DatabaseCreator;
 import com.mazurco066.notepad.util.Preferences;
 
 public class NoteActivity extends AppCompatActivity {
@@ -27,7 +27,7 @@ public class NoteActivity extends AppCompatActivity {
 
     //Definindo Atributos
     private  Preferences preferences;
-    private NoteDAO dao;
+    private NoteActions dao;
     private Note note;
 
     @Override
@@ -45,7 +45,7 @@ public class NoteActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.mainToolbar);
 
         //Instanciando Atributos
-        dao = new NoteDAO(getApplicationContext());
+        dao = new NoteActions(getApplicationContext());
 
         //Recuperando dados passados por intent
         Bundle data = getIntent().getExtras();

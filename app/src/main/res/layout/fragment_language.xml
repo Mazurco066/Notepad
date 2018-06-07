@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:windowBackground"
-    tools:context="com.mazurco066.notepad.fragments.LanguageFragment">
+    tools:context=".ui.fragments.LanguageFragment">
 
     <ScrollView
         android:id="@+id/languageScrollView"

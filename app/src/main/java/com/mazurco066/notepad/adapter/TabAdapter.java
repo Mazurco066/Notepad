@@ -12,10 +12,8 @@ import android.text.style.ImageSpan;
 import android.view.ViewGroup;
 
 import com.mazurco066.notepad.R;
-import com.mazurco066.notepad.fragments.LanguageFragment;
-import com.mazurco066.notepad.fragments.ThemeFragment;
-
-import java.util.HashMap;
+import com.mazurco066.notepad.ui.fragments.LanguageFragment;
+import com.mazurco066.notepad.ui.fragments.ThemeFragment;
 
 public class TabAdapter extends FragmentStatePagerAdapter {
 

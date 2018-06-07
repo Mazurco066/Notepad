@@ -1,4 +1,4 @@
-package com.mazurco066.notepad.fragments;
+package com.mazurco066.notepad.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +10,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.mazurco066.notepad.R;
-import com.mazurco066.notepad.activity.NoteActivity;
+import com.mazurco066.notepad.ui.activity.NoteActivity;
 import com.mazurco066.notepad.adapter.NoteAdapter;
-import com.mazurco066.notepad.dao.NoteDAO;
+import com.mazurco066.notepad.SQLite.methods.NoteActions;
 import com.mazurco066.notepad.model.Note;
-import com.mazurco066.notepad.util.DatabaseCreator;
+import com.mazurco066.notepad.SQLite.DatabaseCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class NotesFragment extends Fragment {
     //Definindo Atributos
     private NoteAdapter adapter;
     private List<Note> notes;
-    private NoteDAO dao;
+    private NoteActions dao;
 
     public NotesFragment() {} // Required empty public constructor
 
@@ -41,7 +41,7 @@ public class NotesFragment extends Fragment {
         this.listView = view.findViewById(R.id.noteListView);
 
         //Instanciando Atributos
-        this.dao = new NoteDAO(getActivity());
+        this.dao = new NoteActions(getActivity());
 
         //Ouvindo eventos de clicar em uma nota
         this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

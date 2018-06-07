@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
-import com.mazurco066.notepad.dao.ListDAO;
+import com.mazurco066.notepad.SQLite.methods.ListActions;
 import com.mazurco066.notepad.model.TodoList;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class ListAdapter extends ArrayAdapter<TodoList> {
     //Atributos
     private Context context;
     private List<TodoList> lists;
-    private ListDAO dao;
+    private ListActions dao;
 
     //Método construtor padrão
     public ListAdapter(@NonNull Context context, @NonNull List<TodoList> objects) {
@@ -35,7 +35,7 @@ public class ListAdapter extends ArrayAdapter<TodoList> {
         //Setando Atributos
         this.context = context;
         this.lists = objects;
-        this.dao = new ListDAO(context);
+        this.dao = new ListActions(context);
 
     }
 

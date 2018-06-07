@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?android:windowBackground"
-    tools:context="com.mazurco066.notepad.activity.SettingsActivity">
+    tools:context=".ui.activity.SettingsActivity">
 
     <include layout="@layout/toolbar" android:id="@+id/mainToolbar" />
 
@@ -18,7 +18,7 @@
         android:layout_weight="1"
         />
 
-    <com.mazurco066.notepad.util.SlidingTabLayout
+    <com.mazurco066.notepad.ui.layout.SlidingTabLayout
         android:id="@+id/slidingTab"
         android:background="?android:colorPrimary"
         android:layout_width="match_parent"

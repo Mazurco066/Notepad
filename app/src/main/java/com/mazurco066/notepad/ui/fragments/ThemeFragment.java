@@ -1,4 +1,4 @@
-package com.mazurco066.notepad.fragments;
+package com.mazurco066.notepad.ui.fragments;
 
 
 import android.content.Context;
@@ -14,7 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
-import com.mazurco066.notepad.activity.SettingsActivity;
+import com.mazurco066.notepad.ui.activity.SettingsActivity;
 import com.mazurco066.notepad.util.Preferences;
 
 public class ThemeFragment extends Fragment {

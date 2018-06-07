@@ -1,4 +1,4 @@
-package com.mazurco066.notepad.fragments;
+package com.mazurco066.notepad.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.mazurco066.notepad.R;
-import com.mazurco066.notepad.activity.ListActivity;
+import com.mazurco066.notepad.ui.activity.ListActivity;
 import com.mazurco066.notepad.adapter.ListAdapter;
-import com.mazurco066.notepad.dao.ListDAO;
+import com.mazurco066.notepad.SQLite.methods.ListActions;
 import com.mazurco066.notepad.model.TodoList;
-import com.mazurco066.notepad.util.DatabaseCreator;
+import com.mazurco066.notepad.SQLite.DatabaseCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class ListsFragment extends Fragment {
     //Attb
     private ArrayAdapter<TodoList> adapter;
     private List<TodoList> lists;
-    private ListDAO dao;
+    private ListActions dao;
 
     public ListsFragment() {} // Required empty public constructor
 
@@ -42,7 +42,7 @@ public class ListsFragment extends Fragment {
         this.listView = view.findViewById(R.id.createdListsView);
 
         // Instanciando atributos
-        this.dao = new ListDAO(getActivity());
+        this.dao = new ListActions(getActivity());
 
         //Atribuindo evento de on click para list view de seleçãod e listas
         this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

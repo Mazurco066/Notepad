@@ -1,4 +1,4 @@
-package com.mazurco066.notepad.util;
+package com.mazurco066.notepad.SQLite;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

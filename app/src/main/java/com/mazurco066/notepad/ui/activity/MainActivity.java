@@ -1,4 +1,4 @@
-package com.mazurco066.notepad.activity;
+package com.mazurco066.notepad.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,21 +20,24 @@ import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.adapter.MainAdapter;
-import com.mazurco066.notepad.dao.ListDAO;
+import com.mazurco066.notepad.SQLite.methods.ListActions;
 import com.mazurco066.notepad.model.Note;
 import com.mazurco066.notepad.model.TodoList;
-import com.mazurco066.notepad.util.DatabaseCreator;
+import com.mazurco066.notepad.SQLite.DatabaseCreator;
 import com.mazurco066.notepad.util.Preferences;
-import com.mazurco066.notepad.util.SlidingTabLayout;
+import com.mazurco066.notepad.ui.layout.SlidingTabLayout;
 
 import java.util.Locale;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
     //Definindo os Componentes
-    private Toolbar toolbar;
-    private ViewPager viewPager;
-    private SlidingTabLayout slidingTabLayout;
+    @BindView(R.id.mainToolbar) Toolbar toolbar;
+    @BindView(R.id.notesViewPager) ViewPager viewPager;
+    @BindView(R.id.slidingTabNotes) SlidingTabLayout slidingTabLayout;
 
     //Definindo Atributos
     private Preferences preferences;
@@ -51,10 +54,8 @@ public class MainActivity extends AppCompatActivity {
         setSettingsTheme();
         setLanguageTheme();
 
-        //Instanciando os Componentes
-        toolbar = findViewById(R.id.mainToolbar);
-        viewPager = findViewById(R.id.notesViewPager);
-        slidingTabLayout = findViewById(R.id.slidingTabNotes);
+        //Interligando componentes com xml
+        ButterKnife.bind(this);
 
         //Definindo Toolbar a ser usada na activity
         this.setSupportActionBar(toolbar);
@@ -160,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
         if (todoList.getId() == -1) {   //Se for nova
 
             //Instanciando DAO de lista para inserir nova lista
-            ListDAO dao = new ListDAO(getApplicationContext());
+            ListActions dao = new ListActions(getApplicationContext());
 
             //Inserindo no banco nova lista
             if (dao.createList(todoList.getTitle(), todoList.getDate())){

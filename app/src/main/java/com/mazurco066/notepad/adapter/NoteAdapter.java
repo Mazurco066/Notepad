@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
-import com.mazurco066.notepad.dao.NoteDAO;
+import com.mazurco066.notepad.SQLite.methods.NoteActions;
 import com.mazurco066.notepad.model.Note;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
     //Atributos
     private Context context;
     private List<Note> notes;
-    private NoteDAO dao;
+    private NoteActions dao;
 
     //Método construtor padrão
     public NoteAdapter(@NonNull Context context, @NonNull List<Note> objects) {
@@ -35,7 +35,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         //Setando Atributos
         this.context = context;
         this.notes = objects;
-        this.dao = new NoteDAO(context);
+        this.dao = new NoteActions(context);
 
     }
 
