@@ -18,7 +18,7 @@
             android:layout_marginEnd="@dimen/listMargin"
             android:layout_gravity="center">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/textThemeLabel"
                 android:textColor="?android:textColor"
                 android:textSize="@dimen/note_text_size"
@@ -37,7 +37,7 @@
                 android:padding="10dp"
                 android:layout_margin="@dimen/listMargin">
                 
-                <RadioButton
+                <android.support.v7.widget.AppCompatRadioButton
                     android:id="@+id/darkRadioBtn"
                     android:textColor="?android:textColor"
                     android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
                     android:layout_weight="1"
                     android:text="@string/theme_dark"/>
 
-                <RadioButton
+                <android.support.v7.widget.AppCompatRadioButton
                     android:id="@+id/lightRadioBtn"
                     android:textColor="?android:textColor"
                     android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
                     android:layout_weight="1"
                     android:text="@string/theme_light"/>
 
-                <RadioButton
+                <android.support.v7.widget.AppCompatRadioButton
                     android:id="@+id/blueRadioBtn"
                     android:textColor="?android:textColor"
                     android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
                     android:layout_weight="1"
                     android:text="@string/theme_blue"/>
 
-                <RadioButton
+                <android.support.v7.widget.AppCompatRadioButton
                     android:id="@+id/redRadioBtn"
                     android:textColor="?android:textColor"
                     android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
 
             </RadioGroup>
 
-            <Button
+            <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btnChangeTheme"
                 android:background="@drawable/button_background"
                 android:layout_below="@id/themeRadioGroup"

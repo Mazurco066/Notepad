@@ -13,7 +13,7 @@
 
         <include layout="@layout/toolbar" android:id="@+id/mainToolbar"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/takLabel"
             android:labelFor="@id/taskEdit"
             android:layout_below="@id/mainToolbar"
@@ -29,7 +29,7 @@
             android:textSize="@dimen/note_text_size"
             android:text="@string/label_task"/>
 
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/taskEdit"
             android:layout_below="@id/takLabel"
             android:inputType="text"
@@ -45,7 +45,7 @@
             android:textColor="?android:textColor"
             android:textSize="@dimen/note_text_size" />
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnAddItem"
             android:layout_below="@id/taskEdit"
             android:layout_width="match_parent"
@@ -62,7 +62,7 @@
             android:textColor="?android:textColor"
             android:text="@string/btn_addTask"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/todoListLabel"
             android:layout_below="@id/btnAddItem"
             android:layout_width="match_parent"
@@ -90,7 +90,7 @@
             android:layout_marginStart="@dimen/listMargin"
             android:layout_marginTop="@dimen/listMargin" />
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/doneListLabel"
             android:layout_below="@id/todoView"
             android:layout_width="match_parent"

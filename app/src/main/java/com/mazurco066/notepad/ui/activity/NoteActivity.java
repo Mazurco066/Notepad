@@ -18,12 +18,15 @@ import com.mazurco066.notepad.model.Note;
 import com.mazurco066.notepad.SQLite.DatabaseCreator;
 import com.mazurco066.notepad.util.Preferences;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class NoteActivity extends AppCompatActivity {
 
     //Definindo Componentes
-    private EditText editTitle;
-    private EditText editNote;
-    private Toolbar toolbar;
+    @BindView(R.id.editTitle) EditText editTitle;
+    @BindView(R.id.editNote) EditText editNote;
+    @BindView(R.id.mainToolbar) Toolbar toolbar;
 
     //Definindo Atributos
     private  Preferences preferences;
@@ -38,6 +41,9 @@ public class NoteActivity extends AppCompatActivity {
 
         //Verificando tema
         setSettingsTheme();
+
+        //Interligando componentes com xml
+        ButterKnife.bind(this);
 
         //Instanciando Componentes
         editTitle = findViewById(R.id.editTitle);

@@ -19,10 +19,13 @@ import com.mazurco066.notepad.SQLite.DatabaseCreator;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class NotesFragment extends Fragment {
 
     //Definindo Componentes
-    private ListView listView;
+    @BindView(R.id.noteListView) ListView listView;
 
     //Definindo Atributos
     private NoteAdapter adapter;
@@ -36,9 +39,7 @@ public class NotesFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
-
-        //Instanciando Componentes
-        this.listView = view.findViewById(R.id.noteListView);
+        ButterKnife.bind(this, view);
 
         //Instanciando Atributos
         this.dao = new NoteActions(getActivity());

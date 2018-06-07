@@ -17,10 +17,14 @@ import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.ui.activity.SettingsActivity;
 import com.mazurco066.notepad.util.Preferences;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ThemeFragment extends Fragment {
 
     //Componentes
-    private RadioGroup themeGroup;
+    @BindView(R.id.themeRadioGroup) RadioGroup themeGroup;
+    @BindView(R.id.btnChangeTheme) Button btnChangeTheme;
 
     //Atributos
     private Preferences preferences;
@@ -35,10 +39,7 @@ public class ThemeFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_theme, container, false);
-
-        // Instanciando Componentes
-        themeGroup = view.findViewById(R.id.themeRadioGroup);
-        Button btnChangeTheme = view.findViewById(R.id.btnChangeTheme);
+        ButterKnife.bind(this, view);
 
         // Instanciando Atributos
         this.context = view.getContext();

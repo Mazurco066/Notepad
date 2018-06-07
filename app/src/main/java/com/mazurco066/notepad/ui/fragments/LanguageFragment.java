@@ -22,12 +22,15 @@ import com.mazurco066.notepad.util.Preferences;
 
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class LanguageFragment extends Fragment {
 
     //Componentes
-    private RadioGroup languageGroup;
+    @BindView(R.id.languageRadioGroup) RadioGroup languageGroup;
+    @BindView(R.id.btnChangeLanguage) Button btnChange;
     private RadioButton radioButton;
-    private Button btnChange;
 
     //Atributos
     private Locale myLocale;
@@ -44,10 +47,7 @@ public class LanguageFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_language, container, false);
-
-        // Instanciando Componentes
-        this.languageGroup = view.findViewById(R.id.languageRadioGroup);
-        this.btnChange = view.findViewById(R.id.btnChangeLanguage);
+        ButterKnife.bind(this, view);
 
         // Instanciando Atributos
         this.context = view.getContext();

@@ -14,12 +14,15 @@ import com.mazurco066.notepad.adapter.TabAdapter;
 import com.mazurco066.notepad.util.Preferences;
 import com.mazurco066.notepad.ui.layout.SlidingTabLayout;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SettingsActivity extends AppCompatActivity {
 
     //Componentes
-    private Toolbar toolbar;
-    private ViewPager viewPager;
-    private SlidingTabLayout slidingTabLayout;
+    @BindView(R.id.mainToolbar) Toolbar toolbar;
+    @BindView(R.id.mainViewPager) ViewPager viewPager;
+    @BindView(R.id.slidingTab) SlidingTabLayout slidingTabLayout;
 
     //Atributos
     private Preferences preferences;
@@ -33,10 +36,8 @@ public class SettingsActivity extends AppCompatActivity {
         //Verificando Tema
         setSettingsTheme();
 
-        //Instanciando componentes
-        this.toolbar = findViewById(R.id.mainToolbar);
-        this.viewPager = findViewById(R.id.mainViewPager);
-        this.slidingTabLayout = findViewById(R.id.slidingTab);
+        //Interligando componentes com xml
+        ButterKnife.bind(this);
 
         //Recuperando título para toolbar
         String title = getResources().getString(R.string.action_settings);

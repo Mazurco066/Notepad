@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center">
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textLanguageLabel"
             android:textColor="?android:textColor"
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-            <RadioButton
+            <android.support.v7.widget.AppCompatRadioButton
                 android:id="@+id/englishButton"
                 android:textColor="?android:textColor"
                 android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
                 android:layout_weight="1"
                 android:text="@string/language_en" />
 
-            <RadioButton
+            <android.support.v7.widget.AppCompatRadioButton
                 android:id="@+id/portugueseButton"
                 android:textColor="?android:textColor"
                 android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
                 android:layout_weight="1"
                 android:text="@string/language_pt" />
 
-            <RadioButton
+            <android.support.v7.widget.AppCompatRadioButton
                 android:id="@+id/spanishButton"
                 android:textColor="?android:textColor"
                 android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
 
         </RadioGroup>
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnChangeLanguage"
             android:background="@drawable/button_background"
             android:layout_below="@id/languageRadioGroup"

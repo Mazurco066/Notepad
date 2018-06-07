@@ -20,10 +20,13 @@ import com.mazurco066.notepad.SQLite.DatabaseCreator;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ListsFragment extends Fragment {
 
     //Components
-    private ListView listView;
+    @BindView(R.id.createdListsView) ListView listView;
 
     //Attb
     private ArrayAdapter<TodoList> adapter;
@@ -37,9 +40,7 @@ public class ListsFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lists, container, false);
-
-        // Instanciando componentes
-        this.listView = view.findViewById(R.id.createdListsView);
+        ButterKnife.bind(this, view);
 
         // Instanciando atributos
         this.dao = new ListActions(getActivity());
