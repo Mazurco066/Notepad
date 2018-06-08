@@ -8,8 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -25,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
-import com.mazurco066.notepad.adapter.MainAdapter;
 import com.mazurco066.notepad.SQLite.methods.ListActions;
 import com.mazurco066.notepad.model.Note;
 import com.mazurco066.notepad.model.TodoList;
@@ -34,7 +31,6 @@ import com.mazurco066.notepad.ui.fragments.ListsFragment;
 import com.mazurco066.notepad.ui.fragments.NotesFragment;
 import com.mazurco066.notepad.ui.fragments.SettingsFragment;
 import com.mazurco066.notepad.util.Preferences;
-import com.mazurco066.notepad.ui.layout.SlidingTabLayout;
 
 import java.util.Locale;
 
@@ -154,28 +150,6 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
     }
 
-    //Sobrescrevendo método de ao retomar a activity
-    @Override
-    protected void onResume() {
-
-        //Implementação padrão do método de onResume do ciclo de vida
-        super.onResume();
-
-        //Verficando se há temas novos a serem aplicados
-        if (settingsOpened) {
-
-            //Retornando boolena a estado falso se bem que n é necessário pois outra activity sera instanciada
-            settingsOpened = false;
-
-            //Reiniciando activity
-            Intent main = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(main);
-            finish();
-
-        }
-
-    }
-
     //Sobrescrevendo método de inflar menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -208,22 +182,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_newList:
                 writeList();
                 break;
-
-            //Configurações do app
-            case R.id.action_settings:
-                openSettingsActivity();
-                break;
-
-            //Sair do App
-            case R.id.action_exit:
-                finish();
-                break;
-
         }
 
         //Retornando retorno padrão do método implementado na superclasse
         return super.onOptionsItemSelected(item);
-
     }
 
     //Método para Abrir Activity de Escrever/Visualizar Nota
@@ -354,18 +316,6 @@ public class MainActivity extends AppCompatActivity {
         //Criando e mostrando a Dialog
         builder.create();
         builder.show();
-
-    }
-
-    //Método para abrir activity de configurações
-    private void openSettingsActivity() {
-
-        //Notificando essa activity que usuário foi para activity de config
-        settingsOpened = true;
-
-        //Instanciando intent e indo para settings
-        Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
-        startActivity(settings);
 
     }
 

@@ -70,6 +70,7 @@
     <string name="alert_empty_shared_field">You have nothing to share!</string>
     <string name="alert_language_same">You are alreay using this language!</string>
     <string name="alert_unselected_language">Please Select a Language!</string>
+    <string name="alert_settings_changed">Preferences Successfully Updated!</string>
 
     <!-- Strings para uso nas dialogs -->
     <string name="dialog_note_delete_title">Delete Confirmation</string>
