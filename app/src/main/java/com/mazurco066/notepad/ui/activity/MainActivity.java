@@ -32,6 +32,7 @@ import com.mazurco066.notepad.model.TodoList;
 import com.mazurco066.notepad.SQLite.DatabaseCreator;
 import com.mazurco066.notepad.ui.fragments.ListsFragment;
 import com.mazurco066.notepad.ui.fragments.NotesFragment;
+import com.mazurco066.notepad.ui.fragments.SettingsFragment;
 import com.mazurco066.notepad.util.Preferences;
 import com.mazurco066.notepad.ui.layout.SlidingTabLayout;
 
@@ -99,10 +100,12 @@ public class MainActivity extends AppCompatActivity {
 
                     //Criar nova nota
                     case R.id.item_new_note:
+                        writeNote();
                         break;
 
                     //Criar nova lista
                     case R.id.item_new_list:
+                        writeList();
                         break;
 
                     //Acessar lista de notas
@@ -123,10 +126,15 @@ public class MainActivity extends AppCompatActivity {
 
                     //Acessar menu de configurações
                     case R.id.item_settings:
+                        ft = fm.beginTransaction();
+                        ft.add(R.id.content_frame, new SettingsFragment());
+                        ft.commit();
+                        mDrawerLayout.closeDrawers();
                         break;
 
                     //Sair do app
                     case  R.id.item_exit:
+                        finish();
                         break;
 
                     //Nenhuma das opções

@@ -45,6 +45,8 @@
     <string name="button_change_language">Change Language</string>
     <string name="button_change_theme">Change Theme</string>
     <string name="btn_addTask">Add Task</string>
+    <string name="btn_save">Save</string>
+
 
     <!-- Strings para TextViews -->
     <string name="label_language">Language Settings</string>

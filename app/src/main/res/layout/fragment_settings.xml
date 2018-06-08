@@ -2,12 +2,141 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:windowBackground"
     tools:context="com.mazurco066.notepad.ui.fragments.SettingsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
+        android:id="@+id/languageScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/relLayout"
+            android:layout_marginEnd="@dimen/listMargin"
+            android:layout_marginStart="@dimen/listMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <!-- Para uso das config. de linguagem -->
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/textLanguageLabel"
+                android:textColor="?android:textColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:layout_marginTop="30dp"
+                android:textSize="@dimen/note_text_size"
+                android:text="@string/label_language"/>
+
+            <RadioGroup
+                android:id="@+id/languageRadioGroup"
+                android:layout_below="@id/textLanguageLabel"
+                android:layout_marginTop="15dp"
+                android:padding="10dp"
+                android:layout_margin="@dimen/listMargin"
+                android:background="@drawable/radio_group_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/englishButton"
+                    android:textColor="?android:textColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/language_en" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/portugueseButton"
+                    android:textColor="?android:textColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/language_pt" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/spanishButton"
+                    android:textColor="?android:textColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/language_es" />
+
+            </RadioGroup>
+
+            <!-- para uso das config. de tema -->
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/textThemeLabel"
+                android:textColor="?android:textColor"
+                android:textSize="@dimen/note_text_size"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/languageRadioGroup"
+                android:text="@string/label_theme"/>
+
+            <RadioGroup
+                android:id="@+id/themeRadioGroup"
+                android:background="@drawable/radio_group_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textThemeLabel"
+                android:padding="10dp"
+                android:layout_margin="@dimen/listMargin">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/darkRadioBtn"
+                    android:textColor="?android:textColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/theme_dark"/>
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/lightRadioBtn"
+                    android:textColor="?android:textColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/theme_light"/>
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/blueRadioBtn"
+                    android:textColor="?android:textColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/theme_blue"/>
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/redRadioBtn"
+                    android:textColor="?android:textColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/theme_red"/>
+
+            </RadioGroup>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnSaveSettings"
+                android:background="@drawable/button_background"
+                android:layout_below="@id/themeRadioGroup"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="@dimen/listMargin"
+                android:layout_marginEnd="@dimen/listMargin"
+                android:text="@string/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
 
 </FrameLayout>
