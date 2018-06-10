@@ -5,7 +5,7 @@
     tools:context=".ui.fragments.ListsFragment">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/createdListsView"
+            android:id="@+id/list_recycler"
             android:background="@drawable/list_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

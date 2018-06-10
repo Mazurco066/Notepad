@@ -1,6 +1,5 @@
 package com.mazurco066.notepad.ui.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,16 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
+
 
 import com.mazurco066.notepad.R;
-import com.mazurco066.notepad.ui.activity.NoteActivity;
 import com.mazurco066.notepad.adapter.NoteAdapter;
 import com.mazurco066.notepad.SQLite.methods.NoteActions;
 import com.mazurco066.notepad.model.Note;
-import com.mazurco066.notepad.SQLite.DatabaseCreator;
+import com.mazurco066.notepad.ui.layout.SimpleDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +45,7 @@ public class NotesFragment extends Fragment {
 
         //Configurando recycler
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recycler.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
 
         //Returning View
         return view;

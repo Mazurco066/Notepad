@@ -12,6 +12,7 @@ import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.adapter.ListAdapter;
 import com.mazurco066.notepad.SQLite.methods.ListActions;
 import com.mazurco066.notepad.model.TodoList;
+import com.mazurco066.notepad.ui.layout.SimpleDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import butterknife.ButterKnife;
 public class ListsFragment extends Fragment {
 
     //Components
-    @BindView(R.id.createdListsView) RecyclerView recycler;
+    @BindView(R.id.list_recycler) RecyclerView recycler;
 
     //Attb
     private ListAdapter adapter;
@@ -43,6 +44,7 @@ public class ListsFragment extends Fragment {
 
         //Configurando recycler
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recycler.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
 
         // Returning inflated view
         return view;
