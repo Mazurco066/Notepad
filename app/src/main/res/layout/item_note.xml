@@ -34,7 +34,7 @@
 
     </LinearLayout>
 
-    <ImageView
+    <android.support.v7.widget.AppCompatImageView
         android:id="@+id/img_delete"
         android:src="@drawable/ic_action_trash"
         android:contentDescription="@string/action_delete"

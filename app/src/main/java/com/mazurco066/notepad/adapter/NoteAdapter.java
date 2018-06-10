@@ -2,95 +2,78 @@ package com.mazurco066.notepad.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
+import com.mazurco066.notepad.SQLite.DatabaseCreator;
 import com.mazurco066.notepad.SQLite.methods.NoteActions;
 import com.mazurco066.notepad.model.Note;
+import com.mazurco066.notepad.ui.activity.NoteActivity;
 
 import java.util.List;
 
-public class NoteAdapter extends ArrayAdapter<Note> {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    //Atributos
-    private Context context;
+public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
+
+    //Atributos para recuperação de dados
+    private static Context context;
     private List<Note> notes;
-    private NoteActions dao;
+    private NoteActions actions;
 
     //Método construtor padrão
     public NoteAdapter(@NonNull Context context, @NonNull List<Note> objects) {
-
-        //Implementação padrão do método
-        super(context, 0, objects);
-
-        //Setando Atributos
+        //Recuperando instancias dos Atributos
+        this.actions = new NoteActions(context);
         this.context = context;
         this.notes = objects;
-        this.dao = new NoteActions(context);
-
+        notifyDataSetChanged();
     }
 
-    //Sobrescrevendo método de retorno de view
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    //Ao criar view holder
+    public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        //View view = super.getView(position, convertView, parent);
-        View view = convertView;
+        //Inflando view
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note, parent, false);
 
-        //Verificando se a view ja está criada
-        if (view == null) {
+        //Retornando view inflada para o view holder
+        return new NoteViewHolder(view);
+    }
 
-            //Iniciando objeto para montar o layout
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+    @Override
+    //Ao bindar view com xml
+    public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
 
-            //Montando a partir do xml
-            view = inflater.inflate(R.layout.item_note, parent, false);
-
-        }
-
-        //Instanciando textView para exibição de dados
-        TextView editNoteTitle = view.findViewById(R.id.editNoteTitle);
-        TextView editNoteData = view.findViewById(R.id.editNoteDate);
-
-        //Instanciando botão para exclusão dos dados
-        ImageView imgDelete = view.findViewById(R.id.img_delete);
-
-        //Recuperando nota para ser exibida
+        //Recuperando posição da nota
         final Note note = notes.get(position);
 
-        //Definindo evento para exclusão da nota
-        imgDelete.setOnClickListener(new View.OnClickListener() {
+        //Adicionando detalhes da nota
+        holder.txtTitle.setText(note.getTitle());
+        holder.txtDate.setText(context.getResources().getString(R.string.label_created) + " " + note.getDate());
+        holder.imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                //Confirmando exclusão da nota com usuário
+            public void onClick(View v) {
                 confirmDelete(note);
-
             }
         });
-
-        //Definindo Strings para serem exibidas
-        String title = note.getTitle();
-        String date = context.getResources().getString(R.string.label_created) + " " + note.getDate();
-
-        //Exibindo dados na tela
-        editNoteTitle.setText(title);
-        editNoteData.setText(date);
-
-        //Retornando a view
-        return view;
-
+        holder.setNote(note);
     }
+
+    @Override
+    //Ao recuperar contagem de itens
+    public int getItemCount() { return notes.size(); }
 
     //Método para confirmar exclusão de uma nota
     private void confirmDelete(final Note note) {
@@ -106,24 +89,19 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         alertDialog.setPositiveButton(context.getResources().getString(R.string.dialog_delete), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
                 //Recuperando mensagens
                 String sucess = context.getResources().getString(R.string.alert_delete_note_sucess);
                 String failure = context.getResources().getString(R.string.alert_failure);
 
-                if (dao.deleteNote(note.getId())) {
-
+                if (actions.deleteNote(note.getId())) {
                     //Retornando mensagem de sucesso ao usuário
                     Toast.makeText(context, sucess, Toast.LENGTH_SHORT).show();
-                    remove(note);
+                    notes.remove(note);
                     notifyDataSetChanged();
-
                 }
                 else {
-
                     //Retornando mensagem de erro ao criar nota para usuário
                     Toast.makeText(context, failure, Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
@@ -132,7 +110,6 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         alertDialog.setNegativeButton(context.getResources().getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
                 //Nada Acontece....
             }
         });
@@ -140,7 +117,41 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         //Criando e mostrando dialog
         alertDialog.create();
         alertDialog.show();
-
     }
 
+    //Definindo view holder
+    class NoteViewHolder extends RecyclerView.ViewHolder {
+
+        //Definindo componentes presentes na view
+        @BindView(R.id.editNoteTitle) TextView txtTitle;
+        @BindView(R.id.editNoteDate) TextView txtDate;
+        @BindView(R.id.img_delete) ImageView imgDelete;
+        View view;
+
+        //Definindo atributos
+        private Note note;
+
+        void setNote(Note note) { this.note = note; }
+
+        //Implementando um construtor para o view holder
+        NoteViewHolder(View itemView) {
+            //Implementação padrão de view holder
+            super(itemView);
+            view = itemView;
+            ButterKnife.bind(this, itemView);
+
+            //Definindo evento de onClick para item da lista
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent noteIntent = new Intent(context , NoteActivity.class);
+                    noteIntent.putExtra(DatabaseCreator.FIELD_ID, note.getId());
+                    noteIntent.putExtra(DatabaseCreator.FIELD_DATE, note.getDate());
+                    noteIntent.putExtra(DatabaseCreator.FIELD_TITLE, note.getTitle());
+                    noteIntent.putExtra(DatabaseCreator.FIELD_CONTENT, note.getContent());
+                    context.startActivity(noteIntent);
+                }
+            });
+        }
+    }
 }

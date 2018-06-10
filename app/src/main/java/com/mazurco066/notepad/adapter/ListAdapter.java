@@ -2,94 +2,71 @@ package com.mazurco066.notepad.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
+import com.mazurco066.notepad.SQLite.DatabaseCreator;
 import com.mazurco066.notepad.SQLite.methods.ListActions;
 import com.mazurco066.notepad.model.TodoList;
+import com.mazurco066.notepad.ui.activity.ListActivity;
 
 import java.util.List;
 
-public class ListAdapter extends ArrayAdapter<TodoList> {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
 
     //Atributos
-    private Context context;
+    private static Context context;
     private List<TodoList> lists;
-    private ListActions dao;
+    private ListActions actions;
 
     //Método construtor padrão
     public ListAdapter(@NonNull Context context, @NonNull List<TodoList> objects) {
-
-        //Implementação padrão do método
-        super(context, 0, objects);
-
         //Setando Atributos
+        this.actions = new ListActions(context);
         this.context = context;
         this.lists = objects;
-        this.dao = new ListActions(context);
-
+        notifyDataSetChanged();
     }
 
-    //Sobrescrevendo método de retorno de view
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        //View view = super.getView(position, convertView, parent);
-        View view = convertView;
+        //Inflando view
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note, parent, false);
 
-        //Verificando se a view ja está criada
-        if (view == null) {
+        //Retornando view inflada para o view holder
+        return new ListAdapter.ListViewHolder(view);
+    }
 
-            //Iniciando objeto para montar o layout
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+    @Override
+    public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
 
-            //Montando a partir do xml
-            view = inflater.inflate(R.layout.item_note, parent, false);
+        //Recuperando lista a ser usada
+        final TodoList list = lists.get(position);
 
-        }
-
-        //Instanciando textView para exibição de dados
-        TextView editNoteTitle = view.findViewById(R.id.editNoteTitle);
-        TextView editNoteData = view.findViewById(R.id.editNoteDate);
-
-        //Instanciando botão para exclusão dos dados
-        ImageView imgDelete = view.findViewById(R.id.img_delete);
-
-        //Recuperando nota para ser exibida
-        final TodoList todoList = lists.get(position);
-
-        //Definindo evento para exclusão da nota
-        imgDelete.setOnClickListener(new View.OnClickListener() {
+        //Adicionando detalhes da lista
+        holder.txtTitle.setText(list.getTitle());
+        holder.txtDate.setText(context.getResources().getString(R.string.label_created) + " " + list.getDate());
+        holder.imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                //Confirmando exclusão da nota com usuário
-                confirmDelete(todoList);
-
+            public void onClick(View v) {
+                confirmDelete(list);
             }
         });
-
-        //Definindo Strings para serem exibidas
-        String title = todoList.getTitle();
-        String date = context.getResources().getString(R.string.label_created) + " " + todoList.getDate();
-
-        //Exibindo dados na tela
-        editNoteTitle.setText(title);
-        editNoteData.setText(date);
-
-        //Retornando a view
-        return view;
-
+        holder.setList(list);
     }
 
     //Método para confirmar exclusão de uma lista
@@ -102,45 +79,74 @@ public class ListAdapter extends ArrayAdapter<TodoList> {
         alertDialog.setTitle(context.getResources().getString(R.string.dialog_list_delete_title));
         alertDialog.setMessage(context.getResources().getString(R.string.dialog_list_delete_content));
         alertDialog.setCancelable(false);
-
         alertDialog.setPositiveButton(context.getResources().getString(R.string.dialog_delete), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
                 //Recuperando mensagens
                 String sucess = context.getResources().getString(R.string.alert_delete_list_sucess);
                 String failure = context.getResources().getString(R.string.alert_failure);
 
-                if (dao.deleteList(todoList)) {
-
+                if (actions.deleteList(todoList)) {
                     //Retornando mensagem de sucesso ao usuário
                     Toast.makeText(context, sucess, Toast.LENGTH_SHORT).show();
-                    remove(todoList);
+                    lists.remove(todoList);
                     notifyDataSetChanged();
-
                 }
                 else {
-
                     //Retornando mensagem de erro ao deletar lista para usuário
                     Toast.makeText(context, failure, Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
-
         //Adicionando botões negativo e positivo para alertdialog
         alertDialog.setNegativeButton(context.getResources().getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                //Nada Acontece....
-            }
+            public void onClick(DialogInterface dialogInterface, int i) { /*Nada Acontece....*/ }
         });
-
         //Criando e mostrando dialog
         alertDialog.create();
         alertDialog.show();
-
     }
 
+    @Override
+    public int getItemCount() { return lists.size(); }
+
+    //Definindo View Holder
+    class ListViewHolder extends RecyclerView.ViewHolder {
+
+        //Definindo componentes presentes na view
+        @BindView(R.id.editNoteTitle) TextView txtTitle;
+        @BindView(R.id.editNoteDate) TextView txtDate;
+        @BindView(R.id.img_delete) ImageView imgDelete;
+        View view;
+
+        //Definindo atributos
+        private TodoList list;
+
+        //Definindo método para setar view
+        void setList(TodoList list) { this.list = list; }
+
+        //Implementando um construtor para vire holder
+        ListViewHolder(View itemView) {
+            //Definindo bind de componentes
+            super(itemView);
+            this.view = itemView;
+            ButterKnife.bind(this, itemView);
+
+            //Definindo evento para click nos itens
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Instanciando intent para ir para prox activity
+                    Intent listIntent = new Intent(context, ListActivity.class);
+                    listIntent.putExtra(DatabaseCreator.FIELD_ID, list.getId());
+                    listIntent.putExtra(DatabaseCreator.FIELD_TITLE, list.getTitle());
+                    listIntent.putExtra(DatabaseCreator.FIELD_DATE, list.getDate());
+
+                    //Iniciando nova activity
+                    context.startActivity(listIntent);
+                }
+            });
+        }
+    }
 }

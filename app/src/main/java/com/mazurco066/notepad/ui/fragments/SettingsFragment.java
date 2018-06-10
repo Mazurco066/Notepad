@@ -61,12 +61,6 @@ public class SettingsFragment extends Fragment {
                 //Salvando configurações referentes a idioma e tema
                 saveLanguage(view);
                 saveTheme();
-
-                //Retornando mensagem de sucesso ao usuário e atualizando view
-                Snackbar.make(
-                        view,
-                        getResources().getString(R.string.alert_settings_changed),
-                        Snackbar.LENGTH_SHORT).show();
                 refresh();
             }
         });

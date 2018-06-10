@@ -1,21 +1,17 @@
 package com.mazurco066.notepad.ui.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.mazurco066.notepad.R;
-import com.mazurco066.notepad.ui.activity.ListActivity;
 import com.mazurco066.notepad.adapter.ListAdapter;
 import com.mazurco066.notepad.SQLite.methods.ListActions;
 import com.mazurco066.notepad.model.TodoList;
-import com.mazurco066.notepad.SQLite.DatabaseCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +22,12 @@ import butterknife.ButterKnife;
 public class ListsFragment extends Fragment {
 
     //Components
-    @BindView(R.id.createdListsView) ListView listView;
+    @BindView(R.id.createdListsView) RecyclerView recycler;
 
     //Attb
-    private ArrayAdapter<TodoList> adapter;
+    private ListAdapter adapter;
     private List<TodoList> lists;
-    private ListActions dao;
+    private ListActions actions;
 
     public ListsFragment() {} // Required empty public constructor
 
@@ -43,25 +39,13 @@ public class ListsFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         // Instanciando atributos
-        this.dao = new ListActions(getActivity());
+        this.actions = new ListActions(getActivity());
 
-        //Atribuindo evento de on click para list view de seleçãod e listas
-        this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                //Instanciando Todo List
-                TodoList todoList = lists.get(i);
-
-                //Abrindo activity para edição da mesma
-                openListActivity(todoList);
-
-            }
-        });
+        //Configurando recycler
+        recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         // Returning inflated view
         return view;
-
     }
 
     //Sobrescrevendo método on resume para atualizar a listview
@@ -72,36 +56,18 @@ public class ListsFragment extends Fragment {
         super.onResume();
 
         //Verificando se há itens na lista
-        this.lists = dao.getAllLists();
+        this.lists = actions.getAllLists();
+
         if (lists != null) {
-
             //Atualizando lista de notas
-            this.adapter = new ListAdapter(getActivity(), lists);
-            this.listView.setAdapter(adapter);
-
+            adapter = new ListAdapter(getActivity(), lists);
+            recycler.setAdapter(adapter);
         }
         else {
-
             //Atualizando lista
-            this.lists = new ArrayList<>();
-            this.adapter = new ListAdapter(getActivity(), lists);
-            this.listView.setAdapter(adapter);
-
+            lists = new ArrayList<>();
+            adapter = new ListAdapter(getActivity(), lists);
+            recycler.setAdapter(adapter);
         }
     }
-
-    //Método para Abrir Activity de Escrever/Visualizar Nota
-    private void openListActivity(TodoList todoList) {
-
-        //Instanciando intent para ir para prox activity
-        Intent listActivity = new Intent(getActivity(), ListActivity.class);
-        listActivity.putExtra(DatabaseCreator.FIELD_ID, todoList.getId());
-        listActivity.putExtra(DatabaseCreator.FIELD_TITLE, todoList.getTitle());
-        listActivity.putExtra(DatabaseCreator.FIELD_DATE, todoList.getDate());
-
-        //Iniciando nova activity
-        startActivity(listActivity);
-
-    }
-
 }

@@ -3,11 +3,14 @@ package com.mazurco066.notepad.ui.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.ui.activity.NoteActivity;
@@ -25,7 +28,7 @@ import butterknife.ButterKnife;
 public class NotesFragment extends Fragment {
 
     //Definindo Componentes
-    @BindView(R.id.noteListView) ListView listView;
+    @BindView(R.id.note_recycler) RecyclerView recycler;
 
     //Definindo Atributos
     private NoteAdapter adapter;
@@ -44,19 +47,8 @@ public class NotesFragment extends Fragment {
         //Instanciando Atributos
         this.dao = new NoteActions(getActivity());
 
-        //Ouvindo eventos de clicar em uma nota
-        this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                //Instanciando nota
-                Note note = notes.get(i);
-
-                //Iniciando Activity de Edição de nota
-                openNoteActivity(note);
-
-            }
-        });
+        //Configurando recycler
+        recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         //Returning View
         return view;
@@ -74,36 +66,15 @@ public class NotesFragment extends Fragment {
 
         //Verificando se ha notas
         if (notes != null) {
-
             //Atualizando lista de notas
             this.adapter = new NoteAdapter(getActivity(), notes);
-            this.listView.setAdapter(adapter);
-
+            this.recycler.setAdapter(adapter);
         }
         else {
-
             //Atualizando lista
             this.notes = new ArrayList<>();
             this.adapter = new NoteAdapter(getActivity(), notes);
-            this.listView.setAdapter(adapter);
-
+            this.recycler.setAdapter(adapter);
         }
-
     }
-
-    //Método para Abrir Activity de Escrever/Visualizar Nota
-    private void openNoteActivity(Note note) {
-
-        //Instanciando intent para ir para prox activity
-        Intent noteActivity = new Intent(getActivity(), NoteActivity.class);
-        noteActivity.putExtra(DatabaseCreator.FIELD_ID, note.getId());
-        noteActivity.putExtra(DatabaseCreator.FIELD_DATE, note.getDate());
-        noteActivity.putExtra(DatabaseCreator.FIELD_TITLE, note.getTitle());
-        noteActivity.putExtra(DatabaseCreator.FIELD_CONTENT, note.getContent());
-
-        //Iniciando nova activity
-        startActivity(noteActivity);
-
-    }
-
 }
