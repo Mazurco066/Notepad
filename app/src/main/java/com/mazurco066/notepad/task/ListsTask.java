@@ -7,7 +7,6 @@ public interface ListsTask {
 
     //Definindo presenters a ser implementados
     interface Presenter {
-        void create(TodoList list);
         void delete(TodoList list);
         void addItem(ItemList item);
         void doneItem(ItemList item);
@@ -17,10 +16,13 @@ public interface ListsTask {
     //Definindo métodos que a view deve implementar
     interface View {
         //Fluxos de sucesso
-        void onCreateSuccess();
+        void onAddItemSuccess();
+        void onItemDoneSucess();
         void onDeleteSuccess();
         //Fluxos de fracasso
         void onCreateFailed();
         void onDeleteFailed();
+        void onItemDoneFailed();
+        void onDeleteItemFailed();
     }
 }

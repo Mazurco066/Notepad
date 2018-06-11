@@ -23,22 +23,29 @@ import com.mazurco066.notepad.SQLite.methods.ListActions;
 import com.mazurco066.notepad.model.ItemList;
 import com.mazurco066.notepad.model.TodoList;
 import com.mazurco066.notepad.SQLite.DatabaseCreator;
+import com.mazurco066.notepad.presenter.ListsPresenter;
+import com.mazurco066.notepad.task.ListsTask;
 import com.mazurco066.notepad.util.Preferences;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    //Attributes
-    private Toolbar toolbar;
-    private EditText taskEdit;
-    private Button btnAddTask;
-    private ListView _todoView;
-    private ListView _doneView;
+public class ListActivity extends AppCompatActivity implements ListsTask.View {
 
+    //Componentes
+    @BindView(R.id.mainToolbar) Toolbar toolbar;
+    @BindView(R.id.taskEdit) EditText taskEdit;
+    @BindView(R.id.btnAddItem) Button btnAddTask;
+    @BindView(R.id.todoView) ListView _todoView;
+    @BindView(R.id.doneView) ListView _doneView;
+
+    //Atributos
     private Preferences preferences;
-    private ListActions dao;
+    private ListsPresenter presenter;
+    private ListActions actions;
     private TodoList todoList;
     private List<ItemList> _todo;
     private List<ItemList> _done;
@@ -56,15 +63,14 @@ public class ListActivity extends AppCompatActivity {
         //Verificando tema
         setSettingsTheme();
 
+        //Bindando componentes com xml
+        ButterKnife.bind(this);
+
         //Instanciando componentes
-        this.toolbar = findViewById(R.id.mainToolbar);
-        this.taskEdit = findViewById(R.id.taskEdit);
-        this.btnAddTask = findViewById(R.id.btnAddItem);
-        this._todoView = findViewById(R.id.todoView);
-        this._doneView = findViewById(R.id.doneView);
+        presenter = new ListsPresenter(this, getApplicationContext());
 
         //Instanciando Atributos
-        this.dao = new ListActions(getApplicationContext());
+        this.actions = new ListActions(getApplicationContext());
 
         //Recuperando dados passados por Intent
         final Bundle data = getIntent().getExtras();
@@ -80,10 +86,8 @@ public class ListActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left);
         this.setSupportActionBar(toolbar);
 
-        //Toast.makeText(getApplicationContext(), "ID: " + todoList.getId(), Toast.LENGTH_SHORT).show();
-
         //Recuperando itens da lista se houver
-        todoList.setItens(dao.getAllItens(todoList.getId()));
+        todoList.setItens(actions.getAllItens(todoList.getId()));
 
         //Verificando se há itens
         if (todoList.getItens() != null) {
@@ -152,7 +156,7 @@ public class ListActivity extends AppCompatActivity {
                 ItemList itemList = _todo.get(i);
 
                 //Tentando Atualizar dados sobre a tarefa
-                if (dao.setDone(todoList.getId(), itemList.getTask())) {
+                if (actions.setDone(todoList.getId(), itemList.getTask())) {
 
                     //Atualizando Arrays
                     _todo.remove(itemList);
@@ -306,7 +310,7 @@ public class ListActivity extends AppCompatActivity {
         itemList.setDone(0);
 
         //Inserindo Tarefa no banco
-        if (this.dao.AddItem(todoList.getId(), itemList)) {
+        if (this.actions.AddItem(todoList.getId(), itemList)) {
 
             //Retornando mensagem de Sucesso
             String msg = getResources().getString(R.string.alert_task_added);
@@ -334,7 +338,7 @@ public class ListActivity extends AppCompatActivity {
     private void removeTask(ItemList itemList) {
 
         //Removendo
-        if (dao.deleteTask(todoList.getId(), itemList.getTask())) {
+        if (actions.deleteTask(todoList.getId(), itemList.getTask())) {
 
             //Removendo da view e atualizando a mesma
             if (itemList.getDone() == 1) _done.remove(itemList);
@@ -384,7 +388,7 @@ public class ListActivity extends AppCompatActivity {
                 String sucess = getResources().getString(R.string.alert_delete_list_sucess);
                 String failure = getResources().getString(R.string.alert_failure);
 
-                if (dao.deleteList(todoList)) {
+                if (actions.deleteList(todoList)) {
 
                     //Retornando mensagem de sucesso ao usuário
                     Toast.makeText(ListActivity.this, sucess, Toast.LENGTH_SHORT).show();
@@ -462,4 +466,38 @@ public class ListActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onAddItemSuccess() {
+
+    }
+
+    @Override
+    public void onItemDoneSucess() {
+
+    }
+
+    @Override
+    public void onDeleteSuccess() {
+
+    }
+
+    @Override
+    public void onCreateFailed() {
+
+    }
+
+    @Override
+    public void onDeleteFailed() {
+
+    }
+
+    @Override
+    public void onItemDoneFailed() {
+
+    }
+
+    @Override
+    public void onDeleteItemFailed() {
+
+    }
 }
