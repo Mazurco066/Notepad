@@ -9,7 +9,7 @@
     <!-- Cores para o tema Dark -->
     <color name="colorPrimary">#282828</color>
     <color name="colorPrimaryDark">#212121</color>
-    <color name="colorAccent">#FFFFFF</color>
+    <color name="colorAccent">#212121</color>
 
     <color name="dark_text_color">#FFFFFF</color>
     <color name="dark_text_color_aux">#000000</color>
@@ -22,7 +22,7 @@
     <!-- Cores para o tema Light -->
     <color name="lightColorPrimary">#282828</color>
     <color name="lightColorPrimaryDark">#212121</color>
-    <color name="lightColorAccent">#000000</color>
+    <color name="lightColorAccent">#212121</color>
 
     <color name="light_text_color">#000000</color>
     <color name="light_text_color_aux">#40000000</color>
@@ -30,7 +30,7 @@
 
     <color name="light_appMenuBackground">#FFFFFF</color>
     <color name="light_appBackground">#ECEFF1</color>
-    <color name="light_noteBackground">#D7CCC8</color>
+    <color name="light_noteBackground">#9E9E9E</color>
 
     <!-- Cores para o tema Blue -->
     <color name="blueColorPrimary">#448AFF</color>
@@ -48,7 +48,7 @@
     <!-- Cores para o tema Wooden -->
     <color name="redColorPrimary">#4E342E</color>
     <color name="redColorPrimaryDark">#3E2723</color>
-    <color name="redColorAccent">#FFFFFF</color>
+    <color name="redColorAccent">#3E2723</color>
 
     <color name="red_text_color">#FFFFFF</color>
     <color name="red_text_color_aux">#000000</color>
@@ -56,6 +56,6 @@
 
     <color name="red_appMenuBackground">#8D6E63</color>
     <color name="red_appBackground">#A1887F</color>
-    <color name="red_noteBackground">#70FFF9C4</color>
+    <color name="red_noteBackground">#BCAAA4</color>
 
 </resources>

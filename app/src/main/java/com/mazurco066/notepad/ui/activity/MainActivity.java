@@ -48,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
     //Definindo Atributos
     private Preferences preferences;
 
-    private boolean settingsOpened = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -62,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Interligando componentes com xml
         ButterKnife.bind(this);
+
 
         //Instanciando componentes
         setSupportActionBar(toolbar);
@@ -148,6 +147,8 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.content_frame, new NotesFragment());
         ft.commit();
+
+        //Verificando se há notificações a ser lançadas
     }
 
     //Sobrescrevendo método de inflar menu
