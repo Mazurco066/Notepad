@@ -77,7 +77,7 @@
             android:textSize="@dimen/note_text_size"
             android:text="@string/label_todo" />
 
-        <com.mazurco066.notepad.util.NonScrollListView
+        <com.mazurco066.notepad.ui.layout.NonScrollListView
             android:id="@+id/todoView"
             android:layout_below="@id/todoListLabel"
             android:layout_width="match_parent"
@@ -105,7 +105,7 @@
             android:textSize="@dimen/note_text_size"
             android:text="@string/label_done" />
 
-        <com.mazurco066.notepad.util.NonScrollListView
+        <com.mazurco066.notepad.ui.layout.NonScrollListView
             android:id="@+id/doneView"
             android:layout_below="@id/doneListLabel"
             android:layout_width="match_parent"

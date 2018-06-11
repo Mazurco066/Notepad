@@ -13,15 +13,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
-import com.mazurco066.notepad.SQLite.methods.NoteActions;
 import com.mazurco066.notepad.model.Note;
 import com.mazurco066.notepad.SQLite.DatabaseCreator;
+import com.mazurco066.notepad.presenter.NotesPresenter;
+import com.mazurco066.notepad.task.NotesTask;
 import com.mazurco066.notepad.util.Preferences;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NoteActivity extends AppCompatActivity {
+public class NoteActivity extends AppCompatActivity implements NotesTask.View {
 
     //Definindo Componentes
     @BindView(R.id.editTitle) EditText editTitle;
@@ -29,8 +30,8 @@ public class NoteActivity extends AppCompatActivity {
     @BindView(R.id.mainToolbar) Toolbar toolbar;
 
     //Definindo Atributos
-    private  Preferences preferences;
-    private NoteActions dao;
+    private Preferences preferences;
+    private NotesPresenter presenter;
     private Note note;
 
     @Override
@@ -46,12 +47,7 @@ public class NoteActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         //Instanciando Componentes
-        editTitle = findViewById(R.id.editTitle);
-        editNote = findViewById(R.id.editNote);
-        toolbar = findViewById(R.id.mainToolbar);
-
-        //Instanciando Atributos
-        dao = new NoteActions(getApplicationContext());
+        presenter = new NotesPresenter(this, getApplicationContext());
 
         //Recuperando dados passados por intent
         Bundle data = getIntent().getExtras();
@@ -104,12 +100,12 @@ public class NoteActivity extends AppCompatActivity {
 
             //Caso pressionou botão compartilhar
             case R.id.action_share:
-                shareNote();
+                presenter.share(note, this);
                 break;
 
             //Caso pressionou botão deletar
             case R.id.action_delete:
-                deleteNote();
+                confirmDelete(note.getId());
                 break;
 
             //Caso pressionou botão voltar
@@ -128,115 +124,17 @@ public class NoteActivity extends AppCompatActivity {
 
         //Recuperando mensagens a serem exibidas
         String emptyMsg = getResources().getString(R.string.alert_empty_fields);
-        String sucessCreatedMsg = getResources().getString(R.string.alert_create_note_sucess);
-        String sucessUpdatedMsg = getResources().getString(R.string.alert_save_note_sucess);
-        String failure = getResources().getString(R.string.alert_failure);
 
         //Verificando se os Campos não estão Vazios
         if (isValidFields()) {
+            //Preenchendo dados da nota
+            note.setTitle(editTitle.getText().toString());
+            note.setContent(editNote.getText().toString());
 
-            String title = editTitle.getText().toString();
-            String content = editNote.getText().toString();
-
-            note.setTitle(title);
-            note.setContent(content);
-
-            //Verifiando se é uma nova nota ou uma existente
-            if (note.getId() == -1) {
-
-                //Criando nova nota
-                if (dao.insertNote(note)) {
-
-                    //Retornando mensagem de sucesso ao criar nota para usuário
-                    Toast.makeText(getApplicationContext(), sucessCreatedMsg, Toast.LENGTH_SHORT).show();
-
-                    //Finalizando a Activity
-                    finish();
-
-                }
-                else {
-
-                    //Retornando mensagem de erro ao criar nota para usuário
-                    Toast.makeText(getApplicationContext(), failure, Toast.LENGTH_SHORT).show();
-
-                }
-
-            }
-            else {
-
-                //Atualizando a existente
-                if (dao.editNote(note)) {
-
-                    //Retornando mensagem de sucesso ao editar nota para usuário
-                    Toast.makeText(getApplicationContext(), sucessUpdatedMsg, Toast.LENGTH_SHORT).show();
-
-                }
-                else {
-
-                    //Retornando mensagem de erro ao criar nota para usuário
-                    Toast.makeText(getApplicationContext(), failure, Toast.LENGTH_SHORT).show();
-
-                }
-
-            }
-
+            //Tentando inserir nota
+            presenter.save(note);
         }
-        else {
-
-            //Retornando alerta ao usuário
-            Toast.makeText(getApplicationContext(), emptyMsg, Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    //Método para executar ações do botão compartilhar
-    private void shareNote() {
-
-        //Verificando se há texto para ser compartilhado
-        if (!editNote.getText().toString().isEmpty()) {
-
-            //Recuperando conteúdo a ser compartilhado
-            String content = editNote.getText().toString();
-
-            //Instanciando intent para compartilhamento
-            Intent shareIntent = new Intent();
-            shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, content);
-            shareIntent.setType("text/plain");
-            startActivity(shareIntent);
-
-        }
-        else {
-
-            //Recuperando mensagem para emitir no alerta
-            String error = getResources().getString(R.string.alert_empty_shared_field);
-
-            //Emitindo Alerta para usuário
-            Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
-
-        }
-
-    }
-
-    //Método para executar ações do botão deletar nota
-    private void deleteNote() {
-
-        //Verificando se o usuário esta tentando deletar uma nota que não existe
-        if (note.getId() != -1) {
-
-            //Confirmando exclusão da nota
-            confirmDelete(note.getId());
-
-        }
-        else {
-
-            //Recuperando mensagem
-            String msg = getResources().getString(R.string.alert_inexistent_note);
-
-            //Retornando alerta ao usuário
-            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-        }
-
+        else { Toast.makeText(getApplicationContext(), emptyMsg, Toast.LENGTH_SHORT).show(); }
     }
 
     //Método para confirmar exclusão de uma nota
@@ -252,42 +150,16 @@ public class NoteActivity extends AppCompatActivity {
 
         alertDialog.setPositiveButton(getResources().getString(R.string.dialog_delete), new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                //Recuperando mensagens
-                String sucess = getResources().getString(R.string.alert_delete_note_sucess);
-                String failure = getResources().getString(R.string.alert_failure);
-
-                if (dao.deleteNote(id)) {
-
-                    //Retornando mensagem de sucesso ao usuário
-                    Toast.makeText(getApplicationContext(), sucess, Toast.LENGTH_SHORT).show();
-
-                    //Retomando a activity principal
-                    finish();
-
-                } else {
-
-                    //Retornando mensagem de erro ao criar nota para usuário
-                    Toast.makeText(getApplicationContext(), failure, Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        });
+            public void onClick(DialogInterface dialogInterface, int i) { presenter.delete(id); }});
 
         //Adicionando botões negativo e positivo para alertdialog
         alertDialog.setNegativeButton(getResources().getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                //Nada Acontece....
-            }
-        });
+            public void onClick(DialogInterface dialogInterface, int i) { /*Nada Acontece....*/}});
 
         //Criando e mostrando dialog
         alertDialog.create();
         alertDialog.show();
-
     }
 
     //Método para validar se os campos não estão vazios
@@ -309,4 +181,72 @@ public class NoteActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onSaveSuccess() {
+
+        //Recuperando mensagem de retorno
+        String sucessCreatedMsg = getResources().getString(R.string.alert_create_note_sucess);
+
+        //Retornando mensagem de sucesso ao criar nota para usuário
+        Toast.makeText(getApplicationContext(), sucessCreatedMsg, Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Override
+    public void onUpdateSucess() {
+
+        //Recuperando mensagem de retorno
+        String sucessUpdatedMsg = getResources().getString(R.string.alert_save_note_sucess);
+
+        //Retornando mensagem de sucesso ao editar nota para usuário
+        Toast.makeText(getApplicationContext(), sucessUpdatedMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSaveFailed() {
+
+        //Recuperando mensagem de retorno
+        String failure = getResources().getString(R.string.alert_failure);
+
+        //Retornando mensagem de erro ao salvar nota para usuário
+        Toast.makeText(getApplicationContext(), failure, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDeleteSuccess() {
+
+        //Recuperando mensagem de sucesso
+        String sucess = getResources().getString(R.string.alert_delete_note_sucess);
+
+        //Retornando mensagem de sucesso ao editar nota para usuário
+        Toast.makeText(getApplicationContext(), sucess, Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Override
+    public void onDeleteFailed(int code) {
+
+        //Recuperando mensagens de erro possiveis
+        String e101 = getResources().getString(R.string.alert_failure);
+        String e102 = getResources().getString(R.string.alert_inexistent_note);
+
+        switch (code) {
+            case 101:
+                Toast.makeText(getApplicationContext(), e101, Toast.LENGTH_SHORT).show();
+                break;
+            case 102:
+                Toast.makeText(getApplicationContext(), e102, Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    @Override
+    public void onShareFailed() {
+
+        //Recuperando mensagem de alerta
+        String error = getResources().getString(R.string.alert_empty_shared_field);
+
+        //Emitindo Alerta para usuário
+        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+    }
 }
