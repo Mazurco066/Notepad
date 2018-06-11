@@ -257,14 +257,6 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
         return !(this.taskEdit.getText().toString().isEmpty());
     }
 
-    //Método para adicionar itens na lista
-    private void addTask(ItemList itemList) {
-
-    }
-
-    //Método para remover uma tarefa
-    private void removeTask(ItemList itemList) { presenter.deleteItem(todoList.getId(), itemList); }
-
     //Método para adaptar tema do app
     private void setSettingsTheme() {
 
