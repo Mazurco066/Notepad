@@ -30,13 +30,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     private static Context context;
     private List<TodoList> lists;
     private ListActions actions;
+    private AdapterCallback callback;
 
     //Método construtor padrão
-    public ListAdapter(@NonNull Context context, @NonNull List<TodoList> objects) {
+    public ListAdapter(@NonNull Context context, @NonNull List<TodoList> objects, AdapterCallback callback) {
         //Setando Atributos
         this.actions = new ListActions(context);
         this.context = context;
         this.lists = objects;
+        this.callback = callback;
         notifyDataSetChanged();
     }
 
@@ -62,54 +64,23 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         holder.txtDate.setText(context.getResources().getString(R.string.label_created) + " " + list.getDate());
         holder.imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                confirmDelete(list);
+            public void onClick(View v) { callback.onDeleteList(list);
             }
         });
-        holder.setList(list);
-    }
-
-    //Método para confirmar exclusão de uma lista
-    private void confirmDelete(final TodoList todoList) {
-
-        //Instanciando criador de alert dialog
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-
-        //Configurando alert dialog
-        alertDialog.setTitle(context.getResources().getString(R.string.dialog_list_delete_title));
-        alertDialog.setMessage(context.getResources().getString(R.string.dialog_list_delete_content));
-        alertDialog.setCancelable(false);
-        alertDialog.setPositiveButton(context.getResources().getString(R.string.dialog_delete), new DialogInterface.OnClickListener() {
+        holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //Recuperando mensagens
-                String sucess = context.getResources().getString(R.string.alert_delete_list_sucess);
-                String failure = context.getResources().getString(R.string.alert_failure);
-
-                if (actions.deleteList(todoList)) {
-                    //Retornando mensagem de sucesso ao usuário
-                    Toast.makeText(context, sucess, Toast.LENGTH_SHORT).show();
-                    lists.remove(todoList);
-                    notifyDataSetChanged();
-                }
-                else {
-                    //Retornando mensagem de erro ao deletar lista para usuário
-                    Toast.makeText(context, failure, Toast.LENGTH_SHORT).show();
-                }
-            }
+            public void onClick(View view) { callback.onClickList(list); }
         });
-        //Adicionando botões negativo e positivo para alertdialog
-        alertDialog.setNegativeButton(context.getResources().getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) { /*Nada Acontece....*/ }
-        });
-        //Criando e mostrando dialog
-        alertDialog.create();
-        alertDialog.show();
     }
 
     @Override
     public int getItemCount() { return lists.size(); }
+
+    //Método para remover lista deletada
+    public void removeList(TodoList list) {
+        lists.remove(list);
+        notifyDataSetChanged();
+    }
 
     //Definindo View Holder
     class ListViewHolder extends RecyclerView.ViewHolder {
@@ -120,33 +91,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         @BindView(R.id.img_delete) ImageView imgDelete;
         View view;
 
-        //Definindo atributos
-        private TodoList list;
-
-        //Definindo método para setar view
-        void setList(TodoList list) { this.list = list; }
-
         //Implementando um construtor para vire holder
         ListViewHolder(View itemView) {
             //Definindo bind de componentes
             super(itemView);
             this.view = itemView;
             ButterKnife.bind(this, itemView);
-
-            //Definindo evento para click nos itens
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Instanciando intent para ir para prox activity
-                    Intent listIntent = new Intent(context, ListActivity.class);
-                    listIntent.putExtra(DatabaseCreator.FIELD_ID, list.getId());
-                    listIntent.putExtra(DatabaseCreator.FIELD_TITLE, list.getTitle());
-                    listIntent.putExtra(DatabaseCreator.FIELD_DATE, list.getDate());
-
-                    //Iniciando nova activity
-                    context.startActivity(listIntent);
-                }
-            });
         }
+    }
+
+    //Definindo interface de callback para eventos
+    public interface AdapterCallback {
+        void onClickList(TodoList list);
+        void onDeleteList(TodoList list);
     }
 }
