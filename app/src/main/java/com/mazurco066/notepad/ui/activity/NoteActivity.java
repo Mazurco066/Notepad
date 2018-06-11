@@ -1,7 +1,6 @@
 package com.mazurco066.notepad.ui.activity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -95,7 +94,19 @@ public class NoteActivity extends AppCompatActivity implements NotesTask.View {
 
             //Caso pressionou botão salvar
             case R.id.action_save:
-                saveNote();
+                //Recuperando mensagens a serem exibidas
+                String emptyMsg = getResources().getString(R.string.alert_empty_fields);
+
+                //Verificando se os Campos não estão Vazios
+                if (isValidFields()) {
+                    //Preenchendo dados da nota
+                    note.setTitle(editTitle.getText().toString());
+                    note.setContent(editNote.getText().toString());
+
+                    //Tentando inserir nota
+                    presenter.save(note);
+                }
+                else { Toast.makeText(getApplicationContext(), emptyMsg, Toast.LENGTH_SHORT).show(); }
                 break;
 
             //Caso pressionou botão compartilhar
@@ -117,24 +128,6 @@ public class NoteActivity extends AppCompatActivity implements NotesTask.View {
 
         //Retorno padrão do método
         return super.onOptionsItemSelected(item);
-    }
-
-    //Método para executar ações do botão salvar nota
-    private void saveNote() {
-
-        //Recuperando mensagens a serem exibidas
-        String emptyMsg = getResources().getString(R.string.alert_empty_fields);
-
-        //Verificando se os Campos não estão Vazios
-        if (isValidFields()) {
-            //Preenchendo dados da nota
-            note.setTitle(editTitle.getText().toString());
-            note.setContent(editNote.getText().toString());
-
-            //Tentando inserir nota
-            presenter.save(note);
-        }
-        else { Toast.makeText(getApplicationContext(), emptyMsg, Toast.LENGTH_SHORT).show(); }
     }
 
     //Método para confirmar exclusão de uma nota
