@@ -91,59 +91,41 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
 
         //Verificando se há itens
         if (todoList.getItens() != null) {
-
             //Instanciando Arraylists
             this._todo = new ArrayList<>();
             this._done = new ArrayList<>();
 
             //Adicionando itens na view
             for (ItemList _item : todoList.getItens()) {
-
                 //Verificando se é uma tarefa pendente ou concluída
-                if (_item.getDone() == 1) {
-
-                    _done.add(_item);
-                }
-                else {
-
-                    _todo.add(_item);
-                }
-
+                if (_item.getDone() == 1) _done.add(_item);
+                else _todo.add(_item);
             }
-
         }
         else {
-
             //Instanciando Arraylists
             this._todo = new ArrayList<>();
             this._done = new ArrayList<>();
-
         }
 
         //Adicionando evento ao botão Adicionar Tarefa
         btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 //Verificando se os campos não estão vazios
                 if (isNotEmptyFields()) {
-
-                    //Instanciando uma nova tarefa e a populando
+                    //Adicionando uma nova tarefa
                     final ItemList itemList = new ItemList();
                     itemList.setTask(taskEdit.getText().toString());
-
-                    //Adicionando tarefa
-                    addTask(itemList);
-
+                    itemList.setDone(0);
+                    presenter.addItem(todoList.getId(), itemList);
                 }
-                else {
-
-                    //Retornando mensagem de Validação
-                    String msg = getResources().getString(R.string.alert_empty_fields);
-                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-
+                else { Toast.makeText(
+                            getApplicationContext(),
+                            getString(R.string.alert_empty_fields),
+                            Toast.LENGTH_SHORT)
+                            .show();
                 }
-
             }
         });
 
@@ -151,30 +133,9 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
         _todoView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
                 //Recuperando tarefa que sera atualizada
                 ItemList itemList = _todo.get(i);
-
-                //Tentando Atualizar dados sobre a tarefa
-                if (actions.setDone(todoList.getId(), itemList.getTask())) {
-
-                    //Atualizando Arrays
-                    _todo.remove(itemList);
-                    itemList.setDone(1);
-                    _done.add(itemList);
-
-                    //Atualizando Views
-                    updateViewContent();
-
-                }
-                else {
-
-                    //Retornando mensagem de Erro
-                    String msg = getResources().getString(R.string.alert_failure);
-                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-
-                }
-
+                presenter.doneItem(todoList.getId(), itemList);
             }
         });
 
@@ -182,13 +143,9 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
         _todoView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                //Deletando tarefa selecionada
-                removeTask(_todo.get(i));
-
-                //Retorno padrão
+                //Removendo item dos pendentes
+                presenter.deleteItem(todoList.getId(), _todo.get(i));
                 return true;
-
             }
         });
 
@@ -196,11 +153,8 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
         _doneView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                //Deletando tarefa selecionada
-                removeTask(_done.get(i));
-
-                //Retorno padrão
+                //Removendo item dos pendentes
+                presenter.deleteItem(todoList.getId(), _done.get(i));
                 return false;
             }
         });
@@ -231,7 +185,7 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
 
             //Caso botão compartilhar
             case R.id.action_share:
-                shareList();
+                presenter.shareList(todoList.getTitle(), _todo, _done, this);
                 break;
 
             //Caso botão cancelar
@@ -306,55 +260,10 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
     //Método para adicionar itens na lista
     private void addTask(ItemList itemList) {
 
-        //Definindo tarefa como pendende
-        itemList.setDone(0);
-
-        //Inserindo Tarefa no banco
-        if (this.actions.AddItem(todoList.getId(), itemList)) {
-
-            //Retornando mensagem de Sucesso
-            String msg = getResources().getString(R.string.alert_task_added);
-            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-
-            //Limpando campo de texto
-            taskEdit.setText(null);
-
-            //Atualizando View
-            _todo.add(itemList);
-            updateViewContent();
-
-        }
-        else {
-
-            //Retornando mensagem de Erro
-            String msg = getResources().getString(R.string.alert_failure);
-            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-
-        }
-
     }
 
     //Método para remover uma tarefa
-    private void removeTask(ItemList itemList) {
-
-        //Removendo
-        if (actions.deleteTask(todoList.getId(), itemList.getTask())) {
-
-            //Removendo da view e atualizando a mesma
-            if (itemList.getDone() == 1) _done.remove(itemList);
-            else _todo.remove(itemList);
-            updateViewContent();
-
-        }
-        else {
-
-            //Retornando mensagem de Erro
-            String msg = getResources().getString(R.string.alert_failure);
-            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-
-        }
-
-    }
+    private void removeTask(ItemList itemList) { presenter.deleteItem(todoList.getId(), itemList); }
 
     //Método para adaptar tema do app
     private void setSettingsTheme() {
@@ -379,125 +288,109 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
         alertDialog.setTitle(getResources().getString(R.string.dialog_list_delete_title));
         alertDialog.setMessage(getResources().getString(R.string.dialog_list_delete_content));
         alertDialog.setCancelable(false);
-
         alertDialog.setPositiveButton(getResources().getString(R.string.dialog_delete), new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                //Recuperando mensagens
-                String sucess = getResources().getString(R.string.alert_delete_list_sucess);
-                String failure = getResources().getString(R.string.alert_failure);
-
-                if (actions.deleteList(todoList)) {
-
-                    //Retornando mensagem de sucesso ao usuário
-                    Toast.makeText(ListActivity.this, sucess, Toast.LENGTH_SHORT).show();
-
-                    //Finalizando Activity
-                    finish();
-
-                }
-                else {
-
-                    //Retornando mensagem de erro ao deletar lista para usuário
-                    Toast.makeText(ListActivity.this, failure, Toast.LENGTH_SHORT).show();
-
-                }
-            }
+            public void onClick(DialogInterface dialogInterface, int i) { presenter.delete(todoList); }
         });
-
         //Adicionando botões negativo e positivo para alertdialog
         alertDialog.setNegativeButton(getResources().getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                //Nada Acontece....
-            }
+            public void onClick(DialogInterface dialogInterface, int i) {/*Nada Acontece....*/}
         });
-
         //Criando e mostrando dialog
         alertDialog.create();
         alertDialog.show();
 
     }
 
-    //Método para compartilhar nota via redes sociais
-    private void shareList() {
+    @Override
+    public void onAddItemSuccess(ItemList itemList) {
+        //Retornando mensagem de Sucesso
+        String msg = getResources().getString(R.string.alert_task_added);
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
 
-        //Verificando se há conteúdo para se compartilhar na lista
-        if (this._todo != null || this._done != null) {
+        //Limpando campo de texto
+        taskEdit.setText(null);
 
-            //Montando estrutura da lista para compartilhamento em texto
-            StringBuilder finalList = new StringBuilder();
-            finalList.append(todoList.getTitle()).append("\n\n");
-            finalList.append(getResources().getString(R.string.label_todo)).append("\n\n");
-            if (_todo != null) for (ItemList _item: _todo) {
-                finalList.append("-> ").append(_item.getTask()).append("\n");
-            }
-            finalList.append("\n");
-            finalList.append(getResources().getString(R.string.label_done)).append("\n\n");
-            if (_done != null) for (ItemList _item: _done) {
-                finalList.append("-> ").append(_item.getTask()).append("\n");
-            }
-            finalList.append("\nNotepad App - by Gabriel Mazurco");
-
-            //Recuperando conteúdo a ser compartilhado
-            String content = finalList.toString();
-
-            //Instanciando intent para compartilhamento
-            Intent shareIntent = new Intent();
-            shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, content);
-            shareIntent.setType("text/plain");
-            startActivity(shareIntent);
-
-
-
-        }
-        else {
-
-            //Recuperando mensagem para emitir no alerta
-            String error = getResources().getString(R.string.alert_empty_shared_field);
-
-            //Emitindo Alerta para usuário
-            Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
-
-        }
-
+        //Atualizando View
+        _todo.add(itemList);
+        updateViewContent();
     }
 
     @Override
-    public void onAddItemSuccess() {
-
+    public void onItemAddFailed() { Toast.makeText(
+            getApplicationContext(),
+            getString(R.string.alert_failure),
+            Toast.LENGTH_SHORT)
+            .show();
     }
 
     @Override
-    public void onItemDoneSucess() {
+    public void onItemDoneSucess(ItemList itemList) {
+        //Atualizando Arrays
+        _todo.remove(itemList);
+        itemList.setDone(1);
+        _done.add(itemList);
 
-    }
-
-    @Override
-    public void onDeleteSuccess() {
-
-    }
-
-    @Override
-    public void onCreateFailed() {
-
-    }
-
-    @Override
-    public void onDeleteFailed() {
-
+        //Atualizando Views
+        updateViewContent();
     }
 
     @Override
     public void onItemDoneFailed() {
+        //Retornando mensagem de erro
+        Toast.makeText(
+                getApplicationContext(),
+                getString(R.string.alert_failure),
+                Toast.LENGTH_SHORT)
+                .show();
+    }
 
+    @Override
+    public void onItemDeleteSucess(ItemList itemList) {
+        //Removendo da view e atualizando a mesma
+        if (itemList.getDone() == 1) _done.remove(itemList);
+        else _todo.remove(itemList);
+        updateViewContent();
     }
 
     @Override
     public void onDeleteItemFailed() {
+        Toast.makeText(
+                getApplicationContext(),
+                getString(R.string.alert_failure),
+                Toast.LENGTH_SHORT)
+                .show();
+    }
 
+    @Override
+    public void onDeleteSuccess() {
+        //Retornando mensagem de sucesso ao deletar usuário
+        Toast.makeText(
+                ListActivity.this,
+                getString(R.string.alert_delete_list_sucess),
+                Toast.LENGTH_SHORT)
+                .show();
+        finish();
+    }
+
+    @Override
+    public void onDeleteFailed() {
+        //Retornando mensagem de erro ao deletar lista para usuário
+        Toast.makeText(
+                ListActivity.this,
+                getString(R.string.alert_failure),
+                Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    @Override
+    public void onShareFailed() {
+        //Emitindo Alerta para usuário
+        Toast.makeText(
+                getApplicationContext(),
+                getString(R.string.alert_empty_shared_field),
+                Toast.LENGTH_SHORT)
+                .show();
     }
 }

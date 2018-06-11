@@ -1,23 +1,17 @@
 package com.mazurco066.notepad.adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
-import com.mazurco066.notepad.SQLite.DatabaseCreator;
 import com.mazurco066.notepad.SQLite.methods.ListActions;
 import com.mazurco066.notepad.model.TodoList;
-import com.mazurco066.notepad.ui.activity.ListActivity;
 
 import java.util.List;
 
@@ -27,7 +21,7 @@ import butterknife.ButterKnife;
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
 
     //Atributos
-    private static Context context;
+    private Context context;
     private List<TodoList> lists;
     private ListActions actions;
     private AdapterCallback callback;

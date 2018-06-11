@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
 
     //Atributos para recuperação de dados
-    private static Context context;
+    private Context context;
     private List<Note> notes;
     private NoteActions actions;
     private AdapterCallback adapterCallback;
