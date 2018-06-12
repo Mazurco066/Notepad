@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
             switch (data.getInt(NOTIFICATION_ID)) {
                 //Configurações alteradas
                 case 100:
-                    Snackbar snackbar = Snackbar.make(view, "Configurações alteradas", Snackbar.LENGTH_SHORT);
+                    Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_settings_changed), Snackbar.LENGTH_SHORT);
                     //Customizando a snackbar
                     TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
                     snackActionView.setTextColor(Color.WHITE);
