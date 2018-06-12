@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.model.Note;
@@ -98,19 +97,25 @@ public class NoteActivity extends AppCompatActivity implements NotesTask.View {
 
             //Caso pressionou botão salvar
             case R.id.action_save:
-                //Recuperando mensagens a serem exibidas
-                String emptyMsg = getResources().getString(R.string.alert_empty_fields);
-
                 //Verificando se os Campos não estão Vazios
                 if (isValidFields()) {
                     //Preenchendo dados da nota
                     note.setTitle(editTitle.getText().toString());
                     note.setContent(editNote.getText().toString());
-
                     //Tentando inserir nota
                     presenter.save(note);
                 }
-                else { Toast.makeText(getApplicationContext(), emptyMsg, Toast.LENGTH_SHORT).show(); }
+                else {
+                    View view = findViewById(R.id.note_activity);
+                    Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_empty_fields), Snackbar.LENGTH_SHORT);
+                    //Customizando a snackbar
+                    TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+                    snackActionView.setTextColor(Color.WHITE);
+                    snackActionView.setTextSize(16);
+                    snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+                    //Mostrando a snackbar
+                    snackbar.show();
+                }
                 break;
 
             //Caso pressionou botão compartilhar
@@ -180,12 +185,7 @@ public class NoteActivity extends AppCompatActivity implements NotesTask.View {
 
     @Override
     public void onSaveSuccess() {
-
-        //Recuperando mensagem de retorno
-        String sucessCreatedMsg = getResources().getString(R.string.alert_create_note_sucess);
-
-        //Retornando mensagem de sucesso ao criar nota para usuário
-        Toast.makeText(getApplicationContext(), sucessCreatedMsg, Toast.LENGTH_SHORT).show();
+        setResult(1010);
         finish();
     }
 
@@ -217,12 +217,7 @@ public class NoteActivity extends AppCompatActivity implements NotesTask.View {
 
     @Override
     public void onDeleteSuccess() {
-
-        //Recuperando mensagem de sucesso
-        String sucess = getResources().getString(R.string.alert_delete_note_sucess);
-
-        //Retornando mensagem de sucesso ao editar nota para usuário
-        Toast.makeText(getApplicationContext(), sucess, Toast.LENGTH_SHORT).show();
+        setResult(1011);
         finish();
     }
 

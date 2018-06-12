@@ -58,6 +58,7 @@
 
     <!-- Strings para mensagens de alerta e sucesso -->
     <string name="alert_task_added">Task Added</string>
+    <string name="alert_task_deleted">Task Deleted</string>
     <string name="alert_same_task">This task already exists!</string>
     <string name="alert_theme_change_sucess">Theme Successfully changed!</string>
     <string name="alert_create_note_sucess">Note successfully created!</string>

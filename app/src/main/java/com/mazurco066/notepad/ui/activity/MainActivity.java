@@ -24,7 +24,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.SQLite.methods.ListActions;
@@ -215,6 +214,38 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //Implementação padrão
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //Verificando se lista foi deletada
+        if (requestCode == 101 && resultCode == 1010) {
+            View view = findViewById(R.id.appDrawer);
+            Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_delete_list_sucess), Snackbar.LENGTH_SHORT);
+            //Customizando a snackbar
+            TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+            snackActionView.setTextColor(Color.WHITE);
+            snackActionView.setTextSize(16);
+            snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+            //Mostrando a snackbar
+            snackbar.show();
+        }
+
+        //Verificando se nota foi criada
+        if (requestCode == 102 && resultCode == 1010) {
+            View view = findViewById(R.id.appDrawer);
+            Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_create_note_sucess), Snackbar.LENGTH_SHORT);
+            //Customizando a snackbar
+            TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+            snackActionView.setTextColor(Color.WHITE);
+            snackActionView.setTextSize(16);
+            snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+            //Mostrando a snackbar
+            snackbar.show();
+        }
+    }
+
     //Método para Abrir Activity de Escrever/Visualizar Nota
     private void openNoteActivity(Note note) {
 
@@ -226,8 +257,7 @@ public class MainActivity extends AppCompatActivity {
         noteActivity.putExtra(DatabaseCreator.FIELD_CONTENT, note.getContent());
 
         //Iniciando nova activity
-        startActivity(noteActivity);
-
+        startActivityForResult(noteActivity, 102);
     }
 
     //Método para Abrir Activity de Escrever/Visualizar Nota
@@ -250,15 +280,19 @@ public class MainActivity extends AppCompatActivity {
                 listActivity.putExtra(DatabaseCreator.FIELD_ID, todoList.getId());
                 listActivity.putExtra(DatabaseCreator.FIELD_TITLE, todoList.getTitle());
 
-                startActivity(listActivity);
+                startActivityForResult(listActivity, 101);
 
             }
             else {
-
-                //Recuperando mensagem de erro
-                String msg = getResources().getString(R.string.alert_failure);
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-
+                View view = findViewById(R.id.appDrawer);
+                Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
+                //Customizando a snackbar
+                TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+                snackActionView.setTextColor(Color.WHITE);
+                snackActionView.setTextSize(16);
+                snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+                //Mostrando a snackbar
+                snackbar.show();
             }
 
         }
@@ -323,11 +357,16 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 else {
-
                     //Retornando Mensagem de erro
-                    String msg = getApplicationContext().getResources().getString(R.string.alert_empty_fields);
-                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-
+                    View view = findViewById(R.id.appDrawer);
+                    Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_empty_fields), Snackbar.LENGTH_SHORT);
+                    //Customizando a snackbar
+                    TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+                    snackActionView.setTextColor(Color.WHITE);
+                    snackActionView.setTextSize(16);
+                    snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+                    //Mostrando a snackbar
+                    snackbar.show();
                 }
             }
         });

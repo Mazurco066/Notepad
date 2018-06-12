@@ -2,7 +2,9 @@ package com.mazurco066.notepad.ui.fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.SQLite.DatabaseCreator;
@@ -80,6 +82,24 @@ public class ListsFragment extends Fragment implements ListAdapter.AdapterCallba
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //Implementação padrão
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 101 && resultCode == 1010) {
+
+            View view = getActivity().findViewById(R.id.appDrawer);
+            Snackbar snackbarError = Snackbar.make(view, getString(R.string.alert_delete_list_sucess), Snackbar.LENGTH_SHORT);
+            //Customizando a snackbar
+            TextView snackActionView = snackbarError.getView().findViewById(android.support.design.R.id.snackbar_text);
+            snackActionView.setTextColor(Color.WHITE);
+            snackActionView.setTextSize(16);
+            snackbarError.getView().setBackground(getActivity().getDrawable(R.drawable.themed_snackbar));
+            snackbarError.show();
+        }
+    }
+
+    @Override
     public void onClickList(TodoList list) {
         //Instanciando intent para ir para prox activity
         Intent listIntent = new Intent(getActivity(), ListActivity.class);
@@ -87,13 +107,14 @@ public class ListsFragment extends Fragment implements ListAdapter.AdapterCallba
         listIntent.putExtra(DatabaseCreator.FIELD_TITLE, list.getTitle());
         listIntent.putExtra(DatabaseCreator.FIELD_DATE, list.getDate());
         //Iniciando nova activity
-        startActivity(listIntent);
+        startActivityForResult(listIntent, 101);
     }
 
     @Override
     public void onDeleteList(final TodoList list) {
         //Instanciando criador de alert dialog
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        final View view = getActivity().findViewById(R.id.appDrawer);
 
         //Configurando alert dialog
         alertDialog.setTitle(getString(R.string.dialog_list_delete_title));
@@ -102,16 +123,26 @@ public class ListsFragment extends Fragment implements ListAdapter.AdapterCallba
         alertDialog.setPositiveButton(getString(R.string.dialog_delete), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //Recuperando mensagens
-                String sucess = getString(R.string.alert_delete_list_sucess);
-                String failure = getString(R.string.alert_failure);
-
                 if (actions.deleteList(list)) {
                     //Retornando mensagem de sucesso ao usuário
-                    Toast.makeText(getActivity(), sucess, Toast.LENGTH_SHORT).show();
+                    Snackbar snackbarError = Snackbar.make(view, getString(R.string.alert_delete_list_sucess), Snackbar.LENGTH_SHORT);
+                    //Customizando a snackbar
+                    TextView snackActionView = snackbarError.getView().findViewById(android.support.design.R.id.snackbar_text);
+                    snackActionView.setTextColor(Color.WHITE);
+                    snackActionView.setTextSize(16);
+                    snackbarError.getView().setBackground(getActivity().getDrawable(R.drawable.themed_snackbar));
+                    snackbarError.show();
                     adapter.removeList(list);
                 }
-                else { Toast.makeText(getActivity(), failure, Toast.LENGTH_SHORT).show(); }
+                else {
+                    Snackbar snackbarError = Snackbar.make(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
+                    //Customizando a snackbar
+                    TextView snackActionView = snackbarError.getView().findViewById(android.support.design.R.id.snackbar_text);
+                    snackActionView.setTextColor(Color.WHITE);
+                    snackActionView.setTextSize(16);
+                    snackbarError.getView().setBackground(getActivity().getDrawable(R.drawable.themed_snackbar));
+                    snackbarError.show();
+                }
             }
         });
         //Adicionando botões negativo e positivo para alertdialog

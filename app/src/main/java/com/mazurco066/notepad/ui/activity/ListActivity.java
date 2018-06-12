@@ -1,7 +1,8 @@
 package com.mazurco066.notepad.ui.activity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.adapter.TaskAdapter;
@@ -120,11 +121,14 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
                     itemList.setDone(0);
                     presenter.addItem(todoList.getId(), itemList);
                 }
-                else { Toast.makeText(
-                            getApplicationContext(),
-                            getString(R.string.alert_empty_fields),
-                            Toast.LENGTH_SHORT)
-                            .show();
+                else {
+                    Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_empty_fields), Snackbar.LENGTH_SHORT);
+                    //Customizando a snackbar
+                    TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+                    snackActionView.setTextColor(Color.WHITE);
+                    snackActionView.setTextSize(16);
+                    snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+                    snackbar.show();
                 }
             }
         });
@@ -298,8 +302,14 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
     @Override
     public void onAddItemSuccess(ItemList itemList) {
         //Retornando mensagem de Sucesso
-        String msg = getResources().getString(R.string.alert_task_added);
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+        View view = findViewById(R.id.list_activity);
+        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_task_added), Snackbar.LENGTH_SHORT);
+        //Customizando a snackbar
+        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        snackActionView.setTextColor(Color.WHITE);
+        snackActionView.setTextSize(16);
+        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+        snackbar.show();
 
         //Limpando campo de texto
         taskEdit.setText(null);
@@ -310,11 +320,15 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
     }
 
     @Override
-    public void onItemAddFailed() { Toast.makeText(
-            getApplicationContext(),
-            getString(R.string.alert_failure),
-            Toast.LENGTH_SHORT)
-            .show();
+    public void onItemAddFailed() {
+        View view = findViewById(R.id.list_activity);
+        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
+        //Customizando a snackbar
+        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        snackActionView.setTextColor(Color.WHITE);
+        snackActionView.setTextSize(16);
+        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+        snackbar.show();
     }
 
     @Override
@@ -330,12 +344,14 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
 
     @Override
     public void onItemDoneFailed() {
-        //Retornando mensagem de erro
-        Toast.makeText(
-                getApplicationContext(),
-                getString(R.string.alert_failure),
-                Toast.LENGTH_SHORT)
-                .show();
+        View view = findViewById(R.id.list_activity);
+        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
+        //Customizando a snackbar
+        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        snackActionView.setTextColor(Color.WHITE);
+        snackActionView.setTextSize(16);
+        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+        snackbar.show();
     }
 
     @Override
@@ -344,45 +360,58 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
         if (itemList.getDone() == 1) _done.remove(itemList);
         else _todo.remove(itemList);
         updateViewContent();
+
+        //Retornando mensagem de sucesso
+        View view = findViewById(R.id.list_activity);
+        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_task_deleted), Snackbar.LENGTH_SHORT);
+        //Customizando a snackbar
+        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        snackActionView.setTextColor(Color.WHITE);
+        snackActionView.setTextSize(16);
+        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+        snackbar.show();
     }
 
     @Override
     public void onDeleteItemFailed() {
-        Toast.makeText(
-                getApplicationContext(),
-                getString(R.string.alert_failure),
-                Toast.LENGTH_SHORT)
-                .show();
+        View view = findViewById(R.id.list_activity);
+        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
+        //Customizando a snackbar
+        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        snackActionView.setTextColor(Color.WHITE);
+        snackActionView.setTextSize(16);
+        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+        snackbar.show();
     }
 
     @Override
     public void onDeleteSuccess() {
-        //Retornando mensagem de sucesso ao deletar usuário
-        Toast.makeText(
-                ListActivity.this,
-                getString(R.string.alert_delete_list_sucess),
-                Toast.LENGTH_SHORT)
-                .show();
+        setResult(1010);
         finish();
     }
 
     @Override
     public void onDeleteFailed() {
-        //Retornando mensagem de erro ao deletar lista para usuário
-        Toast.makeText(
-                ListActivity.this,
-                getString(R.string.alert_failure),
-                Toast.LENGTH_SHORT)
-                .show();
+        View view = findViewById(R.id.list_activity);
+        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
+        //Customizando a snackbar
+        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        snackActionView.setTextColor(Color.WHITE);
+        snackActionView.setTextSize(16);
+        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+        snackbar.show();
     }
 
     @Override
     public void onShareFailed() {
-        //Emitindo Alerta para usuário
-        Toast.makeText(
-                getApplicationContext(),
-                getString(R.string.alert_empty_shared_field),
-                Toast.LENGTH_SHORT)
-                .show();
+        View view = findViewById(R.id.list_activity);
+        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_empty_shared_field), Snackbar.LENGTH_SHORT);
+        //Customizando a snackbar
+        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        snackActionView.setTextColor(Color.WHITE);
+        snackActionView.setTextSize(16);
+        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+        snackbar.show();
     }
+
 }
