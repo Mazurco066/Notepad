@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -23,7 +22,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.SQLite.methods.ListActions;
@@ -34,6 +32,7 @@ import com.mazurco066.notepad.ui.fragments.ListsFragment;
 import com.mazurco066.notepad.ui.fragments.NotesFragment;
 import com.mazurco066.notepad.ui.fragments.SettingsFragment;
 import com.mazurco066.notepad.util.Preferences;
+import com.mazurco066.notepad.util.SnackUtil;
 
 import java.util.Locale;
 
@@ -163,14 +162,7 @@ public class MainActivity extends AppCompatActivity {
             switch (data.getInt(NOTIFICATION_ID)) {
                 //Configurações alteradas
                 case 100:
-                    Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_settings_changed), Snackbar.LENGTH_SHORT);
-                    //Customizando a snackbar
-                    TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-                    snackActionView.setTextColor(Color.WHITE);
-                    snackActionView.setTextSize(16);
-                    snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-                    //Mostrando a snackbar
-                    snackbar.show();
+                    SnackUtil.show(view, getString(R.string.alert_settings_changed), Snackbar.LENGTH_SHORT);
                     break;
             }
         }
@@ -179,14 +171,12 @@ public class MainActivity extends AppCompatActivity {
     //Sobrescrevendo método de inflar menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         //Inflando menu no app
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
 
         //Usando implementação padrão ao inflar menu
         return super.onCreateOptionsMenu(menu);
-
     }
 
     //Sobrescrevento método de capturar ações feitas na toolbar
@@ -219,31 +209,17 @@ public class MainActivity extends AppCompatActivity {
         //Implementação padrão
         super.onActivityResult(requestCode, resultCode, data);
 
+        //Recuperando view
+        View view = findViewById(R.id.appDrawer);
+
         //Verificando se lista foi deletada
-        if (requestCode == 101 && resultCode == 1010) {
-            View view = findViewById(R.id.appDrawer);
-            Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_delete_list_sucess), Snackbar.LENGTH_SHORT);
-            //Customizando a snackbar
-            TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-            snackActionView.setTextColor(Color.WHITE);
-            snackActionView.setTextSize(16);
-            snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-            //Mostrando a snackbar
-            snackbar.show();
-        }
+        if (requestCode == 101 && resultCode == 1010)
+            SnackUtil.show(view, getString(R.string.alert_delete_list_sucess), Snackbar.LENGTH_SHORT);
+
 
         //Verificando se nota foi criada
-        if (requestCode == 102 && resultCode == 1010) {
-            View view = findViewById(R.id.appDrawer);
-            Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_create_note_sucess), Snackbar.LENGTH_SHORT);
-            //Customizando a snackbar
-            TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-            snackActionView.setTextColor(Color.WHITE);
-            snackActionView.setTextSize(16);
-            snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-            //Mostrando a snackbar
-            snackbar.show();
-        }
+        if (requestCode == 102 && resultCode == 1010)
+            SnackUtil.show(view, getString(R.string.alert_create_note_sucess), Snackbar.LENGTH_SHORT);
     }
 
     //Método para Abrir Activity de Escrever/Visualizar Nota
@@ -285,14 +261,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else {
                 View view = findViewById(R.id.appDrawer);
-                Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
-                //Customizando a snackbar
-                TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-                snackActionView.setTextColor(Color.WHITE);
-                snackActionView.setTextSize(16);
-                snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-                //Mostrando a snackbar
-                snackbar.show();
+                SnackUtil.show(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
             }
 
         }
@@ -301,14 +270,12 @@ public class MainActivity extends AppCompatActivity {
 
     //Método que será responsável por executar as ações de recuperar dados de uma nota
     private void writeNote() {
-
         //Instanciando uma nova nota com id de não salva para validação
         Note note = new Note();
         note.setId(-1);
 
         //Abrindo Activity de edição para nova nota
         openNoteActivity(note);
-
     }
 
     //Método que será responsável por executar as ações de recuperar dados de uma lista
@@ -316,7 +283,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Abrindo um dialog para recolher título da lista
         getTodoListTitle();
-
     }
 
     //Método para recuperar nome da lista que usuário deseja criar
@@ -336,7 +302,6 @@ public class MainActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT);
         input.setLayoutParams(lp);
         builder.setView(input);
-
         //Setando botões de avançar ou cancelar
         builder.setPositiveButton(getResources().getString(R.string.dialog_confirm), new DialogInterface.OnClickListener() {
             @Override
@@ -359,26 +324,14 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     //Retornando Mensagem de erro
                     View view = findViewById(R.id.appDrawer);
-                    Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_empty_fields), Snackbar.LENGTH_SHORT);
-                    //Customizando a snackbar
-                    TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-                    snackActionView.setTextColor(Color.WHITE);
-                    snackActionView.setTextSize(16);
-                    snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-                    //Mostrando a snackbar
-                    snackbar.show();
+                    SnackUtil.show(view, getString(R.string.alert_empty_fields), Snackbar.LENGTH_SHORT);
                 }
             }
         });
-
         builder.setNegativeButton(getResources().getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                //Nada Acontece.....
-            }
+            public void onClick(DialogInterface dialogInterface, int i) { /*Nada Acontece.....*/ }
         });
-
         //Criando e mostrando a Dialog
         builder.create();
         builder.show();
