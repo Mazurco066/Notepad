@@ -1,7 +1,6 @@
 package com.mazurco066.notepad.ui.activity;
 
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.adapter.TaskAdapter;
@@ -27,6 +25,7 @@ import com.mazurco066.notepad.SQLite.DatabaseCreator;
 import com.mazurco066.notepad.presenter.ListsPresenter;
 import com.mazurco066.notepad.task.ListsTask;
 import com.mazurco066.notepad.util.Preferences;
+import com.mazurco066.notepad.util.SnackUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,13 +121,7 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
                     presenter.addItem(todoList.getId(), itemList);
                 }
                 else {
-                    Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_empty_fields), Snackbar.LENGTH_SHORT);
-                    //Customizando a snackbar
-                    TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-                    snackActionView.setTextColor(Color.WHITE);
-                    snackActionView.setTextSize(16);
-                    snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-                    snackbar.show();
+                    SnackUtil.show(view, getString(R.string.alert_empty_fields), Snackbar.LENGTH_SHORT);
                 }
             }
         });
@@ -303,13 +296,7 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
     public void onAddItemSuccess(ItemList itemList) {
         //Retornando mensagem de Sucesso
         View view = findViewById(R.id.list_activity);
-        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_task_added), Snackbar.LENGTH_SHORT);
-        //Customizando a snackbar
-        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        snackActionView.setTextColor(Color.WHITE);
-        snackActionView.setTextSize(16);
-        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-        snackbar.show();
+        SnackUtil.show(view, getString(R.string.alert_task_added), Snackbar.LENGTH_SHORT);
 
         //Limpando campo de texto
         taskEdit.setText(null);
@@ -322,13 +309,7 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
     @Override
     public void onItemAddFailed() {
         View view = findViewById(R.id.list_activity);
-        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
-        //Customizando a snackbar
-        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        snackActionView.setTextColor(Color.WHITE);
-        snackActionView.setTextSize(16);
-        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-        snackbar.show();
+        SnackUtil.show(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
     }
 
     @Override
@@ -345,13 +326,7 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
     @Override
     public void onItemDoneFailed() {
         View view = findViewById(R.id.list_activity);
-        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
-        //Customizando a snackbar
-        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        snackActionView.setTextColor(Color.WHITE);
-        snackActionView.setTextSize(16);
-        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-        snackbar.show();
+        SnackUtil.show(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
     }
 
     @Override
@@ -363,25 +338,13 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
 
         //Retornando mensagem de sucesso
         View view = findViewById(R.id.list_activity);
-        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_task_deleted), Snackbar.LENGTH_SHORT);
-        //Customizando a snackbar
-        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        snackActionView.setTextColor(Color.WHITE);
-        snackActionView.setTextSize(16);
-        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-        snackbar.show();
+        SnackUtil.show(view, getString(R.string.alert_task_deleted), Snackbar.LENGTH_SHORT);
     }
 
     @Override
     public void onDeleteItemFailed() {
         View view = findViewById(R.id.list_activity);
-        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
-        //Customizando a snackbar
-        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        snackActionView.setTextColor(Color.WHITE);
-        snackActionView.setTextSize(16);
-        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-        snackbar.show();
+        SnackUtil.show(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
     }
 
     @Override
@@ -393,25 +356,13 @@ public class ListActivity extends AppCompatActivity implements ListsTask.View {
     @Override
     public void onDeleteFailed() {
         View view = findViewById(R.id.list_activity);
-        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
-        //Customizando a snackbar
-        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        snackActionView.setTextColor(Color.WHITE);
-        snackActionView.setTextSize(16);
-        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-        snackbar.show();
+        SnackUtil.show(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
     }
 
     @Override
     public void onShareFailed() {
         View view = findViewById(R.id.list_activity);
-        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_empty_shared_field), Snackbar.LENGTH_SHORT);
-        //Customizando a snackbar
-        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        snackActionView.setTextColor(Color.WHITE);
-        snackActionView.setTextSize(16);
-        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-        snackbar.show();
+        SnackUtil.show(view, getString(R.string.alert_empty_shared_field), Snackbar.LENGTH_SHORT);
     }
 
 }

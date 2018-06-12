@@ -1,7 +1,6 @@
 package com.mazurco066.notepad.ui.activity;
 
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.model.Note;
@@ -20,6 +18,7 @@ import com.mazurco066.notepad.SQLite.DatabaseCreator;
 import com.mazurco066.notepad.presenter.NotesPresenter;
 import com.mazurco066.notepad.task.NotesTask;
 import com.mazurco066.notepad.util.Preferences;
+import com.mazurco066.notepad.util.SnackUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -107,14 +106,7 @@ public class NoteActivity extends AppCompatActivity implements NotesTask.View {
                 }
                 else {
                     View view = findViewById(R.id.note_activity);
-                    Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_empty_fields), Snackbar.LENGTH_SHORT);
-                    //Customizando a snackbar
-                    TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-                    snackActionView.setTextColor(Color.WHITE);
-                    snackActionView.setTextSize(16);
-                    snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-                    //Mostrando a snackbar
-                    snackbar.show();
+                    SnackUtil.show(view, getString(R.string.alert_empty_fields), Snackbar.LENGTH_SHORT);
                 }
                 break;
 
@@ -192,27 +184,13 @@ public class NoteActivity extends AppCompatActivity implements NotesTask.View {
     @Override
     public void onUpdateSucess() {
         View view = findViewById(R.id.note_activity);
-        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_save_note_sucess), Snackbar.LENGTH_SHORT);
-        //Customizando a snackbar
-        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        snackActionView.setTextColor(Color.WHITE);
-        snackActionView.setTextSize(16);
-        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-        //Mostrando a snackbar
-        snackbar.show();
+        SnackUtil.show(view, getString(R.string.alert_save_note_sucess), Snackbar.LENGTH_SHORT);
     }
 
     @Override
     public void onSaveFailed() {
         View view = findViewById(R.id.note_activity);
-        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
-        //Customizando a snackbar
-        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        snackActionView.setTextColor(Color.WHITE);
-        snackActionView.setTextSize(16);
-        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-        //Mostrando a snackbar
-        snackbar.show();
+        SnackUtil.show(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
     }
 
     @Override
@@ -226,39 +204,24 @@ public class NoteActivity extends AppCompatActivity implements NotesTask.View {
 
         //Recuperando mensagens de erro possiveis
         View view = findViewById(R.id.note_activity);
-        Snackbar snackbar;
         String e101 = getResources().getString(R.string.alert_failure);
         String e102 = getResources().getString(R.string.alert_inexistent_note);
 
         switch (code) {
             case 101:
-                snackbar = Snackbar.make(view, e101, Snackbar.LENGTH_SHORT);
+                SnackUtil.show(view, e101, Snackbar.LENGTH_SHORT);
                 break;
             case 102:
-                snackbar = Snackbar.make(view, e102, Snackbar.LENGTH_SHORT);
+                SnackUtil.show(view, e102, Snackbar.LENGTH_SHORT);
                 break;
             default:
-                snackbar = Snackbar.make(view, e102, Snackbar.LENGTH_LONG);
+                SnackUtil.show(view, e102, Snackbar.LENGTH_SHORT);
         }
-
-        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        snackActionView.setTextColor(Color.WHITE);
-        snackActionView.setTextSize(16);
-        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-        //Mostrando a snackbar
-        snackbar.show();
     }
 
     @Override
     public void onShareFailed() {
         View view = findViewById(R.id.note_activity);
-        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_empty_shared_field), Snackbar.LENGTH_SHORT);
-        //Customizando a snackbar
-        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        snackActionView.setTextColor(Color.WHITE);
-        snackActionView.setTextSize(16);
-        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
-        //Mostrando a snackbar
-        snackbar.show();
+        SnackUtil.show(view, getString(R.string.alert_empty_shared_field), Snackbar.LENGTH_SHORT);
     }
 }
