@@ -195,41 +195,37 @@ public class SettingsFragment extends Fragment {
     //Método para salvar configurações de idioma
     private void saveLanguage(View view) {
 
-        //Verificando se há um botão selecionado
-        if (languageGroup.getCheckedRadioButtonId() > 0) {
+        //Recuperando botão selecionado
+        radioButton = view.findViewById(languageGroup.getCheckedRadioButtonId());
 
-            //Recuperando botão selecionado
-            radioButton = view.findViewById(languageGroup.getCheckedRadioButtonId());
+        //Definindo string que definirá locale
+        String local = "";
 
-            //Definindo string que definirá locale
-            String local = "";
+        //Verificando qual idioma foi selecionado
+        switch (languageGroup.getCheckedRadioButtonId()) {
 
-            //Verificando qual idioma foi selecionado
-            switch (languageGroup.getCheckedRadioButtonId()) {
+            //Caso lingua portuguesa
+            case R.id.portugueseButton:
+                local = "pt";
+                break;
 
-                //Caso lingua portuguesa
-                case R.id.portugueseButton:
-                    local = "pt";
-                    break;
-
-                //Caso lingua inglesa
-                case R.id.englishButton:
+            //Caso lingua inglesa
+            case R.id.englishButton:
                     local = "en";
                     break;
 
-                //Caso lingua espanhola
-                case R.id.spanishButton:
+            //Caso lingua espanhola
+            case R.id.spanishButton:
                     local = "es";
                     break;
-            }
+        }
 
-            //Verificando se local não é o msm que atual
-            if (!local.equals(getLocale())) {
-                //Salvando novo idioma nas preferencias
-                preferences.saveLanguage(local);
-                //Setando novo local
-                setLocale(local);
-            }
+        //Verificando se local não é o msm que atual
+        if (!local.equals(getLocale())) {
+            //Salvando novo idioma nas preferencias
+            preferences.saveLanguage(local);
+            //Setando novo local
+            setLocale(local);
         }
     }
 
