@@ -4,8 +4,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -18,8 +20,10 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
@@ -47,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
     //Definindo Atributos
     private Preferences preferences;
+
+    //Definindo constantes
+    public static String NOTIFICATION_ID = "notification";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +156,25 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
 
         //Verificando se há notificações a ser lançadas
+        Bundle data = getIntent().getExtras();
+        if (data != null) {
+            //Recuperando view para disparar snackbar
+            View view = findViewById(R.id.appDrawer);
+            //Verificando qual notificação precisa ser disparada
+            switch (data.getInt(NOTIFICATION_ID)) {
+                //Configurações alteradas
+                case 100:
+                    Snackbar snackbar = Snackbar.make(view, "Configurações alteradas", Snackbar.LENGTH_SHORT);
+                    //Customizando a snackbar
+                    TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+                    snackActionView.setTextColor(Color.WHITE);
+                    snackActionView.setTextSize(16);
+                    snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+                    //Mostrando a snackbar
+                    snackbar.show();
+                    break;
+            }
+        }
     }
 
     //Sobrescrevendo método de inflar menu
@@ -352,7 +378,6 @@ public class MainActivity extends AppCompatActivity {
             Configuration conf = res.getConfiguration();
             conf.locale = myLocale;
             res.updateConfiguration(conf, dm);
-
         }
 
     }

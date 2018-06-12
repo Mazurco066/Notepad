@@ -257,6 +257,7 @@ public class SettingsFragment extends Fragment {
     private void refresh() {
         //Instanciando intent da msm acitivity
         Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.putExtra(MainActivity.NOTIFICATION_ID, 100);
         startActivity(intent);
         getActivity().finish();
     }

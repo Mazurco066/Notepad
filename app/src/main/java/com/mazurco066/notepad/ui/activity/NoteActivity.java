@@ -1,6 +1,8 @@
 package com.mazurco066.notepad.ui.activity;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mazurco066.notepad.R;
@@ -187,22 +191,28 @@ public class NoteActivity extends AppCompatActivity implements NotesTask.View {
 
     @Override
     public void onUpdateSucess() {
-
-        //Recuperando mensagem de retorno
-        String sucessUpdatedMsg = getResources().getString(R.string.alert_save_note_sucess);
-
-        //Retornando mensagem de sucesso ao editar nota para usuário
-        Toast.makeText(getApplicationContext(), sucessUpdatedMsg, Toast.LENGTH_SHORT).show();
+        View view = findViewById(R.id.note_activity);
+        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_save_note_sucess), Snackbar.LENGTH_SHORT);
+        //Customizando a snackbar
+        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        snackActionView.setTextColor(Color.WHITE);
+        snackActionView.setTextSize(16);
+        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+        //Mostrando a snackbar
+        snackbar.show();
     }
 
     @Override
     public void onSaveFailed() {
-
-        //Recuperando mensagem de retorno
-        String failure = getResources().getString(R.string.alert_failure);
-
-        //Retornando mensagem de erro ao salvar nota para usuário
-        Toast.makeText(getApplicationContext(), failure, Toast.LENGTH_SHORT).show();
+        View view = findViewById(R.id.note_activity);
+        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
+        //Customizando a snackbar
+        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        snackActionView.setTextColor(Color.WHITE);
+        snackActionView.setTextSize(16);
+        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+        //Mostrando a snackbar
+        snackbar.show();
     }
 
     @Override
@@ -220,26 +230,40 @@ public class NoteActivity extends AppCompatActivity implements NotesTask.View {
     public void onDeleteFailed(int code) {
 
         //Recuperando mensagens de erro possiveis
+        View view = findViewById(R.id.note_activity);
+        Snackbar snackbar;
         String e101 = getResources().getString(R.string.alert_failure);
         String e102 = getResources().getString(R.string.alert_inexistent_note);
 
         switch (code) {
             case 101:
-                Toast.makeText(getApplicationContext(), e101, Toast.LENGTH_SHORT).show();
+                snackbar = Snackbar.make(view, e101, Snackbar.LENGTH_SHORT);
                 break;
             case 102:
-                Toast.makeText(getApplicationContext(), e102, Toast.LENGTH_SHORT).show();
+                snackbar = Snackbar.make(view, e102, Snackbar.LENGTH_SHORT);
                 break;
+            default:
+                snackbar = Snackbar.make(view, e102, Snackbar.LENGTH_LONG);
         }
+
+        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        snackActionView.setTextColor(Color.WHITE);
+        snackActionView.setTextSize(16);
+        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+        //Mostrando a snackbar
+        snackbar.show();
     }
 
     @Override
     public void onShareFailed() {
-
-        //Recuperando mensagem de alerta
-        String error = getResources().getString(R.string.alert_empty_shared_field);
-
-        //Emitindo Alerta para usuário
-        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+        View view = findViewById(R.id.note_activity);
+        Snackbar snackbar = Snackbar.make(view, getString(R.string.alert_empty_shared_field), Snackbar.LENGTH_SHORT);
+        //Customizando a snackbar
+        TextView snackActionView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        snackActionView.setTextColor(Color.WHITE);
+        snackActionView.setTextSize(16);
+        snackbar.getView().setBackground(getDrawable(R.drawable.themed_snackbar));
+        //Mostrando a snackbar
+        snackbar.show();
     }
 }
