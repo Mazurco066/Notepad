@@ -1,6 +1,5 @@
 package com.mazurco066.notepad.ui.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -11,7 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -20,14 +18,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import com.mazurco066.notepad.R;
 import com.mazurco066.notepad.SQLite.methods.ListActions;
 import com.mazurco066.notepad.model.Note;
 import com.mazurco066.notepad.model.TodoList;
 import com.mazurco066.notepad.SQLite.DatabaseCreator;
+import com.mazurco066.notepad.ui.dialog.ListCreateDialog;
 import com.mazurco066.notepad.ui.fragments.ListsFragment;
 import com.mazurco066.notepad.ui.fragments.NotesFragment;
 import com.mazurco066.notepad.ui.fragments.SettingsFragment;
@@ -39,7 +36,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ListCreateDialog.ListCreateDialogCallback {
 
     //Definindo os Componentes
     @BindView(R.id.mainToolbar) Toolbar toolbar;
@@ -287,55 +284,8 @@ public class MainActivity extends AppCompatActivity {
 
     //Método para recuperar nome da lista que usuário deseja criar
     private void getTodoListTitle() {
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-
-        //Configurando a AlertDialog
-        builder.setTitle(getResources().getString(R.string.dialog_list_create_title));
-        builder.setMessage(getResources().getString(R.string.dialog_list_create_content));
-        builder.setCancelable(false);
-
-        //Criando EditText para coleta do título
-        final EditText input = new EditText(MainActivity.this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        input.setLayoutParams(lp);
-        builder.setView(input);
-        //Setando botões de avançar ou cancelar
-        builder.setPositiveButton(getResources().getString(R.string.dialog_confirm), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                if (!input.getText().toString().isEmpty()) {
-
-                    //Recuperando texto digitado
-                    String title = input.getText().toString();
-
-                    //Instanciando nova Lista para insersão
-                    TodoList todoList = new TodoList();
-                    todoList.setId(-1);
-                    todoList.setTitle(title);
-
-                    //Validando e se possível partindo para activity de listas
-                    openListActivity(todoList);
-
-                }
-                else {
-                    //Retornando Mensagem de erro
-                    View view = findViewById(R.id.appDrawer);
-                    SnackUtil.show(view, getString(R.string.alert_empty_fields), Snackbar.LENGTH_SHORT);
-                }
-            }
-        });
-        builder.setNegativeButton(getResources().getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) { /*Nada Acontece.....*/ }
-        });
-        //Criando e mostrando a Dialog
-        builder.create();
-        builder.show();
-
+        ListCreateDialog dialog = new ListCreateDialog(this, this);
+        dialog.show();
     }
 
     //Método para adaptar tema do app
@@ -374,4 +324,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onPositiveClicked(TodoList list) {
+        openListActivity(list);
+    }
+
+
+    @Override
+    public void onEmptyFields() {
+        //Retornando Mensagem de erro
+        View view = findViewById(R.id.appDrawer);
+        SnackUtil.show(view, getString(R.string.alert_empty_fields), Snackbar.LENGTH_SHORT);
+    }
+
+    @Override
+    public void onNegativeClicked() {
+        //Nada acontece
+    }
 }
