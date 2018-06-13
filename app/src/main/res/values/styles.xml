@@ -19,7 +19,7 @@
     </style>
 
     <!-- Light application theme -->
-    <style name="LightTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/lightColorPrimary</item>
@@ -37,7 +37,7 @@
     </style>
 
     <!-- Blue application theme -->
-    <style name="BlueTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="BlueTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/blueColorPrimary</item>
@@ -75,7 +75,7 @@
     <!-- Definindo tema para boões -->
     <style name="RaisedButton" parent="Widget.AppCompat.Button.Colored">
         <item name="android:backgroundTint">?android:colorPrimaryDark</item>
-        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">18sp</item>
     </style>
 
