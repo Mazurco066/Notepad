@@ -18,6 +18,7 @@ import com.mazurco066.notepad.adapter.ListAdapter;
 import com.mazurco066.notepad.SQLite.methods.ListActions;
 import com.mazurco066.notepad.model.TodoList;
 import com.mazurco066.notepad.ui.activity.ListActivity;
+import com.mazurco066.notepad.ui.dialog.ListDeleteDialog;
 import com.mazurco066.notepad.ui.layout.SimpleDividerItemDecoration;
 import com.mazurco066.notepad.util.SnackUtil;
 
@@ -27,7 +28,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ListsFragment extends Fragment implements ListAdapter.AdapterCallback {
+public class ListsFragment extends Fragment implements ListAdapter.AdapterCallback,
+                                                       ListDeleteDialog.ListDialogCallback {
 
     //Components
     @BindView(R.id.list_recycler) RecyclerView recycler;
@@ -105,31 +107,23 @@ public class ListsFragment extends Fragment implements ListAdapter.AdapterCallba
     @Override
     public void onDeleteList(final TodoList list) {
         //Instanciando criador de alert dialog
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-        final View view = getActivity().findViewById(R.id.appDrawer);
+        ListDeleteDialog dialog = new ListDeleteDialog(getActivity(), list, this);
+        dialog.show();
+    }
 
-        //Configurando alert dialog
-        alertDialog.setTitle(getString(R.string.dialog_list_delete_title));
-        alertDialog.setMessage(getString(R.string.dialog_list_delete_content));
-        alertDialog.setCancelable(false);
-        alertDialog.setPositiveButton(getString(R.string.dialog_delete), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (actions.deleteList(list)) {
-                    SnackUtil.show(view, getString(R.string.alert_delete_list_sucess), Snackbar.LENGTH_SHORT);
-                    adapter.removeList(list);
-                }
-                else
-                    SnackUtil.show(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
-            }
-        });
-        //Adicionando botões negativo e positivo para alertdialog
-        alertDialog.setNegativeButton(getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) { /*Nada Acontece....*/ }
-        });
-        //Criando e mostrando dialog
-        alertDialog.create();
-        alertDialog.show();
+    @Override
+    public void onPositiveClicked(TodoList list) {
+        View view = getActivity().findViewById(R.id.appDrawer);
+        if (actions.deleteList(list)) {
+            SnackUtil.show(view, getString(R.string.alert_delete_list_sucess), Snackbar.LENGTH_SHORT);
+            adapter.removeList(list);
+        }
+        else
+            SnackUtil.show(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
+    }
+
+    @Override
+    public void onNegativeClicked() {
+        //Nada Acontece
     }
 }

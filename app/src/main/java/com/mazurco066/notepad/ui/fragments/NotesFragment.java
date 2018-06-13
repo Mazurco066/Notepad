@@ -18,6 +18,7 @@ import com.mazurco066.notepad.adapter.NoteAdapter;
 import com.mazurco066.notepad.SQLite.methods.NoteActions;
 import com.mazurco066.notepad.model.Note;
 import com.mazurco066.notepad.ui.activity.NoteActivity;
+import com.mazurco066.notepad.ui.dialog.NoteDeleteDialog;
 import com.mazurco066.notepad.ui.layout.SimpleDividerItemDecoration;
 import com.mazurco066.notepad.util.SnackUtil;
 
@@ -27,7 +28,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NotesFragment extends Fragment implements NoteAdapter.AdapterCallback {
+public class NotesFragment extends Fragment implements NoteAdapter.AdapterCallback,
+                                                       NoteDeleteDialog.NoteDialogCallback {
 
     //Definindo Componentes
     @BindView(R.id.note_recycler) RecyclerView recycler;
@@ -106,40 +108,25 @@ public class NotesFragment extends Fragment implements NoteAdapter.AdapterCallba
     @Override
     //Definindo evento de onClick sobre excluir de uma nota
     public void onNoteDelete(final Note note) {
-        //Instanciando criador de alert dialog
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-
-        //Configurando alert dialog
-        alertDialog.setTitle(getString(R.string.dialog_note_delete_title));
-        alertDialog.setMessage(getString(R.string.dialog_note_delete_content));
-        alertDialog.setCancelable(false);
-
-        alertDialog.setPositiveButton(getString(R.string.dialog_delete), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //Recuperando view
-                View view = getActivity().findViewById(R.id.appDrawer);
-                if (actions.deleteNote(note.getId())) {
-                    SnackUtil.show(view, getString(R.string.alert_delete_note_sucess), Snackbar.LENGTH_SHORT);
-                    adapter.removeNote(note);
-                }
-                else {
-                    SnackUtil.show(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
-                }
-            }
-        });
-
-        //Adicionando botões negativo e positivo para alertdialog
-        alertDialog.setNegativeButton(getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //Nada Acontece....
-            }
-        });
-
-        //Criando e mostrando dialog
-        alertDialog.create();
-        alertDialog.show();
+        //Criando e emitindo dialog de remoção para nota
+        NoteDeleteDialog dialog = new NoteDeleteDialog(getActivity(), note, this);
+        dialog.show();
     }
 
+    @Override
+    public void onPositiveClicked(Note note) {
+        View view = getActivity().findViewById(R.id.appDrawer);
+        if (actions.deleteNote(note.getId())) {
+            SnackUtil.show(view, getString(R.string.alert_delete_note_sucess), Snackbar.LENGTH_SHORT);
+            adapter.removeNote(note);
+        }
+        else {
+            SnackUtil.show(view, getString(R.string.alert_failure), Snackbar.LENGTH_SHORT);
+        }
+    }
+
+    @Override
+    public void onNegativeClicked() {
+        //Nada acontece
+    }
 }
