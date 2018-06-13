@@ -38,7 +38,7 @@
 
     <!-- Strings para botões -->
     <string name="btn_addTask">Adicionar Tarefa</string>
-    <string name="btn_save">Save</string>
+    <string name="btn_save">Salvar</string>
 
     <!-- Strings para TextViews -->
     <string name="label_language">Configurações de Idioma</string>

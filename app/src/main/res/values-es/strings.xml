@@ -31,9 +31,8 @@
     <string name="edit_title_hint">Título</string>
     <string name="edit_content_hint">Contenido</string>
 
-    <string name="button_change_language">Cambiar Idioma</string>
-    <string name="button_change_theme">Canbiar Tema</string>
     <string name="btn_addTask">Agregar tarea</string>
+    <string name="btn_save">Guardar</string>
 
     <string name="label_language">Configuración del Idioma</string>
     <string name="label_theme">Configuración del Tema</string>
